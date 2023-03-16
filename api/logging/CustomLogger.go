@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/go-logr/logr"
+	"sigs.k8s.io/controller-runtime/pkg/log"
 )
 
 type CustomLogger struct {
@@ -11,7 +12,7 @@ type CustomLogger struct {
 }
 
 func GetAzureLogger(ctx context.Context, annotationsMaps ...map[string]string) *CustomLogger {
-	c := &CustomLogger{logr.FromContextOrDiscard(ctx)}
+	c := &CustomLogger{log.FromContext(ctx)}
 	return c
 }
 
@@ -25,4 +26,8 @@ func (c *CustomLogger) Debug(msg string, keysAndValues ...interface{}) {
 
 func (c *CustomLogger) Error(err error, msg string, keysAndValues ...interface{}) {
 	c.logr.Error(err, msg, keysAndValues...)
+}
+
+func (c *CustomLogger) IntoContext(ctx context.Context) context.Context {
+	return log.IntoContext(ctx, c.logr)
 }

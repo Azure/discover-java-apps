@@ -7,6 +7,11 @@ import (
 	"flag"
 	"fmt"
 
+	"github.com/go-logr/zapr"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
+	ctrl "sigs.k8s.io/controller-runtime"
+
 	"microsoft.com/azure-spring-discovery/api/logging"
 	"microsoft.com/azure-spring-discovery/api/v1alpha1"
 	"microsoft.com/azure-spring-discovery/core"
@@ -22,7 +27,31 @@ func main() {
 	flag.StringVar(&password, "password", "", "Password for ssh login")
 	flag.IntVar(&port, "port", 0, "The ssh port")
 	flag.Parse()
-	azureLogger := logging.GetAzureLogger(context.Background())
+	cfg := &zap.Config{
+		Encoding:         "console",
+		Level:            zap.NewAtomicLevelAt(zapcore.DebugLevel),
+		OutputPaths:      []string{"discovery.log"},
+		ErrorOutputPaths: []string{"discovery.log"},
+		EncoderConfig: zapcore.EncoderConfig{
+			MessageKey: "message",
+
+			LevelKey:    "level",
+			EncodeLevel: zapcore.CapitalLevelEncoder,
+
+			TimeKey:    "time",
+			EncodeTime: zapcore.ISO8601TimeEncoder,
+
+			CallerKey:    "caller",
+			EncodeCaller: zapcore.ShortCallerEncoder,
+
+			EncodeDuration: zapcore.MillisDurationEncoder,
+		},
+	}
+	logger, _ := cfg.Build()
+	ctrl.SetLogger(zapr.NewLogger(logger))
+
+	ctx := context.Background()
+	azureLogger := logging.GetAzureLogger(ctx)
 	var serverObj = v1alpha1.SpringBootServer{
 		Spec: v1alpha1.SpringBootServerSpec{
 			Server: server,
@@ -35,7 +64,7 @@ func main() {
 		core.DefaultServerFactory(),
 	)
 
-	apps, err := executor.Discover(context.Background(), &serverObj)
+	apps, err := executor.Discover(azureLogger.IntoContext(ctx), &serverObj)
 	if err != nil {
 		azureLogger.Error(err, "Failed to discover apps")
 	}
