@@ -13,6 +13,8 @@ A test script to discovery spring apps in your linux system, there is steps
 1) For linux: execute cmd output/discovery-l -server 'servername' -port 'port' -username 'userwithsudo' -password 'password'
 2) For windows: execute cmd output/discovery.exe -server 'servername' -port 'port' -username 'userwithsudo' -password 'password'
 
+You can find the running log from discovery.log in the same folder
+
 ### Limitation
 Only probe the spring apps from linux VM
 
