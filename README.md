@@ -6,12 +6,12 @@ A test script to discovery spring apps in your linux system, there is steps
 4) print the info to console
 
 ## Build the project
-For linux, run build.sh
-For Window, run build.bat
+1) For linux, run build.sh
+2) For Window, run build.bat
 
 ## Run the project
-For linux: execute cmd output/discovery-l -server <servername> -port <port> -username <userwithsudo> -password <password>
-For windows: execute cmd output/discovery.exe -server <servername> -port <port> -username <userwithsudo> -password <password>
+1) For linux: execute cmd output/discovery-l -server <servername> -port <port> -username <userwithsudo> -password <password>
+2) For windows: execute cmd output/discovery.exe -server <servername> -port <port> -username <userwithsudo> -password <password>
 
 ### Limitation
 Only probe the spring apps from linux VM
