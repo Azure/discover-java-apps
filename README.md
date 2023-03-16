@@ -1,14 +1,20 @@
 # Project
+A test script to discovery spring apps in your linux system, there is steps
+1) login to the yourlinux system
+2) find the java process for spring application
+3) collect the spring apps runtime and env
+4) print the info to console
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+## Build the project
+For linux, run build.sh
+For Window, run build.bat
 
-As the maintainer of this project, please make a few updates:
+## Run the project
+For linux: execute cmd output/discovery-l -server <servername> -port <port> -username <userwithsudo> -password <password>
+For windows: execute cmd output/discovery.exe -server <servername> -port <port> -username <userwithsudo> -password <password>
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+### Limitation
+Only probe the spring apps from linux VM
 
 ## Contributing
 
