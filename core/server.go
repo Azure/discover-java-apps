@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"net"
 	"os"
 	"strings"
 	"time"
@@ -256,7 +257,7 @@ func (s *linuxServer) doConnect(cred *Credential, timeout time.Duration) (*ssh.C
 	cfg := &ssh.ClientConfig{
 		User:            cred.Username,
 		Auth:            auth,
-		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+		HostKeyCallback: MemoryHostKeyCallbackFunction(),
 		BannerCallback: func(message string) error {
 			azureLogger.Info(message)
 			return nil
@@ -272,4 +273,17 @@ type loginResult struct {
 	cred   *Credential
 	client *ssh.Client
 	err    error
+}
+
+var publicKeyStore = map[string][]byte{}
+
+func MemoryHostKeyCallbackFunction() ssh.HostKeyCallback {
+	return func(hostname string, remote net.Addr, key ssh.PublicKey) error {
+		if publicKeyStore[hostname] == nil {
+			publicKeyStore[hostname] = key.Marshal()
+		} else if !bytes.Equal(publicKeyStore[hostname], key.Marshal()) {
+			return fmt.Errorf("ssh: host key mismatch")
+		}
+		return nil
+	}
 }
