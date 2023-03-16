@@ -1,8 +1,8 @@
 # Project
 A test script to discovery spring apps in your linux system, there is steps
-1) login to the yourlinux system
+1) login to the your linux system
 2) find the java process for spring application
-3) collect the spring apps runtime and env
+3) collect the spring apps runtime env and config
 4) print the info to console
 
 ## Build the project
