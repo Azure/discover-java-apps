@@ -42,8 +42,8 @@ type patterns struct {
 }
 
 const (
-	SpringBootFatJar   AppType = "SpringBootFatJar"
-	SpringBootThinJar  AppType = "SpringBootThinJar"
+	SpringBootFatJar   AppType = "SpringBootExecutableFatJar"
+	SpringBootThinJar  AppType = "SpringBootExecutableThinJar"
 	SpringBootExploded AppType = "SpringBootExploded"
 	ExecutableJar      AppType = "ExecutableJar"
 	Unknown            AppType = "Unknown"
