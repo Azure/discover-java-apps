@@ -11,6 +11,7 @@ const (
 	LinuxGetTotalMemoryCmd    = "cat /proc/meminfo | grep MemTotal | awk '{print $2}'"
 	LinuxGetDefaultMaxHeapCmd = "java -XX:+PrintFlagsFinal 2>1 | grep ' MaxHeapSize ' | awk '{print $4}'"
 	LinuxGetPortsCmd          = `ls -lta /proc/%[1]d/fd | grep socket | awk -F'[\\[\\]]' '{print $2}' | xargs -I {} grep {} /proc/%[1]d/net/tcp /proc/%[1]d/net/tcp6 | awk '{print $3}' | awk -F':' '{print $2}' | sort | uniq | xargs -I {} printf '%%d\n' '0x{}'`
+	LinuxGetOS 				  = "cat /proc/version"
 
 	LinuxNewLineCharacter = "\n"
 )
@@ -33,6 +34,10 @@ func GetEnvCmd(pid int) string {
 
 func GetJdkVersionCmd(javaCmd string) string {
 	return fmt.Sprintf(LinuxGetJdkVersionCmd, javaCmd)
+}
+
+func GetOsCmd() string {
+	return fmt.Sprintf(LinuxGetOS)
 }
 
 func GetTotalMemoryCmd() string {
