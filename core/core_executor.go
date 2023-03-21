@@ -179,6 +179,10 @@ var getRuntimeJdkVersion StepFunc = func(app *v1alpha1.SpringBootApp, process Ja
 	return Of(process.GetRuntimeJdkVersion()).Spec("RuntimeJdkVersion")
 }
 
+var getOsVersion StepFunc = func(app *v1alpha1.SpringBootApp, process JavaProcess, jarFile JarFile) *Monad {
+	return Of(process.GetOsVersion()).Spec("OsVersion")
+}
+
 var getJvmMemoryInMB StepFunc = func(app *v1alpha1.SpringBootApp, process JavaProcess, jarFile JarFile) *Monad {
 	return Of(process.GetJvmMemoryInMb()).Map(wrap(func(f float64) int { return int(f) })).Spec("JvmMemoryInMB")
 }
@@ -203,7 +207,7 @@ func (s *DiscoveryCoreExecutor) discoverApp(process JavaProcess, jar JarFile) (*
 	app := &v1alpha1.SpringBootApp{}
 	m := NewMonadic(process, jar, app)
 
-	m.
+	m.Then(getOsVersion).
 		Then(getArtifactName). // get artifact name should be first otherwise not able to use artifact name as fallback of app name
 		Then(getAppName).
 		Then(getChecksum).

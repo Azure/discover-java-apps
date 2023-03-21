@@ -44,6 +44,7 @@ type SpringBootAppSpec struct {
 	SpringBootVersion         string      `json:"springBootVersion,omitempty"`
 	AppType                   string      `json:"appType,omitempty"`
 	RuntimeJdkVersion         string      `json:"runtimeJdkVersion,omitempty"`
+	OsVersion                 string      `json:"OsVersion,omitempty"`
 	BuildJdkVersion           string      `json:"buildJdkVersion,omitempty"`
 	Environments              []string    `json:"environments,omitempty"`
 	JvmOptions                []string    `json:"jvmOptions,omitempty"`

@@ -23,6 +23,7 @@ const (
 type JavaProcess interface {
 	GetProcessId() int
 	GetRuntimeJdkVersion() (string, error)
+	GetOsVersion() (string, error)
 	LocateJarFile() (string, error)
 	GetJvmOptions() ([]string, error)
 	GetEnvironments() ([]string, error)
@@ -79,6 +80,15 @@ func (p *javaProcess) GetRuntimeJdkVersion() (string, error) {
 	return sanitizeVersion(jdkVersion), nil
 }
 
+func (p *javaProcess) GetOsVersion() (string, error) {
+	buf, err := p.executor.Server().RunCmd(GetOsCmd())
+	if err != nil {
+		return "", err
+	}
+
+	osVersion := cleanOutput(buf, LinuxNewLineCharacter)
+	return sanitizeVersion(osVersion), nil
+}
 func (p *javaProcess) GetJvmOptions() ([]string, error) {
 	var jvmOptions []string
 	var jarOpIdx = -1
