@@ -74,6 +74,11 @@ func main() {
 		specs = append(specs, app.Spec)
 	}
 
+	if specs == nil {
+		fmt.Println("Error during discovery and please check discovery.log for details")
+		return
+	}
+
 	b, err := json.Marshal(specs)
 	if err != nil {
 		panic(err)
