@@ -108,32 +108,6 @@ The default output will be a json like
   }
 ]
 ```
-=======
-'''json
-ads
-'''
-
-## Limitation
-1) Only probe the spring apps from linux VM
-
-## Roadmap
-1) Tomcat Apps support
-2) More target system
-
-## Support
-Report the issue to https://github.com/Azure/azure-discovery-java-apps/issues
-
-## Contributing
-
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
-
-When you submit a pull request, a CLA bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
->>>>>>> c7880e0ceda2008e16e6dd4440f973d99c9539db
-
 ## Limitation
 1) Only probe the spring apps from linux VM
 
