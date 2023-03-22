@@ -33,12 +33,22 @@ jobs:
     
 
         
-    - name: Upload release binary
+    - name: Upload linux release binary 
       uses: actions/upload-release-asset@v1.0.2
       env:
         GITHUB_TOKEN: ${{ secrets.UPLOADRELEASE }}
       with:
         upload_url: ${{ steps.get_release.outputs.upload_url }}
-        asset_path: ./bin
-        asset_name: bin
+        asset_path: ./bin/discovery.exe
+        asset_name: discovery-l
+        asset_content_type: application/octet-stream
+        
+    - name: Upload windows release binary 
+      uses: actions/upload-release-asset@v1.0.2
+      env:
+        GITHUB_TOKEN: ${{ secrets.UPLOADRELEASE }}
+      with:
+        upload_url: ${{ steps.get_release.outputs.upload_url }}
+        asset_path: ./bin/discovery-l
+        asset_name: discovery-l
         asset_content_type: application/octet-stream
