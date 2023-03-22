@@ -1,9 +1,17 @@
 # Project
-A test script to discovery spring apps in your linux system, there is steps
+A script to discovery java apps in your linux system by serveral steps
 1) login to the your linux system
 2) find the java process for spring application
 3) collect the spring apps runtime env and config
 4) print the info to console
+
+## Run it directly
+Download the binary files from https://github.com/Azure/azure-discovery-java-apps/releases
+1) For linux: execute cmd
+- discovery-l -server 'servername' -port 'port' -username 'userwithsudo' -password 'password'
+2) For windows: execute cmd 
+- discovery.exe -server 'servername' -port 'port' -username 'userwithsudo' -password 'password'
+<p>You can find the running log from discovery.log in the same folder
 
 ## Build the project
 1) For linux, run build.sh
@@ -15,8 +23,21 @@ A test script to discovery spring apps in your linux system, there is steps
 
 You can find the running log from discovery.log in the same folder
 
-### Limitation
-Only probe the spring apps from linux VM
+## Output
+The default output will be a json like 
+'''json
+ads
+'''
+
+## Limitation
+1) Only probe the spring apps from linux VM
+
+## Roadmap
+1) Tomcat Apps support
+2) More target system
+
+## Support
+Report the issue to https://github.com/Azure/azure-discovery-java-apps/issues
 
 ## Contributing
 
