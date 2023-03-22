@@ -4,7 +4,7 @@ name: publish-release
 
 on:
   release:
-    types: [created]
+    types: [created,updated]
 
 
 jobs:
