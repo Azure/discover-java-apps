@@ -112,8 +112,12 @@ The default output will be a json like
 1) Only probe the spring apps from linux VM
 
 ## Roadmap
-1) Tomcat Apps support
-2) More target system
+1) More Application Types
+- Tomcat Apps support
+- WebLogic Apps
+- WebSphere Apps
+- JBoss EAP Apps
+2) More Source system
 
 ## Support
 Report the issue to https://github.com/Azure/azure-discovery-java-apps/issues
