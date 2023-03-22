@@ -22,7 +22,6 @@ You can find the running log from discovery.log in the same folder
 
 ## Output
 The default output will be a json like 
-<<<<<<< HEAD
 ```json
 [
   {
