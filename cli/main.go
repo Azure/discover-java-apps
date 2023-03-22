@@ -1,9 +1,7 @@
 package main
 
 import (
-	"bytes"
 	"context"
-	"encoding/json"
 	"flag"
 	"fmt"
 
@@ -22,10 +20,15 @@ func main() {
 	var port int
 	var username string
 	var password string
+	var filename string
+	var format string
 	flag.StringVar(&server, "server", "", "Target server to be discovered")
 	flag.StringVar(&username, "username", "", "Username for ssh login")
 	flag.StringVar(&password, "password", "", "Password for ssh login")
 	flag.IntVar(&port, "port", 0, "The ssh port")
+
+	flag.StringVar(&filename, "file", "", "File name for result, default console")
+	flag.StringVar(&format, "format", "", "Output format, default json")
 	flag.Parse()
 	cfg := &zap.Config{
 		Encoding:         "console",
@@ -79,15 +82,6 @@ func main() {
 		return
 	}
 
-	b, err := json.Marshal(specs)
-	if err != nil {
-		panic(err)
-	}
-
-	var out bytes.Buffer
-	err = json.Indent(&out, b, "", "  ")
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(out.String())
+	output := core.NewOutput(filename, format)
+	output.Write(specs)
 }
