@@ -39,7 +39,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.UPLOADRELEASE }}
       with:
         upload_url: ${{ steps.get_release.outputs.upload_url }}
-        asset_path: ./bin/discovery.exe
+        asset_path: ./bin/discovery-l
         asset_name: discovery-l
         asset_content_type: application/octet-stream
         
@@ -49,6 +49,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.UPLOADRELEASE }}
       with:
         upload_url: ${{ steps.get_release.outputs.upload_url }}
-        asset_path: ./bin/discovery-l
-        asset_name: discovery-l
+        asset_path: ./bin/discovery.exe
+        asset_name: discovery.exe
         asset_content_type: application/octet-stream
