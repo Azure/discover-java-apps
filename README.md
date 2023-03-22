@@ -16,7 +16,7 @@ Download the binary files from https://github.com/Azure/azure-discovery-java-app
 ## Build the project
 1) For linux, run build.sh
 2) For Window, run build.bat
-<p> Find your binanry file from bin folder
+<p> Find your binary file from bin folder
 
 You can find the running log from discovery.log in the same folder
 
