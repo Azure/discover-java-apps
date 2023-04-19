@@ -20,10 +20,21 @@ jobs:
       uses: actions/setup-go@v4
       with:
         go-version: '1.20'
+
     - name: Install Dependencies
       run: |
         go install github.com/axw/gocov/gocov@latest
         go install github.com/AlekSi/gocov-xml@latest
+
+    - name: Git Version
+      id: version
+      uses: codacy/git-version@2.7.1
+      with:
+        release-branch: main
+
+    - name: Use the version
+      run: |
+        echo ${{ steps.version.outputs.version }}
 
     - name: Test
       run: |
