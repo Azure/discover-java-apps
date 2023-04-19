@@ -5,6 +5,7 @@
 *.so
 *.dylib
 .vscode
+.idea
 *.log
 # Test binary, built with `go test -c`
 *.test
@@ -19,3 +20,5 @@ vendor/
 output/
 
 go.sum
+
+*_report.xml

@@ -1,0 +1,25 @@
+server:
+  connect:
+    parallel: false
+    timeoutSeconds: 3
+pattern:
+  app:
+    - "app_pattern"
+  logging:
+    file_patterns:
+      - "logging_pattern"
+    console_output:
+      patterns:
+        - "console_pattern"
+      yamlpath:
+        - "yaml_pattern"
+  cert:
+    - ".cert"
+  static:
+    extension:
+      - ".static"
+    folder:
+      - "/static/"
+env:
+  denylist:
+    - "environment"

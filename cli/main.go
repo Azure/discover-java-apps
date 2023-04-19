@@ -4,15 +4,15 @@ import (
 	"context"
 	"flag"
 	"fmt"
-
+	"github.com/Azure/discover-java-apps/springboot"
+	"github.com/go-logr/logr"
 	"github.com/go-logr/zapr"
+	"io"
+	"os"
+	"time"
+
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	ctrl "sigs.k8s.io/controller-runtime"
-
-	"microsoft.com/azure-spring-discovery/api/logging"
-	"microsoft.com/azure-spring-discovery/api/v1alpha1"
-	"microsoft.com/azure-spring-discovery/core"
 )
 
 func main() {
@@ -25,10 +25,10 @@ func main() {
 	flag.StringVar(&server, "server", "", "Target server to be discovered")
 	flag.StringVar(&username, "username", "", "Username for ssh login")
 	flag.StringVar(&password, "password", "", "Password for ssh login")
-	flag.IntVar(&port, "port", 0, "The ssh port")
+	flag.IntVar(&port, "port", 22, "The ssh port, default 22")
 
 	flag.StringVar(&filename, "file", "", "File name for result, default console")
-	flag.StringVar(&format, "format", "", "Output format, default json")
+	flag.StringVar(&format, "format", "json", "Output format, default json")
 	flag.Parse()
 	cfg := &zap.Config{
 		Encoding:         "console",
@@ -36,52 +36,60 @@ func main() {
 		OutputPaths:      []string{"discovery.log"},
 		ErrorOutputPaths: []string{"discovery.log"},
 		EncoderConfig: zapcore.EncoderConfig{
-			MessageKey: "message",
-
-			LevelKey:    "level",
-			EncodeLevel: zapcore.CapitalLevelEncoder,
-
-			TimeKey:    "time",
-			EncodeTime: zapcore.ISO8601TimeEncoder,
-
-			CallerKey:    "caller",
-			EncodeCaller: zapcore.ShortCallerEncoder,
-
+			MessageKey:     "message",
+			LevelKey:       "level",
+			EncodeLevel:    zapcore.CapitalLevelEncoder,
+			TimeKey:        "time",
+			EncodeTime:     zapcore.ISO8601TimeEncoder,
+			CallerKey:      "caller",
+			EncodeCaller:   zapcore.ShortCallerEncoder,
 			EncodeDuration: zapcore.MillisDurationEncoder,
 		},
 	}
 	logger, _ := cfg.Build()
-	ctrl.SetLogger(zapr.NewLogger(logger))
-
-	ctx := context.Background()
-	azureLogger := logging.GetAzureLogger(ctx)
-	var serverObj = v1alpha1.SpringBootServer{
-		Spec: v1alpha1.SpringBootServerSpec{
-			Server: server,
-			Port:   port,
-		},
+	ctx := logr.NewContext(context.Background(), zapr.NewLogger(logger))
+	var serverConnectInfo = springboot.ServerConnectionInfo{
+		Server: server,
+		Port:   port,
 	}
 
-	var executor = core.NewCoreExecutor(
-		core.NewUsernamePasswordCredentialProvider(username, password),
-		core.DefaultServerFactory(),
+	azuerLogger := springboot.GetAzureLogger(ctx, map[string]string{
+		"server": server,
+	})
+	var executor = springboot.NewSpringBootDiscoveryExecutor(
+		NewUsernamePasswordCredentialProvider(username, password),
+		springboot.DefaultServerConnectorFactory(
+			springboot.WithConnectionTimeout(time.Duration(5)*time.Second),
+			springboot.WithHostKeyCallback(MemoryHostKeyCallbackFunction()),
+		),
+		springboot.YamlCfg,
 	)
 
-	apps, err := executor.Discover(azureLogger.IntoContext(ctx), &serverObj)
+	apps, err := executor.Discover(ctx, serverConnectInfo)
 	if err != nil {
-		azureLogger.Error(err, "Failed to discover apps")
+		azuerLogger.Error(err, "failed to discover")
+		os.Exit(1)
 	}
 
-	var specs []v1alpha1.SpringBootAppSpec
-	for _, app := range apps {
-		specs = append(specs, app.Spec)
+	if len(apps) == 0 {
+		azuerLogger.Warning(fmt.Errorf("no app discovered"), "")
+		os.Exit(0)
 	}
 
-	if specs == nil {
-		fmt.Println("Error during discovery and please check discovery.log for details")
-		return
+	var converter = NewSpringBootAppConverter()
+	var cliApps = converter.Convert(apps)
+
+	var writer io.Writer
+	if writer, err = NewWriter(filename); err != nil {
+		panic(err)
+	}
+	if closer, ok := writer.(io.Closer); ok {
+		defer closer.Close()
 	}
 
-	output := core.NewOutput(filename, format)
-	output.Write(specs)
+	output := NewOutput[*CliApp](writer, format)
+	if err = output.Write(cliApps); err != nil {
+		azuerLogger.Error(err, "error when write to target file", "filename", filename)
+		os.Exit(1)
+	}
 }

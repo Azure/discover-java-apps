@@ -1,24 +1,40 @@
 # Project
-A script to discovery java apps in your linux system by serveral steps
-1) login to the your linux system
-2) find the java process for spring application
-3) collect the spring apps runtime env and config
-4) print the info to console
+A script to discover java apps from your linux system
+1. SSH login to the your linux system 
+2. Find the java process for spring application 
+3. Collect the spring apps runtime env and config 
+4. Print the info to console in json or csv format
 
-## Run it directly
-Download the binary files from https://github.com/Azure/azure-discovery-java-apps/releases
-1) For linux: execute cmd
-- discovery-l -server 'servername' -port 'port' -username 'userwithsudo' -password 'password'
-2) For windows: execute cmd 
-- discovery.exe -server 'servername' -port 'port' -username 'userwithsudo' -password 'password'
+## Run it from your local machine
+Download the binary files from [releases](https://github.com/Azure/azure-discovery-java-apps/releases)
+- For Linux:
+```bash
+discovery-l -server 'servername' -port 'port' -username 'userwithsudo' -password 'password'
+```
+- For Windows:
+```bash
+discovery.exe -server 'servername' -port 'port' -username 'userwithsudo' -password 'password'
+```
+- For Mac (Intel chip):
+```bash
+discovery-darwin-amd64 -server 'servername' -port 'port' -username 'userwithsudo' -password 'password'
+```
+- For Mac (Apple silicon):
+```bash
+discovery-darwin-arm64 -server 'servername' -port 'port' -username 'userwithsudo' -password 'password'
+```
 <p>You can find the running log from discovery.log in the same folder
 
-## Build the project
-1) For linux, run build.sh
-2) For Window, run build.bat
-<p> Find your binary file from bin folder
+## Build
 
-You can find the running log from discovery.log in the same folder
+```bash
+make build
+```
+
+## Test
+```bash
+make test
+```
 
 ## Output
 The default output will be a json like 
@@ -108,15 +124,15 @@ The default output will be a json like
 ]
 ```
 ## Limitation
-1) Only probe the spring apps from linux VM
+1. Only support to discover the spring apps from Linux VM
 
 ## Roadmap
-1) More Application Types
-- Tomcat Apps support
-- WebLogic Apps
-- WebSphere Apps
-- JBoss EAP Apps
-2) More Source system
+1. More application types
+   - Tomcat Apps support
+   - WebLogic Apps
+   - WebSphere Apps
+   - JBoss EAP Apps
+2. More Source system
 
 ## Support
 Report the issue to https://github.com/Azure/azure-discovery-java-apps/issues
