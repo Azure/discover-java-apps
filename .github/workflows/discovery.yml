@@ -20,37 +20,40 @@ jobs:
       uses: actions/setup-go@v4
       with:
         go-version: '1.20'
+    - name: Install Dependencies
+      run: |
+        go install github.com/axw/gocov/gocov@latest
+        go install github.com/AlekSi/gocov-xml@latest
 
     - name: Test
       run: |
         make test
         go tool cover -func=coverage.out -o=coverage.out
 
-    - name: Go Coverage Badge  # Pass the `coverage.out` output to this action
-      uses: tj-actions/coverage-badge-go@v2
-      with:
-        filename: coverage.out
-
-    - name: Verify Changed files
-      uses: tj-actions/verify-changed-files@v12
-      id: verify-changed-files
-      with:
-        files: README.md
-
-    - name: Commit changes
-      if: steps.verify-changed-files.outputs.files_changed == 'true'
+    - name: Generate Code Coverage
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add README.md
-        git commit -m "chore: Updated coverage badge."
+        gocov convert coverage.out > coverage.json
+        gocov-xml < coverage.json > coverage.xml
 
-    - name: Push changes
-      if: steps.verify-changed-files.outputs.files_changed == 'true'
-      uses: ad-m/github-push-action@master
+    - name: Code Coverage Report
+      uses: irongut/CodeCoverageSummary@v1.3.0
       with:
-        github_token: ${{ github.token }}
-        branch: ${{ github.head_ref }}
+        filename: coverage.xml
+        badge: true
+        fail_below_min: true
+        format: markdown
+        hide_branch_rate: false
+        hide_complexity: true
+        indicators: true
+        output: both
+        thresholds: '60 80'
+
+    - name: Add Coverage PR Comment
+      uses: marocchino/sticky-pull-request-comment@v2
+      if: github.event_name == 'pull_request'
+      with:
+        recreate: true
+        path: code-coverage-results.md
 
     - name: Build
       run: make build
