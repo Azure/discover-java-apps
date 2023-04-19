@@ -19,7 +19,5 @@ vendor/
 
 output/
 
-go.sum
-
 *_report.xml
 coverage*
