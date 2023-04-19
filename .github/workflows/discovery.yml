@@ -32,6 +32,7 @@ jobs:
 
     - name: Generate Code Coverage
       run: |
+        cat coverage.out
         gocov convert coverage.out > coverage.json
         gocov-xml < coverage.json > coverage.xml
 
