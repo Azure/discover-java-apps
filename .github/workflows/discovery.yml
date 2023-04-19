@@ -15,6 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: ${{ github.head_ref }}   # checkout the correct branch name
+        fetch-depth: 0                # fetch the whole repo history
 
     - name: Set up Go
       uses: actions/setup-go@v4
@@ -23,7 +26,6 @@ jobs:
 
     - name: Install Dependencies
       run: |
-        sudo apt-get install libevent-dev
         go install github.com/axw/gocov/gocov@latest
         go install github.com/AlekSi/gocov-xml@latest
 
