@@ -1,3 +1,4 @@
+![Coverage](https://github.com/Azure/discover-java-apps/blob/badge/badge.svg?branch=badge)
 
 # Project
 A script to discover java apps from your linux system
