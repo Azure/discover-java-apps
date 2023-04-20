@@ -44,7 +44,7 @@ jobs:
         gocov convert coverage.out > coverage.json
         gocov-xml < coverage.json > coverage.xml
 
-    - name: Code Coverage Report
+    - name: Publish Code Coverage Report
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
         filename: coverage.xml
