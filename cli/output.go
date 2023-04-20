@@ -109,7 +109,6 @@ func (o *Output) writCSV(records any, writer io.Writer) error {
 	var refTyp = reflect.TypeOf(records)
 	refVal := reflect.ValueOf(records)
 	var values []reflect.Value
-	fmt.Println(refTyp.Kind())
 	switch refTyp.Kind() {
 	case reflect.Slice:
 		for i := 0; i < refVal.Len(); i++ {

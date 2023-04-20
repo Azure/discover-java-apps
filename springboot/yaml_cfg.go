@@ -1,28 +1,5 @@
 package springboot
 
-// Logging
-type Logging struct {
-	FilePatterns  []string      `yaml:"file_patterns"`
-	ConsoleOutput ConsoleOutput `yaml:"console_output"`
-}
-
-// ConsoleOutput
-type ConsoleOutput struct {
-	Patterns []string `yaml:"patterns"`
-	Yamlpath []string `yaml:"yamlpath"`
-}
-
-// Static
-type Static struct {
-	Extension []string `yaml:"extension"`
-	Folder    []string `yaml:"folder"`
-}
-
-// Env
-type Env struct {
-	Denylist []string `yaml:"denylist"`
-}
-
 // YamlConfig
 type YamlConfig struct {
 	Server  Server  `yaml:"server"`
@@ -43,9 +20,32 @@ type Connect struct {
 
 // Pattern
 type Pattern struct {
+	Static  Static   `yaml:"static"`
 	App     []string `yaml:"app"`
 	Logging Logging  `yaml:"logging"`
 	Cert    []string `yaml:"cert"`
-	Static  Static   `yaml:"static"`
+}
+
+// Static
+type Static struct {
+	Folder    []string `yaml:"folder"`
+	Extension []string `yaml:"extension"`
+}
+
+// Logging
+type Logging struct {
+	FilePatterns  []string      `yaml:"file_patterns"`
+	ConsoleOutput ConsoleOutput `yaml:"console_output"`
+}
+
+// ConsoleOutput
+type ConsoleOutput struct {
+	Yamlpath []string `yaml:"yamlpath"`
+	Patterns []string `yaml:"patterns"`
+}
+
+// Env
+type Env struct {
+	Denylist []string `yaml:"denylist"`
 }
 

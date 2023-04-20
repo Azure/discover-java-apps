@@ -185,11 +185,12 @@ var _ = Describe("Stream API test", func() {
 		It("should sum as expected", func() {
 			s := FromSlice(context.Background(), []int{7, 4, 8, 3, 5, 1, 9})
 
-			result := s.Reduce(0, func(a, b any) any {
+			result, err := s.Reduce(0, func(a, b any) any {
 				return a.(int) + b.(int)
 			})
 
 			Expect(result).Should(Equal(37))
+			Expect(err).Should(BeNil())
 		})
 	})
 
@@ -199,7 +200,7 @@ var _ = Describe("Stream API test", func() {
 			s := FromSlice(context.Background(), []int{7, 4, 8, 3, 5, 1, 9})
 			s = s.Parallel(3)
 
-			result := s.Filter(
+			result, err := s.Filter(
 				func(t any) bool {
 					return t.(int) > 2
 				},
@@ -224,6 +225,7 @@ var _ = Describe("Stream API test", func() {
 			)
 
 			Expect(result).Should(Equal("test,3,4,5,7,8"))
+			Expect(err).Should(BeNil())
 		})
 
 		When("distinct in parallel", func() {

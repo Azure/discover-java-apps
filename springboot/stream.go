@@ -93,7 +93,7 @@ type Stream interface {
 	Take(n int) Stream
 	First() (any, error)
 	Sorted(less interface{}) Stream
-	Reduce(seed any, c Combinator[any]) any
+	Reduce(seed any, c Combinator[any]) (any, error)
 	Parallel(parallelism int) Stream
 }
 
@@ -136,60 +136,45 @@ func (s stream) asyncConsume(c consumer, parallelism int) error {
 }
 
 func (s stream) ForEach(f interface{}) error {
-	refTyp := isUnaryFunc(reflect.TypeOf(f))
-	refVal := reflect.ValueOf(f)
+	fc := toCall(f)
 	return s(func(ctx context.Context, t any) error {
-		_, err := callUnaryFunc(ctx, refVal, t, refTyp)
+		_, err := fc.call(ctx, t)
 		return err
 	})
 }
 
 func (s stream) Peek(f interface{}) Stream {
-	refTyp := isUnaryFunc(reflect.TypeOf(f))
-	refVal := reflect.ValueOf(f)
+	fc := toCall(f)
 	return s.Map(func(ctx context.Context, t any) (any, error) {
-		_, err := callUnaryFunc(ctx, refVal, t, refTyp)
-		if err != nil && err != stopped {
-			return nil, err
-		}
-		return t, nil
+		_, err := fc.call(ctx, t)
+		return t, err
 	})
 }
 
 func (s stream) Map(f interface{}) Stream {
-	refTyp := isUnaryFunc(reflect.TypeOf(f))
-	refVal := reflect.ValueOf(f)
+	fc := toCall(f)
 	return stream(func(consumer consumer) error {
 		return s(func(ctx context.Context, t any) error {
-			val, err := callUnaryFunc(ctx, refVal, t, refTyp)
+			val, err := fc.call(ctx, t)
 			if err != nil {
 				return err
 			}
-			err = consumer(ctx, val.Interface())
-			if err == stopped {
-				return nil
-			}
-			return err
+			return consumer(ctx, val.Interface())
 		})
 	})
 }
 
 func (s stream) FlatMap(f interface{}) Stream {
-	refTyp := isUnaryFunc(reflect.TypeOf(f))
-	refVal := reflect.ValueOf(f)
-	return stream(
-		func(consumer consumer) error {
-			return s(
-				func(ctx context.Context, t any) error {
-					val, err := callUnaryFunc(ctx, refVal, t, refTyp)
-					if err != nil {
-						return err
-					}
-					return val.Interface().(Stream).consume(consumer)
-				},
-			)
-		},
-	)
+	fc := toCall(f)
+	return stream(func(consumer consumer) error {
+		return s(func(ctx context.Context, t any) error {
+			val, err := fc.call(ctx, t)
+			if err != nil {
+				return err
+			}
+			return val.Interface().(Stream).consume(consumer)
+		})
+	})
 }
 
 func (s stream) Distinct() Stream {
@@ -215,11 +200,7 @@ func (s stream) Filter(f Predicate) Stream {
 	return stream(func(consumer consumer) error {
 		return s(func(ctx context.Context, t any) error {
 			if f(t) {
-				err := consumer(ctx, t)
-				if err == stopped {
-					return nil
-				}
-				return err
+				return consumer(ctx, t)
 			}
 			return nil
 		})
@@ -268,11 +249,7 @@ func (s stream) Take(n int) Stream {
 			shouldConsume = i >= 0
 			mux.Unlock()
 			if shouldConsume {
-				err := consumer(ctx, t)
-				if err == stopped {
-					return nil
-				}
-				return err
+				return consumer(ctx, t)
 			} else {
 				return stopped
 			}
@@ -289,10 +266,7 @@ func (s stream) First() (any, error) {
 		result = t
 		return stopped
 	})
-	if err == stopped {
-		return result, nil
-	}
-	return result, err
+	return result, ignoreStopped(err)
 }
 
 func (s stream) Sorted(less interface{}) Stream {
@@ -320,7 +294,7 @@ func (s stream) Sorted(less interface{}) Stream {
 	})
 }
 
-func (s stream) Reduce(initial any, c Combinator[any]) any {
+func (s stream) Reduce(initial any, c Combinator[any]) (any, error) {
 	var result = initial
 	var mux sync.Mutex
 	err := s.ForEach(func(t any) {
@@ -328,11 +302,7 @@ func (s stream) Reduce(initial any, c Combinator[any]) any {
 		defer mux.Unlock()
 		result = c(result, t)
 	})
-	if err != nil && err != stopped {
-		return err
-	}
-
-	return result
+	return result, ignoreStopped(err)
 }
 
 func (s stream) Parallel(parallelism int) Stream {
@@ -451,4 +421,27 @@ func sortSlice(slice []any, less interface{}) {
 		)
 		return ret[0].Interface().(int) < 0
 	})
+}
+
+type funcCall struct {
+	refTyp unaryFuncType
+	refVal reflect.Value
+}
+
+func toCall(f interface{}) funcCall {
+	return funcCall{
+		refTyp: isUnaryFunc(reflect.TypeOf(f)),
+		refVal: reflect.ValueOf(f),
+	}
+}
+
+func (c funcCall) call(ctx context.Context, t any) (reflect.Value, error) {
+	return callUnaryFunc(ctx, c.refVal, t, c.refTyp)
+}
+
+func ignoreStopped(err error) error {
+	if err == stopped {
+		return nil
+	}
+	return err
 }
