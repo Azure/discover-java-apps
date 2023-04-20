@@ -1,40 +1,18 @@
 package springboot
 
-// Static
-type Static struct {
-	Extension []string `yaml:"extension"`
-	Folder    []string `yaml:"folder"`
-}
-
-// Env
-type Env struct {
-	Denylist []string `yaml:"denylist"`
-}
-
 // YamlConfig
 type YamlConfig struct {
-	Server  Server  `yaml:"server"`
 	Pattern Pattern `yaml:"pattern"`
 	Env     Env     `yaml:"env"`
-}
-
-// Server
-type Server struct {
-	Connect Connect `yaml:"connect"`
-}
-
-// Connect
-type Connect struct {
-	TimeoutSeconds int  `yaml:"timeoutSeconds"`
-	Parallel       bool `yaml:"parallel"`
+	Server  Server  `yaml:"server"`
 }
 
 // Pattern
 type Pattern struct {
-	App     []string `yaml:"app"`
 	Logging Logging  `yaml:"logging"`
 	Cert    []string `yaml:"cert"`
 	Static  Static   `yaml:"static"`
+	App     []string `yaml:"app"`
 }
 
 // Logging
@@ -47,5 +25,27 @@ type Logging struct {
 type ConsoleOutput struct {
 	Patterns []string `yaml:"patterns"`
 	Yamlpath []string `yaml:"yamlpath"`
+}
+
+// Static
+type Static struct {
+	Extension []string `yaml:"extension"`
+	Folder    []string `yaml:"folder"`
+}
+
+// Env
+type Env struct {
+	Denylist []string `yaml:"denylist"`
+}
+
+// Server
+type Server struct {
+	Connect Connect `yaml:"connect"`
+}
+
+// Connect
+type Connect struct {
+	Parallel       bool `yaml:"parallel"`
+	TimeoutSeconds int  `yaml:"timeoutSeconds"`
 }
 

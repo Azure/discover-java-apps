@@ -28,8 +28,8 @@ discovery-darwin-arm64 -server 'servername' -port 'port' -username 'userwithsudo
 
 ## Prerequisites
 
-__Ensure you have Golang 1.20+ installed before starting try from source code__
-__Run make in wsl if you're Windows user__
+1. __Ensure you have Golang 1.20+ installed before starting try from source code__
+2. __Run make in wsl if you're Windows user__
 
 ## Build
 
@@ -41,6 +41,10 @@ make build
 ```bash
 make test
 ```
+
+## Development
+1. 70% test coverage is mandatory in the PR build, so when you do PR, include test cases as well.
+2. Recommend to use [Ginkgo](https://onsi.github.io/ginkgo/) for BDD style test case
 
 ## Output
 The default output will be a json like 
@@ -77,9 +81,6 @@ The default output will be a json like
   }
 ]
 ```
-
-## Pull Request
-70% percent test coverage is mandatory requirement when PR  
 
 ## Limitation
 Only support to discover the spring apps from Linux VM

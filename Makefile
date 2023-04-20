@@ -45,7 +45,7 @@ vet: ## Run go vet against code.
 
 .PHONY: test
 test: fmt vet ginkgo generate ## Run unit tests.
-	$(GINKGO) -r -v --race -trace -covermode atomic -coverprofile=coverage.out --junit-report=test_report.xml ./...
+	$(GINKGO) -r -v --race -trace -covermode atomic -coverprofile=output/coverage.out --junit-report=output/test_report.xml ./...
 
 .PHONY: build
 build: fmt vet yaml2go ## Build binary for release
