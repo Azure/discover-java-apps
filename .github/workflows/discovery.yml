@@ -75,4 +75,4 @@ jobs:
 
     - name: Push Coverage Badge
       run: |
-        ./github/workflows/badge.sh
+        .github/workflows/badge.sh
