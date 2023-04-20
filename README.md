@@ -1,3 +1,4 @@
+![](https://img.shields.io/badge/go%20report-A+-brightgreen.svg?style=flat)
 ![Coverage](https://github.com/Azure/discover-java-apps/blob/badge/badge.svg?branch=badge)
 
 ## What's this project for?
