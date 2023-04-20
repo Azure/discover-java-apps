@@ -1,6 +1,4 @@
 
-![Coverage](https://img.shields.io/badge/Coverage-6-red)
-
 # Project
 A script to discover java apps from your linux system
 1. SSH login to your linux system 
