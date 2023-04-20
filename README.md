@@ -43,7 +43,7 @@ discovery-darwin-arm64 -server 'servername' -port 'port' -username 'userwithsudo
 
 The default output will be a json like
 
-```json
+```javascript
 [
   {
      "server": "127.0.0.1",
