@@ -77,7 +77,7 @@ The default output will be a json like
 ]
 ```
 
-CSV format is also supported `-format csv` is received in command arguments
+CSV format is also supported when `-format csv` is received in command arguments
 ```csv
 Server,AppName,AppType,AppPort,MavenArtifactGroup,MavenArtifact,MavenArtifactVersion,SpringBootVersion,BuildJdkVersion,RuntimeJdkVersion,HeapMemory(MB),OsName,OsVersion,JarFileLocation,JarFileSize(MB),JarFileModifiedTime
 127.0.0.1,hellospring,SpringBoot,8080,com.example,hellospring,0.0.1-SNAPSHOT,2.4.13,8,10,128,ubuntu,18.04,/home/migrateadmin/hellospring2x-0.0.1-SNAPSHOT.jar,52,2022-11-21T08:08:46Z
