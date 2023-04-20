@@ -6,7 +6,6 @@ on:
   release:
     types: [created,updated]
 
-
 jobs:
 
   build:
@@ -17,10 +16,7 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v3
       with:
-        go-version: 1.19
-
-    - name: Install Dependencies
-      run: sudo apt install go-bindata mingw-w64
+        go-version: '1.20'
       
     - name: Get release
       id: get_release
@@ -28,10 +24,11 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.UPLOADRELEASE }}  
         
-    - name: Build
-      run: chmod +x buildall.sh && ./buildall.sh
-    
+    - name: Test
+      run: make test
 
+    - name: Build
+      run: make build
         
     - name: Upload linux release binary 
       uses: actions/upload-release-asset@v1.0.2
@@ -51,4 +48,24 @@ jobs:
         upload_url: ${{ steps.get_release.outputs.upload_url }}
         asset_path: ./bin/discovery.exe
         asset_name: discovery.exe
+        asset_content_type: application/octet-stream
+
+    - name: Upload darwin arm64 release binary
+      uses: actions/upload-release-asset@v1.0.2
+      env:
+        GITHUB_TOKEN: ${{ secrets.UPLOADRELEASE }}
+      with:
+        upload_url: ${{ steps.get_release.outputs.upload_url }}
+        asset_path: ./bin/discovery_darwin_arm64
+        asset_name: discovery_darwin_arm64
+        asset_content_type: application/octet-stream
+
+    - name: Upload darwin amd64 release binary
+      uses: actions/upload-release-asset@v1.0.2
+      env:
+        GITHUB_TOKEN: ${{ secrets.UPLOADRELEASE }}
+      with:
+        upload_url: ${{ steps.get_release.outputs.upload_url }}
+        asset_path: ./bin/discovery_darwin_amd64
+        asset_name: discovery_darwin_amd64
         asset_content_type: application/octet-stream

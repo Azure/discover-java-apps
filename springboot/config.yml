@@ -1,0 +1,96 @@
+server:
+  connect:
+    parallel: true
+    timeoutSeconds: 30
+pattern:
+  app:
+    - "application\\.ya?ml"
+    - "application-\\w+\\.ya?ml"
+    - "application\\.properties"
+    - "application-\\w+\\.properties"
+  logging:
+    file_patterns:
+      - "log4j\\.xml"
+      - "log4j-\\w+\\.xml"
+      - "log4j2\\.xml"
+      - "log4j2-\\w+\\.xml"
+      - "log4j2\\.ya?ml"
+      - "log4j2-\\w+\\.ya?ml"
+      - "log4j2\\.jso?n"
+      - "log4j2-\\w+\\.jso?n"
+      - "log4j\\.properties"
+      - "log4j-\\w+\\.properties"
+      - "log4j2\\.properties"
+      - "log4j2-\\w+\\.properties"
+      - "logback\\.xml"
+      - "logback-\\w+\\.xml"
+    console_output:
+      patterns:
+        - (?i)(appender.*=.*ConsoleAppender|appender.*\.type\s*=\s*Console)
+        - (?i)(<appender)([\s\S])*(ConsoleAppender|type\s*=\s*"console"|</console>)([\s\S])*(</appender)
+      yamlpath:
+        - $[*]["appenders","AppEnders"][?(@.console || @.Console || @.appender[?(@.type=~/(?i)console/)])]
+  cert:
+    - ".der"
+    - ".cer"
+    - ".pfx"
+    - ".p12"
+    - ".pem"
+    - ".pub"
+    - ".key"
+    - ".jks"
+  static:
+    extension:
+      - ".js"
+      - ".css"
+      - ".html"
+      - ".htm"
+      - ".gif"
+      - ".png"
+      - ".jpg"
+      - ".jpeg"
+    folder:
+      - "/META-INF/resources/"
+      - "/static/"
+      - "/public/"
+env:
+  denylist:
+    - "PWD"
+    - "HOME"
+    - "SHELL"
+    - "LOGNAME"
+    - "UID"
+    - "HOSTNAME"
+    - "MAIL"
+    - "EDITOR"
+    - "TEMP"
+    - "LS_COLORS"
+    - "USER"
+    - "TERM"
+    - "LANG"
+    - "PATH"
+    - "SHLVL"
+    - "SSH_TTY"
+    - "SSH_CONNECTION"
+    - "SSH_CLIENT"
+    - "XDG_SESSION_TYPE"
+    - "XDG_RUNTIME_DIR"
+    - "XDG_SESSION_CLASS"
+    - "XDG_SESSION_ID"
+    - "SELINUX_USE_CURRENT_RANGE"
+    - "SELINUX_ROLE_REQUESTED"
+    - "SELINUX_LEVEL_REQUESTED"
+    - "G_BROKEN_FILENAMES"
+    - "QTDIR"
+    - "QTLIB"
+    - "QTINC"
+    - "CVS_RSH"
+    - "HISTSIZE"
+    - "HISTCONTROL"
+    - "LESSOPEN"
+    - "_"
+    - "MOTD_SHOWN"
+    - "SGX_AESM_ADDR"
+    - "LESSCLOSE"
+    - "XDG_DATA_DIRS"
+    - "DBUS_SESSION_BUS_ADDRESS"
