@@ -1,13 +1,13 @@
 ![Coverage](https://github.com/Azure/discover-java-apps/blob/badge/badge.svg?branch=badge)
 
-# Project
-A script to discover java apps from your linux system
+# What this project for?
+A script to discover java apps from your linux system by following steps:
 1. SSH login to your linux system 
-2. Find the java process for spring application 
-3. Collect the spring apps runtime env and config 
-4. Print the info to console in json or csv format
+2. Find the java process for java application 
+3. Collect information of runtime env, configuration, jar/war/ear files 
+4. Print the info to console (or specified file) in json or csv format
 
-## Run it from your local machine
+## Download and run
 Download the binary files from [releases](https://github.com/Azure/azure-discovery-java-apps/releases)
 - For Linux:
 ```bash
@@ -27,10 +27,13 @@ discovery-darwin-arm64 -server 'servername' -port 'port' -username 'userwithsudo
 ```
 <p>You can find the running log from discovery.log in the same folder
 
-## Prerequisites
+## Contributing
+We appreciate your help on the java app discovery. Before your contributing, please be noted:
+1. Ensure you have Golang `1.20+` installed before starting try from source code
+2. Run Makefile in `wsl` if you're Windows user
+3. `70%` test coverage is mandatory in the PR build, so when you do PR, remember to include test cases as well.
+4. Recommend to use [Ginkgo](https://onsi.github.io/ginkgo/) for BDD style test case
 
-1. __Ensure you have Golang 1.20+ installed before starting try from source code__
-2. __Run make in wsl if you're Windows user__
 
 ## Build
 
@@ -43,11 +46,12 @@ make build
 make test
 ```
 
-## Development
-1. 70% test coverage is mandatory in the PR build, so when you do PR, include test cases as well.
-2. Recommend to use [Ginkgo](https://onsi.github.io/ginkgo/) for BDD style test case
+## Check code coverage
+```bash
+go tool cover -func=coverage.out | grep total: | grep -Eo '[0-9]+\.[0-9]+'
+```
 
-## Output
+## Sample output
 The default output will be a json like 
 ```json
 [
@@ -87,12 +91,17 @@ The default output will be a json like
 Only support to discover the spring apps from Linux VM
 
 ## Roadmap
-1. More application types
-   - Tomcat Apps support
-   - WebLogic Apps
-   - WebSphere Apps
-   - JBoss EAP Apps
-2. More Source system
+1. More java app runtimes are coming. 
+
+| Type | Readiness | Ready Date |
+| -- | -- | -- |
+| SpringBoot | Ready | 2023-04 |
+| Tomcat App | Planned | - |
+| WebLogic App | Planned | - |
+| WebSphere App | Planned | - |
+| JBoss EAP App | Planned | - |
+
+2. More source operating systems are coming.
 
 ## Support
 Report the issue to https://github.com/Azure/azure-discovery-java-apps/issues
