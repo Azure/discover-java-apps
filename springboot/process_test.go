@@ -153,55 +153,55 @@ var _ = Describe("Linux java process", func() {
 			})
 
 			It("should return the jvm heap memory size based on the percentage of total memory", func() {
-				totalMemoryInKb := float64(1000000)
-				m.EXPECT().RunCmd(LinuxGetTotalMemoryCmd).Return(fmt.Sprintf("%f\n", totalMemoryInKb), nil)
-				Expect(process.GetJvmMemoryInMb()).Should(Equal(math.Round(totalMemoryInKb*percentage/KiB) / 100))
+				totalMemoryInKb := int64(1000000)
+				m.EXPECT().RunCmd(LinuxGetTotalMemoryCmd).Return(fmt.Sprintf("%v\n", totalMemoryInKb), nil)
+				Expect(process.GetJvmMemory()).Should(Equal(int64(math.Round(float64(totalMemoryInKb*KiB)*percentage) / 100)))
 			})
 		})
 
 		When("Set -Xmx and -XX:MaxRAMPercentage in jvm options", func() {
-			var size float64
+			var size int64
 			BeforeEach(func() {
 				size = 128
 				process.options = []string{
 					fmt.Sprintf("-XX:MaxRAMPercentage=%f", 60.0),
-					fmt.Sprintf("-Xmx%fm", size),
+					fmt.Sprintf("-Xmx%vm", size),
 					jar,
 				}
 			})
 
 			It("should return the jvm heap memory size in -Xmx which has higher priority", func() {
 				m.EXPECT().RunCmd(LinuxGetTotalMemoryCmd).MaxTimes(0)
-				Expect(process.GetJvmMemoryInMb()).Should(Equal(size))
+				Expect(process.GetJvmMemory()).Should(Equal(size * MiB))
 			})
 		})
 
 		When("Set -Xmx in invalid format", func() {
-			var size float64
+			var size int64
 			BeforeEach(func() {
 				size = 128
 				process.options = []string{
-					fmt.Sprintf("-Xmx%fx", size),
+					fmt.Sprintf("-Xmx%vx", size),
 					jar,
 				}
 			})
 
 			It("should return error", func() {
-				Expect(process.GetJvmMemoryInMb()).Error().Should(HaveOccurred())
+				Expect(process.GetJvmMemory()).Error().Should(HaveOccurred())
 			})
 		})
 
 		When("nothing set in jvm options", func() {
-			var size float64
+			var size int64
 			BeforeEach(func() {
-				size = float64(100000000)
+				size = int64(100000000)
 				process.options = []string{}
 			})
 
 			It("should get default max jvm heap memory from vm", func() {
-				m.EXPECT().RunCmd(GetDefaultMaxHeap(JavaCmd)).Return(fmt.Sprintf("%f\n", size), nil)
+				m.EXPECT().RunCmd(GetDefaultMaxHeap(JavaCmd)).Return(fmt.Sprintf("%v\n", size), nil)
 				m.EXPECT().RunCmd(LinuxGetTotalMemoryCmd).MaxTimes(0)
-				Expect(process.GetJvmMemoryInMb()).Should(Equal(math.Round(size*100/MiB) / 100)) // keep 2 digits precision
+				Expect(process.GetJvmMemory()).Should(Equal(size)) // keep 2 digits precision
 			})
 		})
 	})
@@ -231,7 +231,7 @@ var _ = Describe("Linux java process", func() {
 		When("got success output", func() {
 			It("should return memory size in kb", func() {
 				m.EXPECT().RunCmd(GetDefaultMaxHeap(JavaCmd)).Return(DefaultMaxHeapSize, nil)
-				Expect(process.getDefaultMaxHeapSize()).Should(Equal(float64(987654321)))
+				Expect(process.getDefaultMaxHeapSize()).Should(Equal(int64(987654321)))
 			})
 		})
 		When("got empty output", func() {

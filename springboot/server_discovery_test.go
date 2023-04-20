@@ -86,9 +86,9 @@ var _ = Describe("Linux java process", func() {
 
 	Context("Get os total memory", func() {
 		When("got success output", func() {
-			It("should return memory size in kb", func() {
+			It("should return memory size in bytes", func() {
 				m.EXPECT().RunCmd(LinuxGetTotalMemoryCmd).Return(TotalMemory, nil)
-				Expect(executor.GetTotalMemory()).Should(Equal(float64(987654321)))
+				Expect(executor.GetTotalMemory()).Should(Equal(int64(987654321 * KiB)))
 			})
 		})
 		When("got empty output", func() {

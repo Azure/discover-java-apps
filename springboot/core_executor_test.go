@@ -113,11 +113,18 @@ var _ = Describe("Test springboot discovery executor", func() {
 			setupServerConnectorMock(accessibleConnector)
 
 			connection := ServerConnectionInfo{
-				Server:     fqdn,
-				Port:       1022,
-				AltAddress: []string{altServerNotAccessible, altServerAccessible},
+				Server: fqdn,
+				Port:   1022,
 			}
-			apps, err := executor.Discover(context.Background(), connection)
+			accessible := ServerConnectionInfo{
+				Server: altServerAccessible,
+				Port:   1022,
+			}
+			nonaccessible := ServerConnectionInfo{
+				Server: altServerNotAccessible,
+				Port:   1022,
+			}
+			apps, err := executor.Discover(context.Background(), connection, accessible, nonaccessible)
 
 			Expect(apps).Should(Not(BeEmpty()))
 			Expect(err).Should(BeNil())

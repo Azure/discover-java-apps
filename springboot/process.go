@@ -143,7 +143,11 @@ func (p *javaProcess) GetJavaCmd() (string, error) {
 func (p *javaProcess) GetJvmMemory() (int64, error) {
 	for _, option := range p.options {
 		if strings.HasPrefix(option, JvmOptionXmx) {
-			return units.RAMInBytes(option[len(JvmOptionXmx):])
+			bs, err := units.RAMInBytes(option[len(JvmOptionXmx):])
+			if err != nil {
+				return 0, errors.Wrap(err, fmt.Sprintf("failed to parse -Xmx from pid %v", p.pid))
+			}
+			return bs, nil
 		}
 	}
 
@@ -208,12 +212,12 @@ func (p *javaProcess) getDefaultMaxHeapSize() (int64, error) {
 		return 0, errors.New("failed to get default MaxHeapSize, output is empty")
 	}
 
-	size, err := strconv.ParseInt(CleanOutput(output), 10, 64)
+	size, err := strconv.ParseFloat(CleanOutput(output), 64)
 	if err != nil {
 		return 0, errors.Wrap(err, fmt.Sprintf("failed to parse default MaxHeapSize, output: %s", output))
 	}
 
-	return size, nil
+	return int64(size), nil
 }
 
 func (p *javaProcess) String() string {

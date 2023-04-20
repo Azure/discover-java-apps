@@ -140,12 +140,12 @@ func (l *linuxServerDiscovery) GetTotalMemory() (int64, error) {
 		return 0, errors.New("failed to get total memory, output is empty")
 	}
 
-	size, err := strconv.ParseInt(CleanOutput(output), 10, 64)
+	size, err := strconv.ParseFloat(CleanOutput(output), 64)
 	if err != nil {
 		return 0, errors.Wrap(err, fmt.Sprintf("unable to parse total memory, output is %s", output))
 	}
 
-	return size * KiB, nil
+	return int64(size * KiB), nil
 }
 
 func (l *linuxServerDiscovery) getChecksum(absolutePath string) (string, error) {

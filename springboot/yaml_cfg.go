@@ -1,11 +1,5 @@
 package springboot
 
-// ConsoleOutput
-type ConsoleOutput struct {
-	Yamlpath []string `yaml:"yamlpath"`
-	Patterns []string `yaml:"patterns"`
-}
-
 // Static
 type Static struct {
 	Extension []string `yaml:"extension"`
@@ -31,8 +25,8 @@ type Server struct {
 
 // Connect
 type Connect struct {
-	Parallel       bool `yaml:"parallel"`
 	TimeoutSeconds int  `yaml:"timeoutSeconds"`
+	Parallel       bool `yaml:"parallel"`
 }
 
 // Pattern
@@ -47,5 +41,11 @@ type Pattern struct {
 type Logging struct {
 	FilePatterns  []string      `yaml:"file_patterns"`
 	ConsoleOutput ConsoleOutput `yaml:"console_output"`
+}
+
+// ConsoleOutput
+type ConsoleOutput struct {
+	Patterns []string `yaml:"patterns"`
+	Yamlpath []string `yaml:"yamlpath"`
 }
 

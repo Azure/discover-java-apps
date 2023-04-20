@@ -39,18 +39,23 @@ func (m *MockDiscoveryExecutor) EXPECT() *MockDiscoveryExecutorMockRecorder {
 }
 
 // Discover mocks base method.
-func (m *MockDiscoveryExecutor) Discover(ctx context.Context, server ServerConnectionInfo) ([]*SpringBootApp, error) {
+func (m *MockDiscoveryExecutor) Discover(ctx context.Context, server ServerConnectionInfo, alternativeConnectionInfos ...ServerConnectionInfo) ([]*SpringBootApp, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Discover", ctx, server)
+	varargs := []interface{}{ctx, server}
+	for _, a := range alternativeConnectionInfos {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "Discover", varargs...)
 	ret0, _ := ret[0].([]*SpringBootApp)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Discover indicates an expected call of Discover.
-func (mr *MockDiscoveryExecutorMockRecorder) Discover(ctx, server interface{}) *gomock.Call {
+func (mr *MockDiscoveryExecutorMockRecorder) Discover(ctx, server interface{}, alternativeConnectionInfos ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Discover", reflect.TypeOf((*MockDiscoveryExecutor)(nil).Discover), ctx, server)
+	varargs := append([]interface{}{ctx, server}, alternativeConnectionInfos...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Discover", reflect.TypeOf((*MockDiscoveryExecutor)(nil).Discover), varargs...)
 }
 
 // MockCredentialProvider is a mock of CredentialProvider interface.
@@ -158,19 +163,19 @@ func (mr *MockServerDiscoveryMockRecorder) GetOsVersion() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetOsVersion", reflect.TypeOf((*MockServerDiscovery)(nil).GetOsVersion))
 }
 
-// GetTotalMemoryInKB mocks base method.
-func (m *MockServerDiscovery) GetTotalMemoryInKB() (float64, error) {
+// GetTotalMemory mocks base method.
+func (m *MockServerDiscovery) GetTotalMemory() (int64, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetTotalMemory")
-	ret0, _ := ret[0].(float64)
+	ret0, _ := ret[0].(int64)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetTotalMemoryInKB indicates an expected call of GetTotalMemoryInKB.
-func (mr *MockServerDiscoveryMockRecorder) GetTotalMemoryInKB() *gomock.Call {
+// GetTotalMemory indicates an expected call of GetTotalMemory.
+func (mr *MockServerDiscoveryMockRecorder) GetTotalMemory() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTotalMemory", reflect.TypeOf((*MockServerDiscovery)(nil).GetTotalMemoryInKB))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTotalMemory", reflect.TypeOf((*MockServerDiscovery)(nil).GetTotalMemory))
 }
 
 // Prepare mocks base method.
@@ -608,19 +613,19 @@ func (mr *MockJavaProcessMockRecorder) GetJavaCmd() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetJavaCmd", reflect.TypeOf((*MockJavaProcess)(nil).GetJavaCmd))
 }
 
-// GetJvmMemoryInMb mocks base method.
-func (m *MockJavaProcess) GetJvmMemoryInMb() (float64, error) {
+// GetJvmMemory mocks base method.
+func (m *MockJavaProcess) GetJvmMemory() (int64, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetJvmMemoryInMb")
-	ret0, _ := ret[0].(float64)
+	ret := m.ctrl.Call(m, "GetJvmMemory")
+	ret0, _ := ret[0].(int64)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetJvmMemoryInMb indicates an expected call of GetJvmMemoryInMb.
-func (mr *MockJavaProcessMockRecorder) GetJvmMemoryInMb() *gomock.Call {
+// GetJvmMemory indicates an expected call of GetJvmMemory.
+func (mr *MockJavaProcessMockRecorder) GetJvmMemory() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetJvmMemoryInMb", reflect.TypeOf((*MockJavaProcess)(nil).GetJvmMemoryInMb))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetJvmMemory", reflect.TypeOf((*MockJavaProcess)(nil).GetJvmMemory))
 }
 
 // GetJvmOptions mocks base method.
