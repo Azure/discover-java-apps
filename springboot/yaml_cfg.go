@@ -2,8 +2,8 @@ package springboot
 
 // ConsoleOutput
 type ConsoleOutput struct {
-	Patterns []string `yaml:"patterns"`
 	Yamlpath []string `yaml:"yamlpath"`
+	Patterns []string `yaml:"patterns"`
 }
 
 // Static

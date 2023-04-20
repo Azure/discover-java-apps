@@ -147,7 +147,7 @@ var _ = Describe("Test springboot discovery executor", func() {
 func MatchApp(app string, jdkVersion string, springBootVersion string, jarLocation string, instanceCount int) types.GomegaMatcher {
 	return PointTo(MatchFields(IgnoreExtras, Fields{
 		"AppName": Equal(app),
-		"AppType": Equal(string(SpringBootFatJar)),
+		"AppType": Equal(SpringBootFatJar),
 		"Artifact": PointTo(MatchFields(IgnoreExtras, Fields{
 			"Group":   Not(BeEmpty()),
 			"Name":    Not(BeEmpty()),
