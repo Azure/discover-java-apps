@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	. "github.com/Azure/discover-java-apps/mock"
 	"os"
 	"path/filepath"
 	"strings"

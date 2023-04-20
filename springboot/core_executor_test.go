@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"github.com/Azure/discover-java-apps/mock"
 	"github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -66,7 +65,7 @@ var _ = Describe("Test springboot discovery executor", func() {
 
 			Expect(apps).Should(
 				ContainElement(
-					MatchApp(mock.SpringBoot1xAppName, mock.Jdk7Version, mock.SpringBoot1xVersion, mock.SpringBoot1xJarFileLocation, 1),
+					MatchApp(SpringBoot1xAppName, Jdk7Version, SpringBoot1xVersion, SpringBoot1xJarFileLocation, 1),
 				),
 			)
 			Expect(err).Should(BeNil())
@@ -193,37 +192,37 @@ func MatchApp(app string, jdkVersion string, springBootVersion string, jarLocati
 
 func setupServerConnectorMock(s *MockServerConnector) {
 	s.EXPECT().Close().MinTimes(1)
-	s.EXPECT().RunCmd(gomock.Eq(GetLocateJarCmd(mock.SpringBoot1xProcessId, mock.SpringBoot1xJarFile))).Return(mock.SpringBoot1xJarFileLocation, nil).AnyTimes()
-	s.EXPECT().RunCmd(gomock.Eq(GetEnvCmd(mock.SpringBoot1xProcessId))).Return(mock.TestEnv, nil).AnyTimes()
-	s.EXPECT().RunCmd(gomock.Eq(GetPortsCmd(mock.SpringBoot1xProcessId))).Return(mock.Ports, nil).AnyTimes()
-	s.EXPECT().RunCmd(gomock.Eq(GetProcessScanCmd())).Return(mock.SpringBoot1xProcess, nil).AnyTimes()
+	s.EXPECT().RunCmd(gomock.Eq(GetLocateJarCmd(SpringBoot1xProcessId, SpringBoot1xJarFile))).Return(SpringBoot1xJarFileLocation, nil).AnyTimes()
+	s.EXPECT().RunCmd(gomock.Eq(GetEnvCmd(SpringBoot1xProcessId))).Return(TestEnv, nil).AnyTimes()
+	s.EXPECT().RunCmd(gomock.Eq(GetPortsCmd(SpringBoot1xProcessId))).Return(Ports, nil).AnyTimes()
+	s.EXPECT().RunCmd(gomock.Eq(GetProcessScanCmd())).Return(SpringBoot1xProcess, nil).AnyTimes()
 
-	s.EXPECT().RunCmd(CmdMatcher(LinuxGetTotalMemoryCmd)).Return(mock.TotalMemory, nil).AnyTimes()
-	s.EXPECT().RunCmd(CmdMatcher(LinuxGetJdkVersionCmd)).Return(mock.RuntimeJdkVersion, nil).AnyTimes()
-	s.EXPECT().RunCmd(CmdMatcher(LinuxGetDefaultMaxHeapCmd)).Return(mock.DefaultMaxHeapSize, nil).AnyTimes()
+	s.EXPECT().RunCmd(CmdMatcher(LinuxGetTotalMemoryCmd)).Return(TotalMemory, nil).AnyTimes()
+	s.EXPECT().RunCmd(CmdMatcher(LinuxGetJdkVersionCmd)).Return(RuntimeJdkVersion, nil).AnyTimes()
+	s.EXPECT().RunCmd(CmdMatcher(LinuxGetDefaultMaxHeapCmd)).Return(DefaultMaxHeapSize, nil).AnyTimes()
 	s.EXPECT().RunCmd(CmdMatcher(LinuxSha256Cmd)).Return("", nil).AnyTimes()
 	s.EXPECT().RunCmd(CmdMatcher(GetOsName())).Return(osName, nil).AnyTimes()
 	s.EXPECT().RunCmd(CmdMatcher(GetOsVersion())).Return(osVersion, nil).AnyTimes()
-	s.EXPECT().FQDN().Return(mock.Host).AnyTimes()
+	s.EXPECT().FQDN().Return(Host).AnyTimes()
 
-	b, err := os.ReadFile(filepath.Join("..", "mock", mock.SpringBoot2xJarFile))
+	b, err := os.ReadFile(filepath.Join("..", "mock", SpringBoot2xJarFile))
 	if err != nil {
 		panic(err)
 	}
-	info, _ := os.Stat(filepath.Join("..", "mock", mock.SpringBoot2xJarFile))
-	s.EXPECT().Read(gomock.Eq(mock.SpringBoot2xJarFileLocation)).Return(bytes.NewReader(b), info, nil).AnyTimes()
+	info, _ := os.Stat(filepath.Join("..", "mock", SpringBoot2xJarFile))
+	s.EXPECT().Read(gomock.Eq(SpringBoot2xJarFileLocation)).Return(bytes.NewReader(b), info, nil).AnyTimes()
 
-	b, err = os.ReadFile(filepath.Join("..", "mock", mock.SpringBoot1xJarFile))
+	b, err = os.ReadFile(filepath.Join("..", "mock", SpringBoot1xJarFile))
 	if err != nil {
 		panic(err)
 	}
-	info, _ = os.Stat(filepath.Join("..", "mock", mock.SpringBoot1xJarFile))
-	s.EXPECT().Read(gomock.Eq(mock.SpringBoot1xJarFileLocation)).Return(bytes.NewReader(b), info, nil).AnyTimes()
+	info, _ = os.Stat(filepath.Join("..", "mock", SpringBoot1xJarFile))
+	s.EXPECT().Read(gomock.Eq(SpringBoot1xJarFileLocation)).Return(bytes.NewReader(b), info, nil).AnyTimes()
 
-	b, err = os.ReadFile(filepath.Join("..", "mock", mock.ExecutableJarFile))
+	b, err = os.ReadFile(filepath.Join("..", "mock", ExecutableJarFile))
 	if err != nil {
 		panic(err)
 	}
-	info, _ = os.Stat(filepath.Join("..", "mock", mock.ExecutableJarFile))
-	s.EXPECT().Read(gomock.Eq(mock.ExecutableJarFileLocation)).Return(bytes.NewReader(b), info, nil).AnyTimes()
+	info, _ = os.Stat(filepath.Join("..", "mock", ExecutableJarFile))
+	s.EXPECT().Read(gomock.Eq(ExecutableJarFileLocation)).Return(bytes.NewReader(b), info, nil).AnyTimes()
 }

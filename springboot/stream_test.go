@@ -115,24 +115,17 @@ var _ = Describe("Stream API test", func() {
 
 	Context("test flat map", func() {
 		It("should flat map to slice", func() {
-			s := FromSlice(context.Background(), []struct {
-				list []int
-			}{
-				{
-					list: []int{1, 2, 3},
-				},
-				{
-					list: []int{3, 4, 5},
-				},
-				{
-					list: []int{5, 6, 7},
-				},
+			s := FromSlice(context.Background(), [][]int{
+				{1, 2, 3},
+				{3, 4, 5},
+				{5, 6, 7},
 			})
 
-			result, err := ToSlice[int](s.FlatMap(func(ctx context.Context, i any) Stream {
-				in := i.(struct{ list []int })
-				return FromSlice[int](ctx, in.list)
-			}))
+			result, err := ToSlice[int](s.FlatMap(
+				func(ctx context.Context, i []int) Stream {
+					return FromSlice[int](ctx, i)
+				}),
+			)
 
 			Expect(result).Should(ConsistOf(1, 2, 3, 3, 4, 5, 5, 6, 7))
 			Expect(err).Should(BeNil())
@@ -274,8 +267,8 @@ var _ = Describe("Stream API test", func() {
 
 				Expect(m).Should(And(
 					HaveKeyWithValue(1, 1),
-					HaveKeyWithValue(3, 3),
-					HaveKeyWithValue(6, 3),
+					HaveKeyWithValue(3, 4),
+					HaveKeyWithValue(6, 4),
 					HaveKeyWithValue(7, 1),
 				))
 				Expect(err).Should(Not(BeNil()))
@@ -292,6 +285,39 @@ var _ = Describe("Stream API test", func() {
 				}))
 
 				Expect(err).Should(Not(BeNil()))
+			})
+		})
+
+		When("ensure it's parallel", func() {
+			It("should succeeded", func() {
+				gid := getGID()
+
+				By(fmt.Sprintf("running test case in gid %v", gid))
+				s := FromSlice(context.Background(), [][]string{
+					{"1", "2", "3"},
+					{"3", "4", "5"},
+					{"5", "6", "7"},
+				})
+				s = s.Parallel(3)
+				s.FlatMap(func(t []string) Stream {
+					return FromSlice[string](context.Background(), t)
+				}).Map(
+					func(s string) (int64, error) {
+						Expect(getGID()).Should(Not(Equal(gid)))
+						return strconv.ParseInt(s, 10, 32)
+					},
+				).Distinct().Filter(func(t any) bool {
+					Expect(getGID()).Should(Not(Equal(gid)))
+					return t.(int64) > 3
+				}).Take(5).Peek(func(t int64) {
+					Expect(getGID()).Should(Not(Equal(gid)))
+					fmt.Println(t)
+				}).Sorted(func(a, b int64) int {
+					Expect(getGID()).Should(Equal(gid)) // for a parallel stream, the sorting is in main thread
+					return int(a - b)
+				}).ForEach(func(i int64) {
+					Expect(getGID()).Should(Equal(gid)) // after sorting in main thread, forEach is also in main thread
+				})
 			})
 		})
 	})

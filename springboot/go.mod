@@ -2,10 +2,7 @@ module github.com/Azure/discover-java-apps/springboot
 
 go 1.20
 
-replace github.com/Azure/discover-java-apps/mock => ../mock
-
 require (
-	github.com/Azure/discover-java-apps/mock v0.0.0-00010101000000-000000000000
 	github.com/creekorful/mvnparser v1.5.0
 	github.com/docker/go-units v0.5.0
 	github.com/go-logr/logr v1.2.4

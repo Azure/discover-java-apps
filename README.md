@@ -29,6 +29,7 @@ discovery-darwin-arm64 -server 'servername' -port 'port' -username 'userwithsudo
 ## Prerequisites
 
 __Ensure you have Golang 1.20+ installed before starting try from source code__
+__Run make in wsl if you're Windows user__
 
 ## Build
 
@@ -76,6 +77,10 @@ The default output will be a json like
   }
 ]
 ```
+
+## Pull Request
+70% percent test coverage is mandatory requirement when PR  
+
 ## Limitation
 1. Only support to discover the spring apps from Linux VM
 
