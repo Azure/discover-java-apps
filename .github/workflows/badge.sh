@@ -1,5 +1,7 @@
 #!/bin/bash
 
+git config --local user.email "action@github.com"
+git config --local user.name "GitHub Action"
 git fetch
 git checkout badge -f
 git pull
