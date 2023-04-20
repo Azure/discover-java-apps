@@ -14,5 +14,7 @@ if (( $(echo "$COVERAGE <= 50" | bc -l) )) ; then
 fi
 curl "https://img.shields.io/badge/coverage-$COVERAGE%25-$COLOR" > badge.svg
 git add .
+git config --local user.email "action@github.com"
+git config --local user.name "GitHub Action"
 git commit -m "added badge"
 git push
