@@ -1,0 +1,3607 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
+<coverage line-rate="0.7662566" branch-rate="0" lines-covered="872" lines-valid="1138" branches-covered="0" branches-valid="0" complexity="0" version="" timestamp="1681992968053">
+	<packages>
+		<package name="github.com/Azure/discover-java-apps/springboot" line-rate="0.7662566" branch-rate="0" complexity="0" line-count="1138" line-hits="872">
+			<classes>
+				<class name="AppTypes" filename="springboot/contract.go" line-rate="0" branch-rate="0" complexity="0" line-count="3" line-hits="0">
+					<methods>
+						<method name="Contains" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="30" hits="0"></line>
+								<line number="31" hits="0"></line>
+								<line number="33" hits="0"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="30" hits="0"></line>
+						<line number="31" hits="0"></line>
+						<line number="33" hits="0"></line>
+					</lines>
+				</class>
+				<class name="-" filename="springboot/jarfile_walker.go" line-rate="0.85714287" branch-rate="0" complexity="0" line-count="35" line-hits="30">
+					<methods>
+						<method name="@21:37" signature="" line-rate="0.8333333" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="22" hits="522"></line>
+								<line number="23" hits="8"></line>
+								<line number="24" hits="8"></line>
+								<line number="25" hits="0"></line>
+								<line number="27" hits="8"></line>
+								<line number="29" hits="522"></line>
+							</lines>
+						</method>
+						<method name="@32:41" signature="" line-rate="0.8333333" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="33" hits="522"></line>
+								<line number="34" hits="10"></line>
+								<line number="35" hits="10"></line>
+								<line number="36" hits="0"></line>
+								<line number="38" hits="10"></line>
+								<line number="40" hits="522"></line>
+							</lines>
+						</method>
+						<method name="@43:32" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="44" hits="522"></line>
+								<line number="45" hits="4"></line>
+								<line number="47" hits="522"></line>
+							</lines>
+						</method>
+						<method name="@50:36" signature="" line-rate="0.8333333" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="51" hits="522"></line>
+								<line number="52" hits="5"></line>
+								<line number="53" hits="5"></line>
+								<line number="54" hits="0"></line>
+								<line number="56" hits="5"></line>
+								<line number="58" hits="522"></line>
+							</lines>
+						</method>
+						<method name="@61:38" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="62" hits="522"></line>
+								<line number="63" hits="218"></line>
+								<line number="65" hits="522"></line>
+							</lines>
+						</method>
+						<method name="@68:41" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="69" hits="522"></line>
+								<line number="70" hits="24"></line>
+								<line number="72" hits="522"></line>
+							</lines>
+						</method>
+						<method name="@75:35" signature="" line-rate="0.75" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="76" hits="522"></line>
+								<line number="77" hits="5"></line>
+								<line number="78" hits="5"></line>
+								<line number="79" hits="0"></line>
+								<line number="81" hits="5"></line>
+								<line number="82" hits="5"></line>
+								<line number="83" hits="0"></line>
+								<line number="86" hits="522"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="22" hits="522"></line>
+						<line number="23" hits="8"></line>
+						<line number="24" hits="8"></line>
+						<line number="25" hits="0"></line>
+						<line number="27" hits="8"></line>
+						<line number="29" hits="522"></line>
+						<line number="33" hits="522"></line>
+						<line number="34" hits="10"></line>
+						<line number="35" hits="10"></line>
+						<line number="36" hits="0"></line>
+						<line number="38" hits="10"></line>
+						<line number="40" hits="522"></line>
+						<line number="44" hits="522"></line>
+						<line number="45" hits="4"></line>
+						<line number="47" hits="522"></line>
+						<line number="51" hits="522"></line>
+						<line number="52" hits="5"></line>
+						<line number="53" hits="5"></line>
+						<line number="54" hits="0"></line>
+						<line number="56" hits="5"></line>
+						<line number="58" hits="522"></line>
+						<line number="62" hits="522"></line>
+						<line number="63" hits="218"></line>
+						<line number="65" hits="522"></line>
+						<line number="69" hits="522"></line>
+						<line number="70" hits="24"></line>
+						<line number="72" hits="522"></line>
+						<line number="76" hits="522"></line>
+						<line number="77" hits="5"></line>
+						<line number="78" hits="5"></line>
+						<line number="79" hits="0"></line>
+						<line number="81" hits="5"></line>
+						<line number="82" hits="5"></line>
+						<line number="83" hits="0"></line>
+						<line number="86" hits="522"></line>
+					</lines>
+				</class>
+				<class name="-" filename="springboot/patterns.go" line-rate="0.9411765" branch-rate="0" complexity="0" line-count="17" line-hits="16">
+					<methods>
+						<method name="newPatterns" signature="" line-rate="0.9411765" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="19" hits="1"></line>
+								<line number="20" hits="1"></line>
+								<line number="21" hits="1"></line>
+								<line number="22" hits="1"></line>
+								<line number="24" hits="1"></line>
+								<line number="25" hits="4"></line>
+								<line number="28" hits="1"></line>
+								<line number="29" hits="14"></line>
+								<line number="32" hits="1"></line>
+								<line number="33" hits="2"></line>
+								<line number="34" hits="2"></line>
+								<line number="37" hits="1"></line>
+								<line number="38" hits="1"></line>
+								<line number="39" hits="1"></line>
+								<line number="40" hits="0"></line>
+								<line number="42" hits="1"></line>
+								<line number="45" hits="1"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="19" hits="1"></line>
+						<line number="20" hits="1"></line>
+						<line number="21" hits="1"></line>
+						<line number="22" hits="1"></line>
+						<line number="24" hits="1"></line>
+						<line number="25" hits="4"></line>
+						<line number="28" hits="1"></line>
+						<line number="29" hits="14"></line>
+						<line number="32" hits="1"></line>
+						<line number="33" hits="2"></line>
+						<line number="34" hits="2"></line>
+						<line number="37" hits="1"></line>
+						<line number="38" hits="1"></line>
+						<line number="39" hits="1"></line>
+						<line number="40" hits="0"></line>
+						<line number="42" hits="1"></line>
+						<line number="45" hits="1"></line>
+					</lines>
+				</class>
+				<class name="javaProcess" filename="springboot/process.go" line-rate="0.89361703" branch-rate="0" complexity="0" line-count="94" line-hits="84">
+					<methods>
+						<method name="LocateJarFile" signature="" line-rate="0.9375" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="33" hits="6"></line>
+								<line number="34" hits="6"></line>
+								<line number="35" hits="6"></line>
+								<line number="36" hits="85"></line>
+								<line number="37" hits="5"></line>
+								<line number="41" hits="6"></line>
+								<line number="42" hits="1"></line>
+								<line number="44" hits="5"></line>
+								<line number="46" hits="2"></line>
+								<line number="47" hits="2"></line>
+								<line number="48" hits="1"></line>
+								<line number="50" hits="1"></line>
+								<line number="51" hits="0"></line>
+								<line number="53" hits="1"></line>
+								<line number="55" hits="3"></line>
+								<line number="58" hits="4"></line>
+							</lines>
+						</method>
+						<method name="GetRuntimeJdkVersion" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="62" hits="4"></line>
+								<line number="63" hits="4"></line>
+								<line number="64" hits="1"></line>
+								<line number="67" hits="3"></line>
+							</lines>
+						</method>
+						<method name="GetJvmOptions" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="71" hits="24"></line>
+								<line number="72" hits="24"></line>
+								<line number="73" hits="24"></line>
+								<line number="74" hits="174"></line>
+								<line number="75" hits="9"></line>
+								<line number="76" hits="9"></line>
+								<line number="78" hits="165"></line>
+								<line number="80" hits="9"></line>
+								<line number="82" hits="156"></line>
+								<line number="85" hits="24"></line>
+							</lines>
+						</method>
+						<method name="GetEnvironments" signature="" line-rate="0.8947368" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="108" hits="5"></line>
+								<line number="109" hits="5"></line>
+								<line number="110" hits="5"></line>
+								<line number="111" hits="1"></line>
+								<line number="113" hits="4"></line>
+								<line number="114" hits="4"></line>
+								<line number="115" hits="1"></line>
+								<line number="117" hits="3"></line>
+								<line number="118" hits="3"></line>
+								<line number="120" hits="3"></line>
+								<line number="121" hits="66"></line>
+								<line number="122" hits="66"></line>
+								<line number="124" hits="66"></line>
+								<line number="125" hits="66"></line>
+								<line number="126" hits="66"></line>
+								<line number="127" hits="6"></line>
+								<line number="130" hits="0"></line>
+								<line number="133" hits="3"></line>
+								<line number="135" hits="0"></line>
+							</lines>
+						</method>
+						<method name="GetJavaCmd" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="140" hits="2"></line>
+							</lines>
+						</method>
+						<method name="GetJvmMemory" signature="" line-rate="0.84210527" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="144" hits="6"></line>
+								<line number="145" hits="9"></line>
+								<line number="146" hits="4"></line>
+								<line number="147" hits="4"></line>
+								<line number="148" hits="1"></line>
+								<line number="150" hits="3"></line>
+								<line number="157" hits="2"></line>
+								<line number="158" hits="1"></line>
+								<line number="159" hits="1"></line>
+								<line number="160" hits="1"></line>
+								<line number="161" hits="0"></line>
+								<line number="164" hits="1"></line>
+								<line number="165" hits="1"></line>
+								<line number="166" hits="0"></line>
+								<line number="168" hits="1"></line>
+								<line number="172" hits="1"></line>
+								<line number="173" hits="1"></line>
+								<line number="174" hits="0"></line>
+								<line number="176" hits="1"></line>
+							</lines>
+						</method>
+						<method name="Executor" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="180" hits="13"></line>
+							</lines>
+						</method>
+						<method name="GetProcessId" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="184" hits="4"></line>
+							</lines>
+						</method>
+						<method name="GetPorts" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="188" hits="5"></line>
+								<line number="189" hits="5"></line>
+								<line number="190" hits="1"></line>
+								<line number="192" hits="4"></line>
+								<line number="193" hits="4"></line>
+								<line number="194" hits="4"></line>
+								<line number="195" hits="12"></line>
+								<line number="196" hits="12"></line>
+								<line number="197" hits="12"></line>
+								<line number="198" hits="12"></line>
+								<line number="203" hits="4"></line>
+							</lines>
+						</method>
+						<method name="getDefaultMaxHeapSize" signature="" line-rate="0.8888889" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="207" hits="5"></line>
+								<line number="208" hits="5"></line>
+								<line number="209" hits="1"></line>
+								<line number="211" hits="4"></line>
+								<line number="212" hits="0"></line>
+								<line number="215" hits="4"></line>
+								<line number="216" hits="4"></line>
+								<line number="217" hits="2"></line>
+								<line number="220" hits="2"></line>
+							</lines>
+						</method>
+						<method name="String" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="224" hits="0"></line>
+								<line number="225" hits="0"></line>
+								<line number="226" hits="0"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="33" hits="6"></line>
+						<line number="34" hits="6"></line>
+						<line number="35" hits="6"></line>
+						<line number="36" hits="85"></line>
+						<line number="37" hits="5"></line>
+						<line number="41" hits="6"></line>
+						<line number="42" hits="1"></line>
+						<line number="44" hits="5"></line>
+						<line number="46" hits="2"></line>
+						<line number="47" hits="2"></line>
+						<line number="48" hits="1"></line>
+						<line number="50" hits="1"></line>
+						<line number="51" hits="0"></line>
+						<line number="53" hits="1"></line>
+						<line number="55" hits="3"></line>
+						<line number="58" hits="4"></line>
+						<line number="62" hits="4"></line>
+						<line number="63" hits="4"></line>
+						<line number="64" hits="1"></line>
+						<line number="67" hits="3"></line>
+						<line number="71" hits="24"></line>
+						<line number="72" hits="24"></line>
+						<line number="73" hits="24"></line>
+						<line number="74" hits="174"></line>
+						<line number="75" hits="9"></line>
+						<line number="76" hits="9"></line>
+						<line number="78" hits="165"></line>
+						<line number="80" hits="9"></line>
+						<line number="82" hits="156"></line>
+						<line number="85" hits="24"></line>
+						<line number="108" hits="5"></line>
+						<line number="109" hits="5"></line>
+						<line number="110" hits="5"></line>
+						<line number="111" hits="1"></line>
+						<line number="113" hits="4"></line>
+						<line number="114" hits="4"></line>
+						<line number="115" hits="1"></line>
+						<line number="117" hits="3"></line>
+						<line number="118" hits="3"></line>
+						<line number="120" hits="3"></line>
+						<line number="121" hits="66"></line>
+						<line number="122" hits="66"></line>
+						<line number="124" hits="66"></line>
+						<line number="125" hits="66"></line>
+						<line number="126" hits="66"></line>
+						<line number="127" hits="6"></line>
+						<line number="130" hits="0"></line>
+						<line number="133" hits="3"></line>
+						<line number="135" hits="0"></line>
+						<line number="140" hits="2"></line>
+						<line number="144" hits="6"></line>
+						<line number="145" hits="9"></line>
+						<line number="146" hits="4"></line>
+						<line number="147" hits="4"></line>
+						<line number="148" hits="1"></line>
+						<line number="150" hits="3"></line>
+						<line number="157" hits="2"></line>
+						<line number="158" hits="1"></line>
+						<line number="159" hits="1"></line>
+						<line number="160" hits="1"></line>
+						<line number="161" hits="0"></line>
+						<line number="164" hits="1"></line>
+						<line number="165" hits="1"></line>
+						<line number="166" hits="0"></line>
+						<line number="168" hits="1"></line>
+						<line number="172" hits="1"></line>
+						<line number="173" hits="1"></line>
+						<line number="174" hits="0"></line>
+						<line number="176" hits="1"></line>
+						<line number="180" hits="13"></line>
+						<line number="184" hits="4"></line>
+						<line number="188" hits="5"></line>
+						<line number="189" hits="5"></line>
+						<line number="190" hits="1"></line>
+						<line number="192" hits="4"></line>
+						<line number="193" hits="4"></line>
+						<line number="194" hits="4"></line>
+						<line number="195" hits="12"></line>
+						<line number="196" hits="12"></line>
+						<line number="197" hits="12"></line>
+						<line number="198" hits="12"></line>
+						<line number="203" hits="4"></line>
+						<line number="207" hits="5"></line>
+						<line number="208" hits="5"></line>
+						<line number="209" hits="1"></line>
+						<line number="211" hits="4"></line>
+						<line number="212" hits="0"></line>
+						<line number="215" hits="4"></line>
+						<line number="216" hits="4"></line>
+						<line number="217" hits="2"></line>
+						<line number="220" hits="2"></line>
+						<line number="224" hits="0"></line>
+						<line number="225" hits="0"></line>
+						<line number="226" hits="0"></line>
+					</lines>
+				</class>
+				<class name="-" filename="springboot/process.go" line-rate="0.9285714" branch-rate="0" complexity="0" line-count="14" line-hits="13">
+					<methods>
+						<method name="@88:35" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="89" hits="72"></line>
+								<line number="90" hits="3"></line>
+								<line number="95" hits="69"></line>
+								<line number="96" hits="63"></line>
+								<line number="100" hits="6"></line>
+								<line number="101" hits="3"></line>
+								<line number="104" hits="3"></line>
+							</lines>
+						</method>
+						<method name="runWithSudo" signature="" line-rate="0.85714287" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="230" hits="16"></line>
+								<line number="231" hits="16"></line>
+								<line number="232" hits="3"></line>
+								<line number="233" hits="0"></line>
+								<line number="235" hits="3"></line>
+								<line number="236" hits="3"></line>
+								<line number="239" hits="13"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="89" hits="72"></line>
+						<line number="90" hits="3"></line>
+						<line number="95" hits="69"></line>
+						<line number="96" hits="63"></line>
+						<line number="100" hits="6"></line>
+						<line number="101" hits="3"></line>
+						<line number="104" hits="3"></line>
+						<line number="230" hits="16"></line>
+						<line number="231" hits="16"></line>
+						<line number="232" hits="3"></line>
+						<line number="233" hits="0"></line>
+						<line number="235" hits="3"></line>
+						<line number="236" hits="3"></line>
+						<line number="239" hits="13"></line>
+					</lines>
+				</class>
+				<class name="-" filename="springboot/server_discovery.go" line-rate="0.6818182" branch-rate="0" complexity="0" line-count="44" line-hits="30">
+					<methods>
+						<method name="NewLinuxServerDiscovery" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="34" hits="34"></line>
+							</lines>
+						</method>
+						<method name="@96:18" signature="" line-rate="0.88235295" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="97" hits="5"></line>
+								<line number="98" hits="5"></line>
+								<line number="99" hits="5"></line>
+								<line number="100" hits="5"></line>
+								<line number="101" hits="5"></line>
+								<line number="102" hits="1"></line>
+								<line number="104" hits="4"></line>
+								<line number="105" hits="4"></line>
+								<line number="106" hits="0"></line>
+								<line number="108" hits="4"></line>
+								<line number="109" hits="4"></line>
+								<line number="110" hits="7"></line>
+								<line number="111" hits="4"></line>
+								<line number="113" hits="3"></line>
+								<line number="115" hits="4"></line>
+								<line number="116" hits="0"></line>
+								<line number="118" hits="4"></line>
+							</lines>
+						</method>
+						<method name="@163:54" signature="" line-rate="0.75" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="164" hits="4"></line>
+								<line number="165" hits="4"></line>
+								<line number="166" hits="0"></line>
+								<line number="168" hits="4"></line>
+							</lines>
+						</method>
+						<method name="@170:58" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="171" hits="0"></line>
+								<line number="172" hits="0"></line>
+								<line number="173" hits="0"></line>
+								<line number="175" hits="0"></line>
+							</lines>
+						</method>
+						<method name="@188:54" signature="" line-rate="0.75" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="189" hits="2"></line>
+								<line number="190" hits="2"></line>
+								<line number="191" hits="0"></line>
+								<line number="193" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@195:58" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="196" hits="0"></line>
+								<line number="197" hits="0"></line>
+								<line number="198" hits="0"></line>
+								<line number="200" hits="0"></line>
+							</lines>
+						</method>
+						<method name="sudo" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="267" hits="0"></line>
+							</lines>
+						</method>
+						<method name="@297:21" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="298" hits="304"></line>
+								<line number="299" hits="304"></line>
+								<line number="300" hits="136"></line>
+								<line number="301" hits="96"></line>
+								<line number="304" hits="208"></line>
+							</lines>
+						</method>
+						<method name="@305:12" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="306" hits="208"></line>
+							</lines>
+						</method>
+						<method name="isAuthFailure" signature="" line-rate="0.6666667" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="325" hits="136"></line>
+								<line number="326" hits="0"></line>
+								<line number="328" hits="136"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="34" hits="34"></line>
+						<line number="97" hits="5"></line>
+						<line number="98" hits="5"></line>
+						<line number="99" hits="5"></line>
+						<line number="100" hits="5"></line>
+						<line number="101" hits="5"></line>
+						<line number="102" hits="1"></line>
+						<line number="104" hits="4"></line>
+						<line number="105" hits="4"></line>
+						<line number="106" hits="0"></line>
+						<line number="108" hits="4"></line>
+						<line number="109" hits="4"></line>
+						<line number="110" hits="7"></line>
+						<line number="111" hits="4"></line>
+						<line number="113" hits="3"></line>
+						<line number="115" hits="4"></line>
+						<line number="116" hits="0"></line>
+						<line number="118" hits="4"></line>
+						<line number="164" hits="4"></line>
+						<line number="165" hits="4"></line>
+						<line number="166" hits="0"></line>
+						<line number="168" hits="4"></line>
+						<line number="171" hits="0"></line>
+						<line number="172" hits="0"></line>
+						<line number="173" hits="0"></line>
+						<line number="175" hits="0"></line>
+						<line number="189" hits="2"></line>
+						<line number="190" hits="2"></line>
+						<line number="191" hits="0"></line>
+						<line number="193" hits="2"></line>
+						<line number="196" hits="0"></line>
+						<line number="197" hits="0"></line>
+						<line number="198" hits="0"></line>
+						<line number="200" hits="0"></line>
+						<line number="267" hits="0"></line>
+						<line number="298" hits="304"></line>
+						<line number="299" hits="304"></line>
+						<line number="300" hits="136"></line>
+						<line number="301" hits="96"></line>
+						<line number="304" hits="208"></line>
+						<line number="306" hits="208"></line>
+						<line number="325" hits="136"></line>
+						<line number="326" hits="0"></line>
+						<line number="328" hits="136"></line>
+					</lines>
+				</class>
+				<class name="linuxServerDiscovery" filename="springboot/server_discovery.go" line-rate="0.85714287" branch-rate="0" complexity="0" line-count="112" line-hits="96">
+					<methods>
+						<method name="Server" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="38" hits="37"></line>
+							</lines>
+						</method>
+						<method name="Prepare" signature="" line-rate="0.8235294" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="42" hits="12"></line>
+								<line number="43" hits="12"></line>
+								<line number="44" hits="12"></line>
+								<line number="45" hits="12"></line>
+								<line number="46" hits="0"></line>
+								<line number="47" hits="0"></line>
+								<line number="50" hits="12"></line>
+								<line number="51" hits="0"></line>
+								<line number="54" hits="12"></line>
+								<line number="55" hits="12"></line>
+								<line number="56" hits="12"></line>
+								<line number="57" hits="2"></line>
+								<line number="59" hits="10"></line>
+								<line number="60" hits="10"></line>
+								<line number="61" hits="7"></line>
+								<line number="62" hits="7"></line>
+								<line number="64" hits="10"></line>
+							</lines>
+						</method>
+						<method name="ProcessScan" signature="" line-rate="0.9047619" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="69" hits="6"></line>
+								<line number="70" hits="6"></line>
+								<line number="71" hits="6"></line>
+								<line number="72" hits="6"></line>
+								<line number="73" hits="1"></line>
+								<line number="74" hits="0"></line>
+								<line number="79" hits="1"></line>
+								<line number="83" hits="5"></line>
+								<line number="85" hits="5"></line>
+								<line number="86" hits="1"></line>
+								<line number="89" hits="4"></line>
+								<line number="90" hits="4"></line>
+								<line number="91" hits="5"></line>
+								<line number="92" hits="5"></line>
+								<line number="93" hits="0"></line>
+								<line number="95" hits="5"></line>
+								<line number="96" hits="5"></line>
+								<line number="126" hits="5"></line>
+								<line number="127" hits="1"></line>
+								<line number="129" hits="4"></line>
+								<line number="131" hits="3"></line>
+							</lines>
+						</method>
+						<method name="GetTotalMemory" signature="" line-rate="0.8888889" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="135" hits="5"></line>
+								<line number="136" hits="5"></line>
+								<line number="137" hits="1"></line>
+								<line number="139" hits="4"></line>
+								<line number="140" hits="0"></line>
+								<line number="143" hits="4"></line>
+								<line number="144" hits="4"></line>
+								<line number="145" hits="2"></line>
+								<line number="148" hits="2"></line>
+							</lines>
+						</method>
+						<method name="getChecksum" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="152" hits="5"></line>
+								<line number="153" hits="5"></line>
+								<line number="154" hits="5"></line>
+								<line number="155" hits="3"></line>
+								<line number="156" hits="3"></line>
+								<line number="158" hits="2"></line>
+							</lines>
+						</method>
+						<method name="GetOsName" signature="" line-rate="0.85714287" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="162" hits="4"></line>
+								<line number="163" hits="4"></line>
+								<line number="170" hits="4"></line>
+								<line number="178" hits="4"></line>
+								<line number="179" hits="4"></line>
+								<line number="180" hits="4"></line>
+								<line number="183" hits="0"></line>
+							</lines>
+						</method>
+						<method name="GetOsVersion" signature="" line-rate="0.85714287" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="187" hits="2"></line>
+								<line number="188" hits="2"></line>
+								<line number="195" hits="2"></line>
+								<line number="203" hits="2"></line>
+								<line number="204" hits="2"></line>
+								<line number="205" hits="2"></line>
+								<line number="208" hits="0"></line>
+							</lines>
+						</method>
+						<method name="ReadJarFile" signature="" line-rate="0.7916667" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="212" hits="5"></line>
+								<line number="213" hits="5"></line>
+								<line number="214" hits="0"></line>
+								<line number="216" hits="5"></line>
+								<line number="217" hits="0"></line>
+								<line number="220" hits="5"></line>
+								<line number="221" hits="5"></line>
+								<line number="223" hits="5"></line>
+								<line number="224" hits="0"></line>
+								<line number="227" hits="5"></line>
+								<line number="228" hits="5"></line>
+								<line number="230" hits="3"></line>
+								<line number="231" hits="3"></line>
+								<line number="232" hits="0"></line>
+								<line number="235" hits="3"></line>
+								<line number="238" hits="5"></line>
+								<line number="247" hits="5"></line>
+								<line number="248" hits="623"></line>
+								<line number="249" hits="101"></line>
+								<line number="251" hits="522"></line>
+								<line number="252" hits="3654"></line>
+								<line number="253" hits="3654"></line>
+								<line number="254" hits="0"></line>
+								<line number="259" hits="5"></line>
+							</lines>
+						</method>
+						<method name="Finish" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="263" hits="3"></line>
+							</lines>
+						</method>
+						<method name="getCredFromCache" signature="" line-rate="0.6666667" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="271" hits="12"></line>
+								<line number="272" hits="0"></line>
+								<line number="274" hits="12"></line>
+							</lines>
+						</method>
+						<method name="cacheCredential" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="278" hits="7"></line>
+							</lines>
+						</method>
+						<method name="clearCache" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="282" hits="0"></line>
+							</lines>
+						</method>
+						<method name="connect" signature="" line-rate="0.9285714" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="286" hits="10"></line>
+								<line number="287" hits="10"></line>
+								<line number="288" hits="1"></line>
+								<line number="291" hits="9"></line>
+								<line number="293" hits="9"></line>
+								<line number="294" hits="9"></line>
+								<line number="295" hits="9"></line>
+								<line number="297" hits="9"></line>
+								<line number="309" hits="9"></line>
+								<line number="310" hits="7"></line>
+								<line number="313" hits="2"></line>
+								<line number="314" hits="2"></line>
+								<line number="315" hits="2"></line>
+								<line number="318" hits="0"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="38" hits="37"></line>
+						<line number="42" hits="12"></line>
+						<line number="43" hits="12"></line>
+						<line number="44" hits="12"></line>
+						<line number="45" hits="12"></line>
+						<line number="46" hits="0"></line>
+						<line number="47" hits="0"></line>
+						<line number="50" hits="12"></line>
+						<line number="51" hits="0"></line>
+						<line number="54" hits="12"></line>
+						<line number="55" hits="12"></line>
+						<line number="56" hits="12"></line>
+						<line number="57" hits="2"></line>
+						<line number="59" hits="10"></line>
+						<line number="60" hits="10"></line>
+						<line number="61" hits="7"></line>
+						<line number="62" hits="7"></line>
+						<line number="64" hits="10"></line>
+						<line number="69" hits="6"></line>
+						<line number="70" hits="6"></line>
+						<line number="71" hits="6"></line>
+						<line number="72" hits="6"></line>
+						<line number="73" hits="1"></line>
+						<line number="74" hits="0"></line>
+						<line number="79" hits="1"></line>
+						<line number="83" hits="5"></line>
+						<line number="85" hits="5"></line>
+						<line number="86" hits="1"></line>
+						<line number="89" hits="4"></line>
+						<line number="90" hits="4"></line>
+						<line number="91" hits="5"></line>
+						<line number="92" hits="5"></line>
+						<line number="93" hits="0"></line>
+						<line number="95" hits="5"></line>
+						<line number="96" hits="5"></line>
+						<line number="126" hits="5"></line>
+						<line number="127" hits="1"></line>
+						<line number="129" hits="4"></line>
+						<line number="131" hits="3"></line>
+						<line number="135" hits="5"></line>
+						<line number="136" hits="5"></line>
+						<line number="137" hits="1"></line>
+						<line number="139" hits="4"></line>
+						<line number="140" hits="0"></line>
+						<line number="143" hits="4"></line>
+						<line number="144" hits="4"></line>
+						<line number="145" hits="2"></line>
+						<line number="148" hits="2"></line>
+						<line number="152" hits="5"></line>
+						<line number="153" hits="5"></line>
+						<line number="154" hits="5"></line>
+						<line number="155" hits="3"></line>
+						<line number="156" hits="3"></line>
+						<line number="158" hits="2"></line>
+						<line number="162" hits="4"></line>
+						<line number="163" hits="4"></line>
+						<line number="170" hits="4"></line>
+						<line number="178" hits="4"></line>
+						<line number="179" hits="4"></line>
+						<line number="180" hits="4"></line>
+						<line number="183" hits="0"></line>
+						<line number="187" hits="2"></line>
+						<line number="188" hits="2"></line>
+						<line number="195" hits="2"></line>
+						<line number="203" hits="2"></line>
+						<line number="204" hits="2"></line>
+						<line number="205" hits="2"></line>
+						<line number="208" hits="0"></line>
+						<line number="212" hits="5"></line>
+						<line number="213" hits="5"></line>
+						<line number="214" hits="0"></line>
+						<line number="216" hits="5"></line>
+						<line number="217" hits="0"></line>
+						<line number="220" hits="5"></line>
+						<line number="221" hits="5"></line>
+						<line number="223" hits="5"></line>
+						<line number="224" hits="0"></line>
+						<line number="227" hits="5"></line>
+						<line number="228" hits="5"></line>
+						<line number="230" hits="3"></line>
+						<line number="231" hits="3"></line>
+						<line number="232" hits="0"></line>
+						<line number="235" hits="3"></line>
+						<line number="238" hits="5"></line>
+						<line number="247" hits="5"></line>
+						<line number="248" hits="623"></line>
+						<line number="249" hits="101"></line>
+						<line number="251" hits="522"></line>
+						<line number="252" hits="3654"></line>
+						<line number="253" hits="3654"></line>
+						<line number="254" hits="0"></line>
+						<line number="259" hits="5"></line>
+						<line number="263" hits="3"></line>
+						<line number="271" hits="12"></line>
+						<line number="272" hits="0"></line>
+						<line number="274" hits="12"></line>
+						<line number="278" hits="7"></line>
+						<line number="282" hits="0"></line>
+						<line number="286" hits="10"></line>
+						<line number="287" hits="10"></line>
+						<line number="288" hits="1"></line>
+						<line number="291" hits="9"></line>
+						<line number="293" hits="9"></line>
+						<line number="294" hits="9"></line>
+						<line number="295" hits="9"></line>
+						<line number="297" hits="9"></line>
+						<line number="309" hits="9"></line>
+						<line number="310" hits="7"></line>
+						<line number="313" hits="2"></line>
+						<line number="314" hits="2"></line>
+						<line number="315" hits="2"></line>
+						<line number="318" hits="0"></line>
+					</lines>
+				</class>
+				<class name="-" filename="springboot/logger.go" line-rate="0.88235295" branch-rate="0" complexity="0" line-count="17" line-hits="15">
+					<methods>
+						<method name="GetAzureLogger" signature="" line-rate="0.6666667" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="15" hits="40"></line>
+								<line number="16" hits="40"></line>
+								<line number="17" hits="40"></line>
+								<line number="18" hits="0"></line>
+								<line number="19" hits="0"></line>
+								<line number="22" hits="40"></line>
+							</lines>
+						</method>
+						<method name="toFields" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="66" hits="34"></line>
+								<line number="67" hits="34"></line>
+								<line number="68" hits="4"></line>
+								<line number="71" hits="30"></line>
+								<line number="72" hits="30"></line>
+								<line number="73" hits="80"></line>
+								<line number="74" hits="80"></line>
+								<line number="75" hits="80"></line>
+								<line number="76" hits="80"></line>
+								<line number="78" hits="80"></line>
+								<line number="81" hits="30"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="15" hits="40"></line>
+						<line number="16" hits="40"></line>
+						<line number="17" hits="40"></line>
+						<line number="18" hits="0"></line>
+						<line number="19" hits="0"></line>
+						<line number="22" hits="40"></line>
+						<line number="66" hits="34"></line>
+						<line number="67" hits="34"></line>
+						<line number="68" hits="4"></line>
+						<line number="71" hits="30"></line>
+						<line number="72" hits="30"></line>
+						<line number="73" hits="80"></line>
+						<line number="74" hits="80"></line>
+						<line number="75" hits="80"></line>
+						<line number="76" hits="80"></line>
+						<line number="78" hits="80"></line>
+						<line number="81" hits="30"></line>
+					</lines>
+				</class>
+				<class name="CustomLogger" filename="springboot/logger.go" line-rate="0.35714287" branch-rate="0" complexity="0" line-count="14" line-hits="5">
+					<methods>
+						<method name="addAzureAnnotations" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="27" hits="0"></line>
+								<line number="29" hits="0"></line>
+								<line number="30" hits="0"></line>
+								<line number="32" hits="0"></line>
+								<line number="35" hits="0"></line>
+							</lines>
+						</method>
+						<method name="Info" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="41" hits="15"></line>
+								<line number="42" hits="15"></line>
+							</lines>
+						</method>
+						<method name="Debug" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="46" hits="19"></line>
+								<line number="47" hits="19"></line>
+							</lines>
+						</method>
+						<method name="Warning" signature="" line-rate="0.5" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="51" hits="4"></line>
+								<line number="52" hits="0"></line>
+							</lines>
+						</method>
+						<method name="Error" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="57" hits="0"></line>
+								<line number="58" hits="0"></line>
+							</lines>
+						</method>
+						<method name="IntoContext" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="62" hits="0"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="27" hits="0"></line>
+						<line number="29" hits="0"></line>
+						<line number="30" hits="0"></line>
+						<line number="32" hits="0"></line>
+						<line number="35" hits="0"></line>
+						<line number="41" hits="15"></line>
+						<line number="42" hits="15"></line>
+						<line number="46" hits="19"></line>
+						<line number="47" hits="19"></line>
+						<line number="51" hits="4"></line>
+						<line number="52" hits="0"></line>
+						<line number="57" hits="0"></line>
+						<line number="58" hits="0"></line>
+						<line number="62" hits="0"></line>
+					</lines>
+				</class>
+				<class name="Monadic[T]" filename="springboot/monad.go" line-rate="0.8666667" branch-rate="0" complexity="0" line-count="15" line-hits="13">
+					<methods>
+						<method name="Apply" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="42" hits="50"></line>
+								<line number="43" hits="50"></line>
+								<line number="44" hits="50"></line>
+							</lines>
+						</method>
+						<method name="Final" signature="" line-rate="0.875" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="48" hits="50"></line>
+								<line number="49" hits="0"></line>
+								<line number="52" hits="50"></line>
+								<line number="53" hits="50"></line>
+								<line number="54" hits="50"></line>
+								<line number="56" hits="50"></line>
+								<line number="57" hits="50"></line>
+								<line number="59" hits="50"></line>
+							</lines>
+						</method>
+						<method name="Get" signature="" line-rate="0.75" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="65" hits="6"></line>
+								<line number="66" hits="6"></line>
+								<line number="67" hits="0"></line>
+								<line number="70" hits="6"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="42" hits="50"></line>
+						<line number="43" hits="50"></line>
+						<line number="44" hits="50"></line>
+						<line number="48" hits="50"></line>
+						<line number="49" hits="0"></line>
+						<line number="52" hits="50"></line>
+						<line number="53" hits="50"></line>
+						<line number="54" hits="50"></line>
+						<line number="56" hits="50"></line>
+						<line number="57" hits="50"></line>
+						<line number="59" hits="50"></line>
+						<line number="65" hits="6"></line>
+						<line number="66" hits="6"></line>
+						<line number="67" hits="0"></line>
+						<line number="70" hits="6"></line>
+					</lines>
+				</class>
+				<class name="Monad" filename="springboot/monad.go" line-rate="0.8333333" branch-rate="0" complexity="0" line-count="6" line-hits="5">
+					<methods>
+						<method name="Map" signature="" line-rate="0.75" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="74" hits="4"></line>
+								<line number="75" hits="0"></line>
+								<line number="77" hits="4"></line>
+								<line number="78" hits="4"></line>
+							</lines>
+						</method>
+						<method name="Field" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="82" hits="50"></line>
+								<line number="83" hits="50"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="74" hits="4"></line>
+						<line number="75" hits="0"></line>
+						<line number="77" hits="4"></line>
+						<line number="78" hits="4"></line>
+						<line number="82" hits="50"></line>
+						<line number="83" hits="50"></line>
+					</lines>
+				</class>
+				<class name="-" filename="springboot/monad.go" line-rate="0.8" branch-rate="0" complexity="0" line-count="10" line-hits="8">
+					<methods>
+						<method name="NewMonadic" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="28" hits="6"></line>
+							</lines>
+						</method>
+						<method name="Of" signature="" line-rate="0.8" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="32" hits="50"></line>
+								<line number="33" hits="50"></line>
+								<line number="34" hits="44"></line>
+								<line number="35" hits="0"></line>
+								<line number="38" hits="50"></line>
+							</lines>
+						</method>
+						<method name="wrap" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="87" hits="4"></line>
+							</lines>
+						</method>
+						<method name="@87:9" signature="" line-rate="0.6666667" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="88" hits="4"></line>
+								<line number="89" hits="4"></line>
+								<line number="92" hits="0"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="28" hits="6"></line>
+						<line number="32" hits="50"></line>
+						<line number="33" hits="50"></line>
+						<line number="34" hits="44"></line>
+						<line number="35" hits="0"></line>
+						<line number="38" hits="50"></line>
+						<line number="87" hits="4"></line>
+						<line number="88" hits="4"></line>
+						<line number="89" hits="4"></line>
+						<line number="92" hits="0"></line>
+					</lines>
+				</class>
+				<class name="-" filename="springboot/server_connector.go" line-rate="0" branch-rate="0" complexity="0" line-count="14" line-hits="0">
+					<methods>
+						<method name="DefaultServerConnectorFactory" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="23" hits="0"></line>
+							</lines>
+						</method>
+						<method name="@141:19" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="142" hits="0"></line>
+								<line number="143" hits="0"></line>
+							</lines>
+						</method>
+						<method name="toSshError" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="173" hits="0"></line>
+								<line number="174" hits="0"></line>
+								<line number="176" hits="0"></line>
+							</lines>
+						</method>
+						<method name="WithHostKeyCallback" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="180" hits="0"></line>
+							</lines>
+						</method>
+						<method name="@180:9" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="181" hits="0"></line>
+							</lines>
+						</method>
+						<method name="WithClient" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="186" hits="0"></line>
+							</lines>
+						</method>
+						<method name="@186:9" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="187" hits="0"></line>
+							</lines>
+						</method>
+						<method name="WithConnectionTimeout" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="192" hits="0"></line>
+							</lines>
+						</method>
+						<method name="@192:9" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="193" hits="0"></line>
+							</lines>
+						</method>
+						<method name="WithKeyAlgorithms" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="198" hits="0"></line>
+							</lines>
+						</method>
+						<method name="@198:9" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="199" hits="0"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="23" hits="0"></line>
+						<line number="142" hits="0"></line>
+						<line number="143" hits="0"></line>
+						<line number="173" hits="0"></line>
+						<line number="174" hits="0"></line>
+						<line number="176" hits="0"></line>
+						<line number="180" hits="0"></line>
+						<line number="181" hits="0"></line>
+						<line number="186" hits="0"></line>
+						<line number="187" hits="0"></line>
+						<line number="192" hits="0"></line>
+						<line number="193" hits="0"></line>
+						<line number="198" hits="0"></line>
+						<line number="199" hits="0"></line>
+					</lines>
+				</class>
+				<class name="linuxServerFactory" filename="springboot/server_connector.go" line-rate="0" branch-rate="0" complexity="0" line-count="4" line-hits="0">
+					<methods>
+						<method name="Create" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="27" hits="0"></line>
+								<line number="33" hits="0"></line>
+								<line number="34" hits="0"></line>
+								<line number="36" hits="0"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="27" hits="0"></line>
+						<line number="33" hits="0"></line>
+						<line number="34" hits="0"></line>
+						<line number="36" hits="0"></line>
+					</lines>
+				</class>
+				<class name="linuxServer" filename="springboot/server_connector.go" line-rate="0" branch-rate="0" complexity="0" line-count="67" line-hits="0">
+					<methods>
+						<method name="RunCmd" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="52" hits="0"></line>
+								<line number="53" hits="0"></line>
+								<line number="55" hits="0"></line>
+								<line number="56" hits="0"></line>
+								<line number="58" hits="0"></line>
+								<line number="59" hits="0"></line>
+								<line number="60" hits="0"></line>
+								<line number="62" hits="0"></line>
+								<line number="63" hits="0"></line>
+								<line number="64" hits="0"></line>
+								<line number="65" hits="0"></line>
+								<line number="66" hits="0"></line>
+								<line number="67" hits="0"></line>
+								<line number="68" hits="0"></line>
+								<line number="69" hits="0"></line>
+								<line number="70" hits="0"></line>
+								<line number="71" hits="0"></line>
+								<line number="72" hits="0"></line>
+								<line number="73" hits="0"></line>
+								<line number="74" hits="0"></line>
+								<line number="76" hits="0"></line>
+								<line number="77" hits="0"></line>
+								<line number="78" hits="0"></line>
+								<line number="81" hits="0"></line>
+								<line number="84" hits="0"></line>
+								<line number="85" hits="0"></line>
+								<line number="88" hits="0"></line>
+							</lines>
+						</method>
+						<method name="Close" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="92" hits="0"></line>
+								<line number="93" hits="0"></line>
+								<line number="95" hits="0"></line>
+							</lines>
+						</method>
+						<method name="Read" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="99" hits="0"></line>
+								<line number="100" hits="0"></line>
+								<line number="101" hits="0"></line>
+								<line number="103" hits="0"></line>
+								<line number="104" hits="0"></line>
+								<line number="105" hits="0"></line>
+								<line number="109" hits="0"></line>
+								<line number="110" hits="0"></line>
+								<line number="111" hits="0"></line>
+								<line number="114" hits="0"></line>
+								<line number="115" hits="0"></line>
+								<line number="116" hits="0"></line>
+								<line number="119" hits="0"></line>
+							</lines>
+						</method>
+						<method name="FQDN" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="123" hits="0"></line>
+							</lines>
+						</method>
+						<method name="Connect" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="127" hits="0"></line>
+								<line number="128" hits="0"></line>
+								<line number="129" hits="0"></line>
+								<line number="130" hits="0"></line>
+								<line number="131" hits="0"></line>
+								<line number="132" hits="0"></line>
+								<line number="135" hits="0"></line>
+								<line number="137" hits="0"></line>
+								<line number="148" hits="0"></line>
+								<line number="149" hits="0"></line>
+								<line number="150" hits="0"></line>
+								<line number="152" hits="0"></line>
+								<line number="155" hits="0"></line>
+								<line number="156" hits="0"></line>
+								<line number="157" hits="0"></line>
+								<line number="158" hits="0"></line>
+								<line number="160" hits="0"></line>
+								<line number="161" hits="0"></line>
+								<line number="162" hits="0"></line>
+								<line number="163" hits="0"></line>
+								<line number="165" hits="0"></line>
+							</lines>
+						</method>
+						<method name="Username" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="169" hits="0"></line>
+							</lines>
+						</method>
+						<method name="String" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="204" hits="0"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="52" hits="0"></line>
+						<line number="53" hits="0"></line>
+						<line number="55" hits="0"></line>
+						<line number="56" hits="0"></line>
+						<line number="58" hits="0"></line>
+						<line number="59" hits="0"></line>
+						<line number="60" hits="0"></line>
+						<line number="62" hits="0"></line>
+						<line number="63" hits="0"></line>
+						<line number="64" hits="0"></line>
+						<line number="65" hits="0"></line>
+						<line number="66" hits="0"></line>
+						<line number="67" hits="0"></line>
+						<line number="68" hits="0"></line>
+						<line number="69" hits="0"></line>
+						<line number="70" hits="0"></line>
+						<line number="71" hits="0"></line>
+						<line number="72" hits="0"></line>
+						<line number="73" hits="0"></line>
+						<line number="74" hits="0"></line>
+						<line number="76" hits="0"></line>
+						<line number="77" hits="0"></line>
+						<line number="78" hits="0"></line>
+						<line number="81" hits="0"></line>
+						<line number="84" hits="0"></line>
+						<line number="85" hits="0"></line>
+						<line number="88" hits="0"></line>
+						<line number="92" hits="0"></line>
+						<line number="93" hits="0"></line>
+						<line number="95" hits="0"></line>
+						<line number="99" hits="0"></line>
+						<line number="100" hits="0"></line>
+						<line number="101" hits="0"></line>
+						<line number="103" hits="0"></line>
+						<line number="104" hits="0"></line>
+						<line number="105" hits="0"></line>
+						<line number="109" hits="0"></line>
+						<line number="110" hits="0"></line>
+						<line number="111" hits="0"></line>
+						<line number="114" hits="0"></line>
+						<line number="115" hits="0"></line>
+						<line number="116" hits="0"></line>
+						<line number="119" hits="0"></line>
+						<line number="123" hits="0"></line>
+						<line number="127" hits="0"></line>
+						<line number="128" hits="0"></line>
+						<line number="129" hits="0"></line>
+						<line number="130" hits="0"></line>
+						<line number="131" hits="0"></line>
+						<line number="132" hits="0"></line>
+						<line number="135" hits="0"></line>
+						<line number="137" hits="0"></line>
+						<line number="148" hits="0"></line>
+						<line number="149" hits="0"></line>
+						<line number="150" hits="0"></line>
+						<line number="152" hits="0"></line>
+						<line number="155" hits="0"></line>
+						<line number="156" hits="0"></line>
+						<line number="157" hits="0"></line>
+						<line number="158" hits="0"></line>
+						<line number="160" hits="0"></line>
+						<line number="161" hits="0"></line>
+						<line number="162" hits="0"></line>
+						<line number="163" hits="0"></line>
+						<line number="165" hits="0"></line>
+						<line number="169" hits="0"></line>
+						<line number="204" hits="0"></line>
+					</lines>
+				</class>
+				<class name="-" filename="springboot/stream.go" line-rate="0.8373494" branch-rate="0" complexity="0" line-count="166" line-hits="139">
+					<methods>
+						<method name="FromSlice" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="32" hits="40"></line>
+							</lines>
+						</method>
+						<method name="@32:16" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="33" hits="41"></line>
+								<line number="34" hits="41"></line>
+								<line number="35" hits="462"></line>
+								<line number="36" hits="462"></line>
+								<line number="37" hits="3"></line>
+								<line number="40" hits="38"></line>
+							</lines>
+						</method>
+						<method name="FromConsumer" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="45" hits="0"></line>
+							</lines>
+						</method>
+						<method name="FromProducer" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="49" hits="0"></line>
+							</lines>
+						</method>
+						<method name="@49:16" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="50" hits="0"></line>
+								<line number="51" hits="0"></line>
+								<line number="52" hits="0"></line>
+								<line number="54" hits="0"></line>
+							</lines>
+						</method>
+						<method name="IntComparator" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="59" hits="0"></line>
+							</lines>
+						</method>
+						<method name="@59:9" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="60" hits="0"></line>
+							</lines>
+						</method>
+						<method name="StringComparator" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="65" hits="0"></line>
+							</lines>
+						</method>
+						<method name="@65:9" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="66" hits="0"></line>
+							</lines>
+						</method>
+						<method name="IntSum" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="71" hits="0"></line>
+							</lines>
+						</method>
+						<method name="@71:9" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="72" hits="0"></line>
+							</lines>
+						</method>
+						<method name="StringJoiner" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="77" hits="0"></line>
+							</lines>
+						</method>
+						<method name="@77:9" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="78" hits="0"></line>
+							</lines>
+						</method>
+						<method name="@130:16" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="131" hits="341"></line>
+							</lines>
+						</method>
+						<method name="@131:11" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="132" hits="341"></line>
+							</lines>
+						</method>
+						<method name="@141:11" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="142" hits="420"></line>
+								<line number="143" hits="420"></line>
+							</lines>
+						</method>
+						<method name="@150:15" signature="" line-rate="0.75" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="151" hits="7"></line>
+								<line number="152" hits="7"></line>
+								<line number="153" hits="0"></line>
+								<line number="155" hits="7"></line>
+							</lines>
+						</method>
+						<method name="@162:16" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="163" hits="19"></line>
+							</lines>
+						</method>
+						<method name="@163:12" signature="" line-rate="0.85714287" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="164" hits="351"></line>
+								<line number="165" hits="351"></line>
+								<line number="166" hits="106"></line>
+								<line number="168" hits="245"></line>
+								<line number="169" hits="245"></line>
+								<line number="170" hits="0"></line>
+								<line number="172" hits="245"></line>
+							</lines>
+						</method>
+						<method name="@181:3" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="182" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@183:5" signature="" line-rate="0.75" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="184" hits="6"></line>
+								<line number="185" hits="6"></line>
+								<line number="186" hits="0"></line>
+								<line number="188" hits="6"></line>
+							</lines>
+						</method>
+						<method name="@196:16" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="197" hits="4"></line>
+								<line number="198" hits="4"></line>
+								<line number="199" hits="4"></line>
+							</lines>
+						</method>
+						<method name="@199:20" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="200" hits="38"></line>
+								<line number="201" hits="38"></line>
+								<line number="202" hits="38"></line>
+								<line number="203" hits="28"></line>
+								<line number="205" hits="38"></line>
+								<line number="206" hits="38"></line>
+								<line number="207" hits="28"></line>
+								<line number="209" hits="10"></line>
+							</lines>
+						</method>
+						<method name="@215:16" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="216" hits="13"></line>
+							</lines>
+						</method>
+						<method name="@216:12" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="217" hits="228"></line>
+								<line number="218" hits="220"></line>
+								<line number="219" hits="220"></line>
+								<line number="220" hits="208"></line>
+								<line number="222" hits="12"></line>
+								<line number="224" hits="8"></line>
+							</lines>
+						</method>
+						<method name="@232:19" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="233" hits="10"></line>
+								<line number="234" hits="10"></line>
+								<line number="235" hits="10"></line>
+							</lines>
+						</method>
+						<method name="@245:16" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="246" hits="1"></line>
+							</lines>
+						</method>
+						<method name="@246:12" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="247" hits="4"></line>
+								<line number="248" hits="4"></line>
+								<line number="249" hits="10"></line>
+								<line number="250" hits="10"></line>
+								<line number="251" hits="2"></line>
+								<line number="253" hits="8"></line>
+								<line number="255" hits="4"></line>
+							</lines>
+						</method>
+						<method name="@261:16" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="262" hits="3"></line>
+								<line number="263" hits="3"></line>
+								<line number="264" hits="3"></line>
+							</lines>
+						</method>
+						<method name="@264:12" signature="" line-rate="0.90909094" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="265" hits="13"></line>
+								<line number="266" hits="13"></line>
+								<line number="267" hits="13"></line>
+								<line number="268" hits="13"></line>
+								<line number="269" hits="13"></line>
+								<line number="270" hits="13"></line>
+								<line number="271" hits="11"></line>
+								<line number="272" hits="11"></line>
+								<line number="273" hits="0"></line>
+								<line number="275" hits="11"></line>
+								<line number="277" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@286:11" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="287" hits="209"></line>
+								<line number="288" hits="209"></line>
+								<line number="289" hits="209"></line>
+								<line number="290" hits="209"></line>
+							</lines>
+						</method>
+						<method name="@299:16" signature="" line-rate="0.9" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="300" hits="5"></line>
+								<line number="301" hits="5"></line>
+								<line number="302" hits="5"></line>
+								<line number="303" hits="5"></line>
+								<line number="311" hits="5"></line>
+								<line number="313" hits="5"></line>
+								<line number="314" hits="31"></line>
+								<line number="315" hits="31"></line>
+								<line number="316" hits="0"></line>
+								<line number="319" hits="5"></line>
+							</lines>
+						</method>
+						<method name="@303:9" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="304" hits="31"></line>
+								<line number="305" hits="31"></line>
+								<line number="306" hits="31"></line>
+								<line number="307" hits="31"></line>
+								<line number="308" hits="31"></line>
+							</lines>
+						</method>
+						<method name="@326:19" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="327" hits="12"></line>
+								<line number="328" hits="12"></line>
+								<line number="329" hits="12"></line>
+							</lines>
+						</method>
+						<method name="@339:16" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="340" hits="15"></line>
+							</lines>
+						</method>
+						<method name="isUnaryFunc" signature="" line-rate="0.68421054" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="345" hits="50"></line>
+								<line number="346" hits="0"></line>
+								<line number="349" hits="50"></line>
+								<line number="351" hits="44"></line>
+								<line number="353" hits="23"></line>
+								<line number="355" hits="8"></line>
+								<line number="357" hits="13"></line>
+								<line number="358" hits="13"></line>
+								<line number="360" hits="0"></line>
+								<line number="363" hits="6"></line>
+								<line number="364" hits="6"></line>
+								<line number="365" hits="0"></line>
+								<line number="367" hits="6"></line>
+								<line number="369" hits="0"></line>
+								<line number="371" hits="2"></line>
+								<line number="373" hits="4"></line>
+								<line number="374" hits="4"></line>
+								<line number="376" hits="0"></line>
+								<line number="380" hits="0"></line>
+							</lines>
+						</method>
+						<method name="callUnaryFunc" signature="" line-rate="0.8888889" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="384" hits="784"></line>
+								<line number="385" hits="784"></line>
+								<line number="387" hits="0"></line>
+								<line number="389" hits="377"></line>
+								<line number="391" hits="56"></line>
+								<line number="392" hits="56"></line>
+								<line number="394" hits="321"></line>
+								<line number="395" hits="321"></line>
+								<line number="396" hits="223"></line>
+								<line number="398" hits="98"></line>
+								<line number="400" hits="0"></line>
+								<line number="402" hits="8"></line>
+								<line number="403" hits="8"></line>
+								<line number="405" hits="22"></line>
+								<line number="406" hits="22"></line>
+								<line number="407" hits="14"></line>
+								<line number="409" hits="8"></line>
+								<line number="412" hits="377"></line>
+							</lines>
+						</method>
+						<method name="ToSlice" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="416" hits="13"></line>
+								<line number="417" hits="13"></line>
+								<line number="418" hits="13"></line>
+								<line number="419" hits="13"></line>
+								<line number="425" hits="13"></line>
+								<line number="426" hits="3"></line>
+								<line number="428" hits="10"></line>
+							</lines>
+						</method>
+						<method name="@419:18" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="420" hits="48"></line>
+								<line number="421" hits="48"></line>
+								<line number="422" hits="48"></line>
+								<line number="423" hits="48"></line>
+							</lines>
+						</method>
+						<method name="PolicyOf" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="432" hits="1"></line>
+							</lines>
+						</method>
+						<method name="getGID" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="436" hits="29"></line>
+								<line number="437" hits="29"></line>
+								<line number="438" hits="29"></line>
+								<line number="439" hits="29"></line>
+								<line number="440" hits="29"></line>
+								<line number="441" hits="29"></line>
+							</lines>
+						</method>
+						<method name="sortSlice" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="445" hits="5"></line>
+							</lines>
+						</method>
+						<method name="@445:20" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="446" hits="63"></line>
+								<line number="452" hits="63"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="32" hits="40"></line>
+						<line number="33" hits="41"></line>
+						<line number="34" hits="41"></line>
+						<line number="35" hits="462"></line>
+						<line number="36" hits="462"></line>
+						<line number="37" hits="3"></line>
+						<line number="40" hits="38"></line>
+						<line number="45" hits="0"></line>
+						<line number="49" hits="0"></line>
+						<line number="50" hits="0"></line>
+						<line number="51" hits="0"></line>
+						<line number="52" hits="0"></line>
+						<line number="54" hits="0"></line>
+						<line number="59" hits="0"></line>
+						<line number="60" hits="0"></line>
+						<line number="65" hits="0"></line>
+						<line number="66" hits="0"></line>
+						<line number="71" hits="0"></line>
+						<line number="72" hits="0"></line>
+						<line number="77" hits="0"></line>
+						<line number="78" hits="0"></line>
+						<line number="131" hits="341"></line>
+						<line number="132" hits="341"></line>
+						<line number="142" hits="420"></line>
+						<line number="143" hits="420"></line>
+						<line number="151" hits="7"></line>
+						<line number="152" hits="7"></line>
+						<line number="153" hits="0"></line>
+						<line number="155" hits="7"></line>
+						<line number="163" hits="19"></line>
+						<line number="164" hits="351"></line>
+						<line number="165" hits="351"></line>
+						<line number="166" hits="106"></line>
+						<line number="168" hits="245"></line>
+						<line number="169" hits="245"></line>
+						<line number="170" hits="0"></line>
+						<line number="172" hits="245"></line>
+						<line number="182" hits="2"></line>
+						<line number="184" hits="6"></line>
+						<line number="185" hits="6"></line>
+						<line number="186" hits="0"></line>
+						<line number="188" hits="6"></line>
+						<line number="197" hits="4"></line>
+						<line number="198" hits="4"></line>
+						<line number="199" hits="4"></line>
+						<line number="200" hits="38"></line>
+						<line number="201" hits="38"></line>
+						<line number="202" hits="38"></line>
+						<line number="203" hits="28"></line>
+						<line number="205" hits="38"></line>
+						<line number="206" hits="38"></line>
+						<line number="207" hits="28"></line>
+						<line number="209" hits="10"></line>
+						<line number="216" hits="13"></line>
+						<line number="217" hits="228"></line>
+						<line number="218" hits="220"></line>
+						<line number="219" hits="220"></line>
+						<line number="220" hits="208"></line>
+						<line number="222" hits="12"></line>
+						<line number="224" hits="8"></line>
+						<line number="233" hits="10"></line>
+						<line number="234" hits="10"></line>
+						<line number="235" hits="10"></line>
+						<line number="246" hits="1"></line>
+						<line number="247" hits="4"></line>
+						<line number="248" hits="4"></line>
+						<line number="249" hits="10"></line>
+						<line number="250" hits="10"></line>
+						<line number="251" hits="2"></line>
+						<line number="253" hits="8"></line>
+						<line number="255" hits="4"></line>
+						<line number="262" hits="3"></line>
+						<line number="263" hits="3"></line>
+						<line number="264" hits="3"></line>
+						<line number="265" hits="13"></line>
+						<line number="266" hits="13"></line>
+						<line number="267" hits="13"></line>
+						<line number="268" hits="13"></line>
+						<line number="269" hits="13"></line>
+						<line number="270" hits="13"></line>
+						<line number="271" hits="11"></line>
+						<line number="272" hits="11"></line>
+						<line number="273" hits="0"></line>
+						<line number="275" hits="11"></line>
+						<line number="277" hits="2"></line>
+						<line number="287" hits="209"></line>
+						<line number="288" hits="209"></line>
+						<line number="289" hits="209"></line>
+						<line number="290" hits="209"></line>
+						<line number="300" hits="5"></line>
+						<line number="301" hits="5"></line>
+						<line number="302" hits="5"></line>
+						<line number="303" hits="5"></line>
+						<line number="311" hits="5"></line>
+						<line number="313" hits="5"></line>
+						<line number="314" hits="31"></line>
+						<line number="315" hits="31"></line>
+						<line number="316" hits="0"></line>
+						<line number="319" hits="5"></line>
+						<line number="304" hits="31"></line>
+						<line number="305" hits="31"></line>
+						<line number="306" hits="31"></line>
+						<line number="307" hits="31"></line>
+						<line number="308" hits="31"></line>
+						<line number="327" hits="12"></line>
+						<line number="328" hits="12"></line>
+						<line number="329" hits="12"></line>
+						<line number="340" hits="15"></line>
+						<line number="345" hits="50"></line>
+						<line number="346" hits="0"></line>
+						<line number="349" hits="50"></line>
+						<line number="351" hits="44"></line>
+						<line number="353" hits="23"></line>
+						<line number="355" hits="8"></line>
+						<line number="357" hits="13"></line>
+						<line number="358" hits="13"></line>
+						<line number="360" hits="0"></line>
+						<line number="363" hits="6"></line>
+						<line number="364" hits="6"></line>
+						<line number="365" hits="0"></line>
+						<line number="367" hits="6"></line>
+						<line number="369" hits="0"></line>
+						<line number="371" hits="2"></line>
+						<line number="373" hits="4"></line>
+						<line number="374" hits="4"></line>
+						<line number="376" hits="0"></line>
+						<line number="380" hits="0"></line>
+						<line number="384" hits="784"></line>
+						<line number="385" hits="784"></line>
+						<line number="387" hits="0"></line>
+						<line number="389" hits="377"></line>
+						<line number="391" hits="56"></line>
+						<line number="392" hits="56"></line>
+						<line number="394" hits="321"></line>
+						<line number="395" hits="321"></line>
+						<line number="396" hits="223"></line>
+						<line number="398" hits="98"></line>
+						<line number="400" hits="0"></line>
+						<line number="402" hits="8"></line>
+						<line number="403" hits="8"></line>
+						<line number="405" hits="22"></line>
+						<line number="406" hits="22"></line>
+						<line number="407" hits="14"></line>
+						<line number="409" hits="8"></line>
+						<line number="412" hits="377"></line>
+						<line number="416" hits="13"></line>
+						<line number="417" hits="13"></line>
+						<line number="418" hits="13"></line>
+						<line number="419" hits="13"></line>
+						<line number="425" hits="13"></line>
+						<line number="426" hits="3"></line>
+						<line number="428" hits="10"></line>
+						<line number="420" hits="48"></line>
+						<line number="421" hits="48"></line>
+						<line number="422" hits="48"></line>
+						<line number="423" hits="48"></line>
+						<line number="432" hits="1"></line>
+						<line number="436" hits="29"></line>
+						<line number="437" hits="29"></line>
+						<line number="438" hits="29"></line>
+						<line number="439" hits="29"></line>
+						<line number="440" hits="29"></line>
+						<line number="441" hits="29"></line>
+						<line number="445" hits="5"></line>
+						<line number="446" hits="63"></line>
+						<line number="452" hits="63"></line>
+					</lines>
+				</class>
+				<class name="stop" filename="springboot/stream.go" line-rate="0" branch-rate="0" complexity="0" line-count="1" line-hits="0">
+					<methods>
+						<method name="Error" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="104" hits="0"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="104" hits="0"></line>
+					</lines>
+				</class>
+				<class name="stream" filename="springboot/stream.go" line-rate="0.9512195" branch-rate="0" complexity="0" line-count="41" line-hits="39">
+					<methods>
+						<method name="consume" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="123" hits="23"></line>
+							</lines>
+						</method>
+						<method name="asyncConsume" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="127" hits="15"></line>
+								<line number="128" hits="15"></line>
+								<line number="130" hits="15"></line>
+								<line number="135" hits="15"></line>
+							</lines>
+						</method>
+						<method name="ForEach" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="139" hits="27"></line>
+								<line number="140" hits="27"></line>
+								<line number="141" hits="27"></line>
+							</lines>
+						</method>
+						<method name="Peek" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="148" hits="2"></line>
+								<line number="149" hits="2"></line>
+								<line number="150" hits="2"></line>
+							</lines>
+						</method>
+						<method name="Map" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="160" hits="19"></line>
+								<line number="161" hits="19"></line>
+								<line number="162" hits="19"></line>
+							</lines>
+						</method>
+						<method name="FlatMap" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="178" hits="2"></line>
+								<line number="179" hits="2"></line>
+								<line number="180" hits="2"></line>
+							</lines>
+						</method>
+						<method name="Distinct" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="196" hits="3"></line>
+							</lines>
+						</method>
+						<method name="Filter" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="215" hits="13"></line>
+							</lines>
+						</method>
+						<method name="Join" signature="" line-rate="0.8333333" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="230" hits="2"></line>
+								<line number="231" hits="2"></line>
+								<line number="232" hits="2"></line>
+								<line number="237" hits="2"></line>
+								<line number="238" hits="0"></line>
+								<line number="241" hits="2"></line>
+							</lines>
+						</method>
+						<method name="Retry" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="245" hits="1"></line>
+							</lines>
+						</method>
+						<method name="Take" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="261" hits="3"></line>
+							</lines>
+						</method>
+						<method name="First" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="284" hits="10"></line>
+								<line number="285" hits="10"></line>
+								<line number="286" hits="10"></line>
+								<line number="292" hits="10"></line>
+								<line number="293" hits="1"></line>
+								<line number="295" hits="9"></line>
+							</lines>
+						</method>
+						<method name="Sorted" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="299" hits="4"></line>
+							</lines>
+						</method>
+						<method name="Reduce" signature="" line-rate="0.8333333" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="324" hits="2"></line>
+								<line number="325" hits="2"></line>
+								<line number="326" hits="2"></line>
+								<line number="331" hits="2"></line>
+								<line number="332" hits="0"></line>
+								<line number="335" hits="2"></line>
+							</lines>
+						</method>
+						<method name="Parallel" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="339" hits="14"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="123" hits="23"></line>
+						<line number="127" hits="15"></line>
+						<line number="128" hits="15"></line>
+						<line number="130" hits="15"></line>
+						<line number="135" hits="15"></line>
+						<line number="139" hits="27"></line>
+						<line number="140" hits="27"></line>
+						<line number="141" hits="27"></line>
+						<line number="148" hits="2"></line>
+						<line number="149" hits="2"></line>
+						<line number="150" hits="2"></line>
+						<line number="160" hits="19"></line>
+						<line number="161" hits="19"></line>
+						<line number="162" hits="19"></line>
+						<line number="178" hits="2"></line>
+						<line number="179" hits="2"></line>
+						<line number="180" hits="2"></line>
+						<line number="196" hits="3"></line>
+						<line number="215" hits="13"></line>
+						<line number="230" hits="2"></line>
+						<line number="231" hits="2"></line>
+						<line number="232" hits="2"></line>
+						<line number="237" hits="2"></line>
+						<line number="238" hits="0"></line>
+						<line number="241" hits="2"></line>
+						<line number="245" hits="1"></line>
+						<line number="261" hits="3"></line>
+						<line number="284" hits="10"></line>
+						<line number="285" hits="10"></line>
+						<line number="286" hits="10"></line>
+						<line number="292" hits="10"></line>
+						<line number="293" hits="1"></line>
+						<line number="295" hits="9"></line>
+						<line number="299" hits="4"></line>
+						<line number="324" hits="2"></line>
+						<line number="325" hits="2"></line>
+						<line number="326" hits="2"></line>
+						<line number="331" hits="2"></line>
+						<line number="332" hits="0"></line>
+						<line number="335" hits="2"></line>
+						<line number="339" hits="14"></line>
+					</lines>
+				</class>
+				<class name="-" filename="springboot/config.go" line-rate="0.84615386" branch-rate="0" complexity="0" line-count="13" line-hits="11">
+					<methods>
+						<method name="NewYamlConfigOrDie" signature="" line-rate="0.84615386" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="17" hits="3"></line>
+								<line number="18" hits="3"></line>
+								<line number="19" hits="3"></line>
+								<line number="20" hits="3"></line>
+								<line number="21" hits="1"></line>
+								<line number="22" hits="1"></line>
+								<line number="23" hits="1"></line>
+								<line number="24" hits="0"></line>
+								<line number="26" hits="1"></line>
+								<line number="28" hits="2"></line>
+								<line number="31" hits="3"></line>
+								<line number="32" hits="0"></line>
+								<line number="35" hits="3"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="17" hits="3"></line>
+						<line number="18" hits="3"></line>
+						<line number="19" hits="3"></line>
+						<line number="20" hits="3"></line>
+						<line number="21" hits="1"></line>
+						<line number="22" hits="1"></line>
+						<line number="23" hits="1"></line>
+						<line number="24" hits="0"></line>
+						<line number="26" hits="1"></line>
+						<line number="28" hits="2"></line>
+						<line number="31" hits="3"></line>
+						<line number="32" hits="0"></line>
+						<line number="35" hits="3"></line>
+					</lines>
+				</class>
+				<class name="springBootDiscoveryExecutor" filename="springboot/core_executor.go" line-rate="0.77922076" branch-rate="0" complexity="0" line-count="77" line-hits="60">
+					<methods>
+						<method name="Discover" signature="" line-rate="0.7659575" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="30" hits="4"></line>
+								<line number="31" hits="4"></line>
+								<line number="32" hits="4"></line>
+								<line number="33" hits="4"></line>
+								<line number="34" hits="4"></line>
+								<line number="35" hits="2"></line>
+								<line number="37" hits="2"></line>
+								<line number="38" hits="2"></line>
+								<line number="40" hits="2"></line>
+								<line number="41" hits="2"></line>
+								<line number="42" hits="2"></line>
+								<line number="43" hits="0"></line>
+								<line number="45" hits="2"></line>
+								<line number="47" hits="2"></line>
+								<line number="48" hits="2"></line>
+								<line number="49" hits="2"></line>
+								<line number="50" hits="2"></line>
+								<line number="51" hits="2"></line>
+								<line number="52" hits="2"></line>
+								<line number="53" hits="2"></line>
+								<line number="55" hits="2"></line>
+								<line number="56" hits="2"></line>
+								<line number="57" hits="2"></line>
+								<line number="58" hits="0"></line>
+								<line number="59" hits="0"></line>
+								<line number="60" hits="0"></line>
+								<line number="63" hits="2"></line>
+								<line number="64" hits="2"></line>
+								<line number="65" hits="2"></line>
+								<line number="66" hits="0"></line>
+								<line number="68" hits="2"></line>
+								<line number="69" hits="2"></line>
+								<line number="70" hits="0"></line>
+								<line number="71" hits="0"></line>
+								<line number="72" hits="0"></line>
+								<line number="76" hits="2"></line>
+								<line number="77" hits="2"></line>
+								<line number="78" hits="0"></line>
+								<line number="79" hits="0"></line>
+								<line number="80" hits="0"></line>
+								<line number="82" hits="2"></line>
+								<line number="83" hits="2"></line>
+								<line number="84" hits="2"></line>
+								<line number="85" hits="2"></line>
+								<line number="87" hits="2"></line>
+								<line number="89" hits="2"></line>
+								<line number="92" hits="2"></line>
+							</lines>
+						</method>
+						<method name="discoverApp" signature="" line-rate="0.75" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="197" hits="2"></line>
+								<line number="198" hits="2"></line>
+								<line number="213" hits="2"></line>
+								<line number="214" hits="0"></line>
+								<line number="217" hits="2"></line>
+								<line number="218" hits="2"></line>
+								<line number="224" hits="2"></line>
+								<line number="225" hits="0"></line>
+								<line number="227" hits="2"></line>
+								<line number="229" hits="2"></line>
+								<line number="241" hits="2"></line>
+								<line number="242" hits="0"></line>
+								<line number="245" hits="2"></line>
+								<line number="247" hits="2"></line>
+								<line number="248" hits="0"></line>
+								<line number="251" hits="2"></line>
+							</lines>
+						</method>
+						<method name="tryConnect" signature="" line-rate="0.85714287" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="279" hits="4"></line>
+								<line number="280" hits="4"></line>
+								<line number="281" hits="4"></line>
+								<line number="282" hits="4"></line>
+								<line number="283" hits="4"></line>
+								<line number="284" hits="4"></line>
+								<line number="285" hits="0"></line>
+								<line number="286" hits="0"></line>
+								<line number="288" hits="4"></line>
+								<line number="295" hits="4"></line>
+								<line number="296" hits="2"></line>
+								<line number="297" hits="2"></line>
+								<line number="299" hits="2"></line>
+								<line number="304" hits="2"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="30" hits="4"></line>
+						<line number="31" hits="4"></line>
+						<line number="32" hits="4"></line>
+						<line number="33" hits="4"></line>
+						<line number="34" hits="4"></line>
+						<line number="35" hits="2"></line>
+						<line number="37" hits="2"></line>
+						<line number="38" hits="2"></line>
+						<line number="40" hits="2"></line>
+						<line number="41" hits="2"></line>
+						<line number="42" hits="2"></line>
+						<line number="43" hits="0"></line>
+						<line number="45" hits="2"></line>
+						<line number="47" hits="2"></line>
+						<line number="48" hits="2"></line>
+						<line number="49" hits="2"></line>
+						<line number="50" hits="2"></line>
+						<line number="51" hits="2"></line>
+						<line number="52" hits="2"></line>
+						<line number="53" hits="2"></line>
+						<line number="55" hits="2"></line>
+						<line number="56" hits="2"></line>
+						<line number="57" hits="2"></line>
+						<line number="58" hits="0"></line>
+						<line number="59" hits="0"></line>
+						<line number="60" hits="0"></line>
+						<line number="63" hits="2"></line>
+						<line number="64" hits="2"></line>
+						<line number="65" hits="2"></line>
+						<line number="66" hits="0"></line>
+						<line number="68" hits="2"></line>
+						<line number="69" hits="2"></line>
+						<line number="70" hits="0"></line>
+						<line number="71" hits="0"></line>
+						<line number="72" hits="0"></line>
+						<line number="76" hits="2"></line>
+						<line number="77" hits="2"></line>
+						<line number="78" hits="0"></line>
+						<line number="79" hits="0"></line>
+						<line number="80" hits="0"></line>
+						<line number="82" hits="2"></line>
+						<line number="83" hits="2"></line>
+						<line number="84" hits="2"></line>
+						<line number="85" hits="2"></line>
+						<line number="87" hits="2"></line>
+						<line number="89" hits="2"></line>
+						<line number="92" hits="2"></line>
+						<line number="197" hits="2"></line>
+						<line number="198" hits="2"></line>
+						<line number="213" hits="2"></line>
+						<line number="214" hits="0"></line>
+						<line number="217" hits="2"></line>
+						<line number="218" hits="2"></line>
+						<line number="224" hits="2"></line>
+						<line number="225" hits="0"></line>
+						<line number="227" hits="2"></line>
+						<line number="229" hits="2"></line>
+						<line number="241" hits="2"></line>
+						<line number="242" hits="0"></line>
+						<line number="245" hits="2"></line>
+						<line number="247" hits="2"></line>
+						<line number="248" hits="0"></line>
+						<line number="251" hits="2"></line>
+						<line number="279" hits="4"></line>
+						<line number="280" hits="4"></line>
+						<line number="281" hits="4"></line>
+						<line number="282" hits="4"></line>
+						<line number="283" hits="4"></line>
+						<line number="284" hits="4"></line>
+						<line number="285" hits="0"></line>
+						<line number="286" hits="0"></line>
+						<line number="288" hits="4"></line>
+						<line number="295" hits="4"></line>
+						<line number="296" hits="2"></line>
+						<line number="297" hits="2"></line>
+						<line number="299" hits="2"></line>
+						<line number="304" hits="2"></line>
+					</lines>
+				</class>
+				<class name="-" filename="springboot/core_executor.go" line-rate="0.9459459" branch-rate="0" complexity="0" line-count="37" line-hits="35">
+					<methods>
+						<method name="NewSpringBootDiscoveryExecutor" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="22" hits="4"></line>
+							</lines>
+						</method>
+						<method name="@95:27" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="96" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@99:32" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="100" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@103:33" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="104" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@107:35" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="108" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@111:27" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="112" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@115:27" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="116" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@119:26" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="120" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@123:28" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="124" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@127:31" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="128" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@131:35" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="132" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@135:37" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="136" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@139:32" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="140" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@143:32" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="144" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@147:27" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="148" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@151:41" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="152" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@155:45" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="156" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@159:41" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="160" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@163:37" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="164" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@167:29" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="168" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@171:32" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="172" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@175:30" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="176" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@179:32" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="180" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@183:36" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="184" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@187:26" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="188" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@191:29" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="192" hits="2"></line>
+							</lines>
+						</method>
+						<method name="mapToAppTypeString" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="255" hits="0"></line>
+							</lines>
+						</method>
+						<method name="mapToCommonParentFolder" signature="" line-rate="0.8888889" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="259" hits="2"></line>
+								<line number="260" hits="0"></line>
+								<line number="263" hits="2"></line>
+								<line number="264" hits="2"></line>
+								<line number="265" hits="12"></line>
+								<line number="266" hits="12"></line>
+								<line number="267" hits="12"></line>
+								<line number="268" hits="4"></line>
+								<line number="271" hits="2"></line>
+							</lines>
+						</method>
+						<method name="sanitizeArtifactName" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="275" hits="4"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="22" hits="4"></line>
+						<line number="96" hits="2"></line>
+						<line number="100" hits="2"></line>
+						<line number="104" hits="2"></line>
+						<line number="108" hits="2"></line>
+						<line number="112" hits="2"></line>
+						<line number="116" hits="2"></line>
+						<line number="120" hits="2"></line>
+						<line number="124" hits="2"></line>
+						<line number="128" hits="2"></line>
+						<line number="132" hits="2"></line>
+						<line number="136" hits="2"></line>
+						<line number="140" hits="2"></line>
+						<line number="144" hits="2"></line>
+						<line number="148" hits="2"></line>
+						<line number="152" hits="2"></line>
+						<line number="156" hits="2"></line>
+						<line number="160" hits="2"></line>
+						<line number="164" hits="2"></line>
+						<line number="168" hits="2"></line>
+						<line number="172" hits="2"></line>
+						<line number="176" hits="2"></line>
+						<line number="180" hits="2"></line>
+						<line number="184" hits="2"></line>
+						<line number="188" hits="2"></line>
+						<line number="192" hits="2"></line>
+						<line number="255" hits="0"></line>
+						<line number="259" hits="2"></line>
+						<line number="260" hits="0"></line>
+						<line number="263" hits="2"></line>
+						<line number="264" hits="2"></line>
+						<line number="265" hits="12"></line>
+						<line number="266" hits="12"></line>
+						<line number="267" hits="12"></line>
+						<line number="268" hits="4"></line>
+						<line number="271" hits="2"></line>
+						<line number="275" hits="4"></line>
+					</lines>
+				</class>
+				<class name="jarFile" filename="springboot/jarfile.go" line-rate="0.88709676" branch-rate="0" complexity="0" line-count="62" line-hits="55">
+					<methods>
+						<method name="GetAppType" signature="" line-rate="0.875" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="56" hits="5"></line>
+								<line number="57" hits="5"></line>
+								<line number="71" hits="5"></line>
+								<line number="78" hits="5"></line>
+								<line number="87" hits="5"></line>
+								<line number="88" hits="5"></line>
+								<line number="89" hits="5"></line>
+								<line number="91" hits="0"></line>
+							</lines>
+						</method>
+						<method name="GetArtifactGroup" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="95" hits="2"></line>
+							</lines>
+						</method>
+						<method name="GetArtifactName" signature="" line-rate="0.85714287" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="100" hits="6"></line>
+								<line number="107" hits="6"></line>
+								<line number="114" hits="6"></line>
+								<line number="119" hits="6"></line>
+								<line number="120" hits="6"></line>
+								<line number="121" hits="6"></line>
+								<line number="123" hits="0"></line>
+							</lines>
+						</method>
+						<method name="GetArtifactVersion" signature="" line-rate="0.8333333" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="128" hits="2"></line>
+								<line number="135" hits="2"></line>
+								<line number="146" hits="2"></line>
+								<line number="147" hits="2"></line>
+								<line number="148" hits="2"></line>
+								<line number="150" hits="0"></line>
+							</lines>
+						</method>
+						<method name="GetAppName" signature="" line-rate="0.875" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="154" hits="9"></line>
+								<line number="167" hits="9"></line>
+								<line number="180" hits="9"></line>
+								<line number="195" hits="9"></line>
+								<line number="199" hits="9"></line>
+								<line number="200" hits="9"></line>
+								<line number="201" hits="9"></line>
+								<line number="203" hits="0"></line>
+							</lines>
+						</method>
+						<method name="GetAppPort" signature="" line-rate="0.875" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="208" hits="9"></line>
+								<line number="231" hits="9"></line>
+								<line number="250" hits="9"></line>
+								<line number="271" hits="9"></line>
+								<line number="275" hits="9"></line>
+								<line number="276" hits="9"></line>
+								<line number="277" hits="9"></line>
+								<line number="279" hits="0"></line>
+							</lines>
+						</method>
+						<method name="GetChecksum" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="284" hits="5"></line>
+							</lines>
+						</method>
+						<method name="GetBuildJdkVersion" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="288" hits="9"></line>
+								<line number="301" hits="9"></line>
+								<line number="308" hits="9"></line>
+								<line number="315" hits="9"></line>
+								<line number="316" hits="9"></line>
+								<line number="317" hits="7"></line>
+								<line number="319" hits="2"></line>
+							</lines>
+						</method>
+						<method name="GetSpringBootVersion" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="323" hits="9"></line>
+								<line number="330" hits="9"></line>
+								<line number="342" hits="9"></line>
+								<line number="343" hits="9"></line>
+								<line number="344" hits="6"></line>
+								<line number="346" hits="3"></line>
+							</lines>
+						</method>
+						<method name="GetApplicationConfigurations" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="350" hits="5"></line>
+							</lines>
+						</method>
+						<method name="GetLoggingFiles" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="354" hits="5"></line>
+							</lines>
+						</method>
+						<method name="GetDependencies" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="358" hits="5"></line>
+							</lines>
+						</method>
+						<method name="GetCertificates" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="362" hits="5"></line>
+							</lines>
+						</method>
+						<method name="GetStaticFiles" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="366" hits="5"></line>
+							</lines>
+						</method>
+						<method name="GetLocation" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="370" hits="2"></line>
+							</lines>
+						</method>
+						<method name="GetLastModifiedTime" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="374" hits="2"></line>
+							</lines>
+						</method>
+						<method name="GetSize" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="378" hits="2"></line>
+							</lines>
+						</method>
+						<method name="GetManifests" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="382" hits="0"></line>
+							</lines>
+						</method>
+						<method name="GetMavenProject" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="386" hits="0"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="56" hits="5"></line>
+						<line number="57" hits="5"></line>
+						<line number="71" hits="5"></line>
+						<line number="78" hits="5"></line>
+						<line number="87" hits="5"></line>
+						<line number="88" hits="5"></line>
+						<line number="89" hits="5"></line>
+						<line number="91" hits="0"></line>
+						<line number="95" hits="2"></line>
+						<line number="100" hits="6"></line>
+						<line number="107" hits="6"></line>
+						<line number="114" hits="6"></line>
+						<line number="119" hits="6"></line>
+						<line number="120" hits="6"></line>
+						<line number="121" hits="6"></line>
+						<line number="123" hits="0"></line>
+						<line number="128" hits="2"></line>
+						<line number="135" hits="2"></line>
+						<line number="146" hits="2"></line>
+						<line number="147" hits="2"></line>
+						<line number="148" hits="2"></line>
+						<line number="150" hits="0"></line>
+						<line number="154" hits="9"></line>
+						<line number="167" hits="9"></line>
+						<line number="180" hits="9"></line>
+						<line number="195" hits="9"></line>
+						<line number="199" hits="9"></line>
+						<line number="200" hits="9"></line>
+						<line number="201" hits="9"></line>
+						<line number="203" hits="0"></line>
+						<line number="208" hits="9"></line>
+						<line number="231" hits="9"></line>
+						<line number="250" hits="9"></line>
+						<line number="271" hits="9"></line>
+						<line number="275" hits="9"></line>
+						<line number="276" hits="9"></line>
+						<line number="277" hits="9"></line>
+						<line number="279" hits="0"></line>
+						<line number="284" hits="5"></line>
+						<line number="288" hits="9"></line>
+						<line number="301" hits="9"></line>
+						<line number="308" hits="9"></line>
+						<line number="315" hits="9"></line>
+						<line number="316" hits="9"></line>
+						<line number="317" hits="7"></line>
+						<line number="319" hits="2"></line>
+						<line number="323" hits="9"></line>
+						<line number="330" hits="9"></line>
+						<line number="342" hits="9"></line>
+						<line number="343" hits="9"></line>
+						<line number="344" hits="6"></line>
+						<line number="346" hits="3"></line>
+						<line number="350" hits="5"></line>
+						<line number="354" hits="5"></line>
+						<line number="358" hits="5"></line>
+						<line number="362" hits="5"></line>
+						<line number="366" hits="5"></line>
+						<line number="370" hits="2"></line>
+						<line number="374" hits="2"></line>
+						<line number="378" hits="2"></line>
+						<line number="382" hits="0"></line>
+						<line number="386" hits="0"></line>
+					</lines>
+				</class>
+				<class name="-" filename="springboot/jarfile.go" line-rate="0.80136985" branch-rate="0" complexity="0" line-count="146" line-hits="117">
+					<methods>
+						<method name="@57:47" signature="" line-rate="0.8" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="58" hits="5"></line>
+								<line number="59" hits="5"></line>
+								<line number="62" hits="0"></line>
+								<line number="64" hits="1"></line>
+								<line number="68" hits="4"></line>
+							</lines>
+						</method>
+						<method name="@71:42" signature="" line-rate="0.6666667" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="72" hits="4"></line>
+								<line number="73" hits="4"></line>
+								<line number="75" hits="0"></line>
+							</lines>
+						</method>
+						<method name="@78:43" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="79" hits="0"></line>
+								<line number="80" hits="0"></line>
+								<line number="81" hits="0"></line>
+								<line number="84" hits="0"></line>
+							</lines>
+						</method>
+						<method name="@100:46" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="101" hits="3"></line>
+								<line number="102" hits="1"></line>
+								<line number="104" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@107:41" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="108" hits="6"></line>
+								<line number="109" hits="3"></line>
+								<line number="111" hits="3"></line>
+							</lines>
+						</method>
+						<method name="@114:46" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="115" hits="2"></line>
+								<line number="116" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@128:46" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="129" hits="0"></line>
+								<line number="130" hits="0"></line>
+								<line number="132" hits="0"></line>
+							</lines>
+						</method>
+						<method name="@135:41" signature="" line-rate="0.6" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="136" hits="2"></line>
+								<line number="137" hits="0"></line>
+								<line number="140" hits="2"></line>
+								<line number="141" hits="2"></line>
+								<line number="143" hits="0"></line>
+							</lines>
+						</method>
+						<method name="@154:45" signature="" line-rate="0.8333333" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="155" hits="3"></line>
+								<line number="156" hits="5"></line>
+								<line number="157" hits="5"></line>
+								<line number="158" hits="3"></line>
+								<line number="159" hits="3"></line>
+								<line number="164" hits="0"></line>
+							</lines>
+						</method>
+						<method name="@167:46" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="168" hits="4"></line>
+								<line number="169" hits="6"></line>
+								<line number="170" hits="6"></line>
+								<line number="171" hits="3"></line>
+								<line number="172" hits="1"></line>
+								<line number="177" hits="3"></line>
+							</lines>
+						</method>
+						<method name="@180:45" signature="" line-rate="0.875" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="181" hits="9"></line>
+								<line number="182" hits="9"></line>
+								<line number="183" hits="0"></line>
+								<line number="185" hits="9"></line>
+								<line number="186" hits="9"></line>
+								<line number="187" hits="37"></line>
+								<line number="188" hits="5"></line>
+								<line number="192" hits="4"></line>
+							</lines>
+						</method>
+						<method name="@195:46" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="196" hits="0"></line>
+							</lines>
+						</method>
+						<method name="@208:42" signature="" line-rate="0.5833333" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="209" hits="4"></line>
+								<line number="210" hits="7"></line>
+								<line number="211" hits="7"></line>
+								<line number="212" hits="4"></line>
+								<line number="213" hits="1"></line>
+								<line number="215" hits="3"></line>
+								<line number="216" hits="0"></line>
+								<line number="217" hits="0"></line>
+								<line number="218" hits="0"></line>
+								<line number="219" hits="0"></line>
+								<line number="221" hits="0"></line>
+								<line number="228" hits="3"></line>
+							</lines>
+						</method>
+						<method name="@231:43" signature="" line-rate="0.8" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="232" hits="3"></line>
+								<line number="233" hits="4"></line>
+								<line number="234" hits="4"></line>
+								<line number="235" hits="3"></line>
+								<line number="236" hits="3"></line>
+								<line number="237" hits="3"></line>
+								<line number="238" hits="3"></line>
+								<line number="239" hits="0"></line>
+								<line number="241" hits="3"></line>
+								<line number="247" hits="0"></line>
+							</lines>
+						</method>
+						<method name="@250:42" signature="" line-rate="0.8333333" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="251" hits="9"></line>
+								<line number="252" hits="9"></line>
+								<line number="253" hits="0"></line>
+								<line number="255" hits="9"></line>
+								<line number="256" hits="9"></line>
+								<line number="257" hits="38"></line>
+								<line number="258" hits="5"></line>
+								<line number="259" hits="5"></line>
+								<line number="260" hits="5"></line>
+								<line number="261" hits="0"></line>
+								<line number="263" hits="5"></line>
+								<line number="268" hits="4"></line>
+							</lines>
+						</method>
+						<method name="@271:43" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="272" hits="0"></line>
+							</lines>
+						</method>
+						<method name="@288:41" signature="" line-rate="0.8333333" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="289" hits="9"></line>
+								<line number="290" hits="3"></line>
+								<line number="292" hits="6"></line>
+								<line number="293" hits="10"></line>
+								<line number="294" hits="6"></line>
+								<line number="298" hits="0"></line>
+							</lines>
+						</method>
+						<method name="@301:40" signature="" line-rate="0.6666667" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="302" hits="2"></line>
+								<line number="303" hits="0"></line>
+								<line number="305" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@308:40" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="309" hits="3"></line>
+								<line number="310" hits="1"></line>
+								<line number="312" hits="2"></line>
+							</lines>
+						</method>
+						<method name="@323:46" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="324" hits="4"></line>
+								<line number="325" hits="1"></line>
+								<line number="327" hits="3"></line>
+							</lines>
+						</method>
+						<method name="@330:41" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="331" hits="9"></line>
+								<line number="332" hits="3"></line>
+								<line number="335" hits="6"></line>
+								<line number="337" hits="5"></line>
+								<line number="339" hits="1"></line>
+							</lines>
+						</method>
+						<method name="parseManifests" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="390" hits="20"></line>
+								<line number="391" hits="20"></line>
+								<line number="392" hits="20"></line>
+								<line number="393" hits="128"></line>
+								<line number="394" hits="128"></line>
+								<line number="396" hits="128"></line>
+								<line number="397" hits="123"></line>
+								<line number="399" hits="5"></line>
+								<line number="402" hits="20"></line>
+							</lines>
+						</method>
+						<method name="isLoggingConfig" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="406" hits="522"></line>
+								<line number="407" hits="7224"></line>
+								<line number="408" hits="10"></line>
+								<line number="411" hits="512"></line>
+							</lines>
+						</method>
+						<method name="isCertificate" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="415" hits="522"></line>
+								<line number="417" hits="522"></line>
+							</lines>
+						</method>
+						<method name="isStaticContent" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="421" hits="522"></line>
+								<line number="422" hits="1554"></line>
+								<line number="423" hits="12"></line>
+								<line number="426" hits="510"></line>
+								<line number="427" hits="510"></line>
+								<line number="428" hits="12"></line>
+								<line number="431" hits="498"></line>
+							</lines>
+						</method>
+						<method name="isAppConfig" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="435" hits="522"></line>
+								<line number="436" hits="2072"></line>
+								<line number="437" hits="8"></line>
+								<line number="440" hits="514"></line>
+							</lines>
+						</method>
+						<method name="isPomFile" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="444" hits="522"></line>
+							</lines>
+						</method>
+						<method name="readFileInArchive" signature="" line-rate="0.8181818" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="448" hits="28"></line>
+								<line number="449" hits="28"></line>
+								<line number="450" hits="28"></line>
+								<line number="451" hits="28"></line>
+								<line number="452" hits="0"></line>
+								<line number="454" hits="28"></line>
+								<line number="455" hits="28"></line>
+								<line number="456" hits="28"></line>
+								<line number="457" hits="28"></line>
+								<line number="458" hits="0"></line>
+								<line number="461" hits="28"></line>
+							</lines>
+						</method>
+						<method name="readPom" signature="" line-rate="0.75" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="465" hits="10"></line>
+								<line number="467" hits="10"></line>
+								<line number="468" hits="0"></line>
+								<line number="471" hits="10"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="58" hits="5"></line>
+						<line number="59" hits="5"></line>
+						<line number="62" hits="0"></line>
+						<line number="64" hits="1"></line>
+						<line number="68" hits="4"></line>
+						<line number="72" hits="4"></line>
+						<line number="73" hits="4"></line>
+						<line number="75" hits="0"></line>
+						<line number="79" hits="0"></line>
+						<line number="80" hits="0"></line>
+						<line number="81" hits="0"></line>
+						<line number="84" hits="0"></line>
+						<line number="101" hits="3"></line>
+						<line number="102" hits="1"></line>
+						<line number="104" hits="2"></line>
+						<line number="108" hits="6"></line>
+						<line number="109" hits="3"></line>
+						<line number="111" hits="3"></line>
+						<line number="115" hits="2"></line>
+						<line number="116" hits="2"></line>
+						<line number="129" hits="0"></line>
+						<line number="130" hits="0"></line>
+						<line number="132" hits="0"></line>
+						<line number="136" hits="2"></line>
+						<line number="137" hits="0"></line>
+						<line number="140" hits="2"></line>
+						<line number="141" hits="2"></line>
+						<line number="143" hits="0"></line>
+						<line number="155" hits="3"></line>
+						<line number="156" hits="5"></line>
+						<line number="157" hits="5"></line>
+						<line number="158" hits="3"></line>
+						<line number="159" hits="3"></line>
+						<line number="164" hits="0"></line>
+						<line number="168" hits="4"></line>
+						<line number="169" hits="6"></line>
+						<line number="170" hits="6"></line>
+						<line number="171" hits="3"></line>
+						<line number="172" hits="1"></line>
+						<line number="177" hits="3"></line>
+						<line number="181" hits="9"></line>
+						<line number="182" hits="9"></line>
+						<line number="183" hits="0"></line>
+						<line number="185" hits="9"></line>
+						<line number="186" hits="9"></line>
+						<line number="187" hits="37"></line>
+						<line number="188" hits="5"></line>
+						<line number="192" hits="4"></line>
+						<line number="196" hits="0"></line>
+						<line number="209" hits="4"></line>
+						<line number="210" hits="7"></line>
+						<line number="211" hits="7"></line>
+						<line number="212" hits="4"></line>
+						<line number="213" hits="1"></line>
+						<line number="215" hits="3"></line>
+						<line number="216" hits="0"></line>
+						<line number="217" hits="0"></line>
+						<line number="218" hits="0"></line>
+						<line number="219" hits="0"></line>
+						<line number="221" hits="0"></line>
+						<line number="228" hits="3"></line>
+						<line number="232" hits="3"></line>
+						<line number="233" hits="4"></line>
+						<line number="234" hits="4"></line>
+						<line number="235" hits="3"></line>
+						<line number="236" hits="3"></line>
+						<line number="237" hits="3"></line>
+						<line number="238" hits="3"></line>
+						<line number="239" hits="0"></line>
+						<line number="241" hits="3"></line>
+						<line number="247" hits="0"></line>
+						<line number="251" hits="9"></line>
+						<line number="252" hits="9"></line>
+						<line number="253" hits="0"></line>
+						<line number="255" hits="9"></line>
+						<line number="256" hits="9"></line>
+						<line number="257" hits="38"></line>
+						<line number="258" hits="5"></line>
+						<line number="259" hits="5"></line>
+						<line number="260" hits="5"></line>
+						<line number="261" hits="0"></line>
+						<line number="263" hits="5"></line>
+						<line number="268" hits="4"></line>
+						<line number="272" hits="0"></line>
+						<line number="289" hits="9"></line>
+						<line number="290" hits="3"></line>
+						<line number="292" hits="6"></line>
+						<line number="293" hits="10"></line>
+						<line number="294" hits="6"></line>
+						<line number="298" hits="0"></line>
+						<line number="302" hits="2"></line>
+						<line number="303" hits="0"></line>
+						<line number="305" hits="2"></line>
+						<line number="309" hits="3"></line>
+						<line number="310" hits="1"></line>
+						<line number="312" hits="2"></line>
+						<line number="324" hits="4"></line>
+						<line number="325" hits="1"></line>
+						<line number="327" hits="3"></line>
+						<line number="331" hits="9"></line>
+						<line number="332" hits="3"></line>
+						<line number="335" hits="6"></line>
+						<line number="337" hits="5"></line>
+						<line number="339" hits="1"></line>
+						<line number="390" hits="20"></line>
+						<line number="391" hits="20"></line>
+						<line number="392" hits="20"></line>
+						<line number="393" hits="128"></line>
+						<line number="394" hits="128"></line>
+						<line number="396" hits="128"></line>
+						<line number="397" hits="123"></line>
+						<line number="399" hits="5"></line>
+						<line number="402" hits="20"></line>
+						<line number="406" hits="522"></line>
+						<line number="407" hits="7224"></line>
+						<line number="408" hits="10"></line>
+						<line number="411" hits="512"></line>
+						<line number="415" hits="522"></line>
+						<line number="417" hits="522"></line>
+						<line number="421" hits="522"></line>
+						<line number="422" hits="1554"></line>
+						<line number="423" hits="12"></line>
+						<line number="426" hits="510"></line>
+						<line number="427" hits="510"></line>
+						<line number="428" hits="12"></line>
+						<line number="431" hits="498"></line>
+						<line number="435" hits="522"></line>
+						<line number="436" hits="2072"></line>
+						<line number="437" hits="8"></line>
+						<line number="440" hits="514"></line>
+						<line number="444" hits="522"></line>
+						<line number="448" hits="28"></line>
+						<line number="449" hits="28"></line>
+						<line number="450" hits="28"></line>
+						<line number="451" hits="28"></line>
+						<line number="452" hits="0"></line>
+						<line number="454" hits="28"></line>
+						<line number="455" hits="28"></line>
+						<line number="456" hits="28"></line>
+						<line number="457" hits="28"></line>
+						<line number="458" hits="0"></line>
+						<line number="461" hits="28"></line>
+						<line number="465" hits="10"></line>
+						<line number="467" hits="10"></line>
+						<line number="468" hits="0"></line>
+						<line number="471" hits="10"></line>
+					</lines>
+				</class>
+				<class name="-" filename="springboot/linux_cmd.go" line-rate="0.8333333" branch-rate="0" complexity="0" line-count="12" line-hits="10">
+					<methods>
+						<method name="GetProcessScanCmd" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="21" hits="8"></line>
+							</lines>
+						</method>
+						<method name="GetLocateJarCmd" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="25" hits="4"></line>
+							</lines>
+						</method>
+						<method name="GetSha256Cmd" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="29" hits="5"></line>
+							</lines>
+						</method>
+						<method name="GetEnvCmd" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="33" hits="7"></line>
+							</lines>
+						</method>
+						<method name="GetJdkVersionCmd" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="37" hits="4"></line>
+							</lines>
+						</method>
+						<method name="GetTotalMemoryCmd" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="41" hits="5"></line>
+							</lines>
+						</method>
+						<method name="GetDefaultMaxHeap" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="45" hits="10"></line>
+							</lines>
+						</method>
+						<method name="GetPortsCmd" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="49" hits="7"></line>
+							</lines>
+						</method>
+						<method name="GetOsName" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="53" hits="8"></line>
+							</lines>
+						</method>
+						<method name="GetOsVersion" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="57" hits="4"></line>
+							</lines>
+						</method>
+						<method name="GetCentOsName" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="61" hits="0"></line>
+							</lines>
+						</method>
+						<method name="GetCentOsVersion" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="65" hits="0"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="21" hits="8"></line>
+						<line number="25" hits="4"></line>
+						<line number="29" hits="5"></line>
+						<line number="33" hits="7"></line>
+						<line number="37" hits="4"></line>
+						<line number="41" hits="5"></line>
+						<line number="45" hits="10"></line>
+						<line number="49" hits="7"></line>
+						<line number="53" hits="8"></line>
+						<line number="57" hits="4"></line>
+						<line number="61" hits="0"></line>
+						<line number="65" hits="0"></line>
+					</lines>
+				</class>
+				<class name="-" filename="springboot/util.go" line-rate="0.94827586" branch-rate="0" complexity="0" line-count="58" line-hits="55">
+					<methods>
+						<method name="New" signature="" line-rate="0.8" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="15" hits="6"></line>
+								<line number="16" hits="6"></line>
+								<line number="17" hits="6"></line>
+								<line number="18" hits="6"></line>
+								<line number="20" hits="0"></line>
+							</lines>
+						</method>
+						<method name="ParseYaml" signature="" line-rate="0.8" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="24" hits="10"></line>
+								<line number="25" hits="10"></line>
+								<line number="26" hits="10"></line>
+								<line number="27" hits="0"></line>
+								<line number="29" hits="10"></line>
+							</lines>
+						</method>
+						<method name="ParseProperties" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="33" hits="24"></line>
+								<line number="34" hits="24"></line>
+								<line number="35" hits="24"></line>
+								<line number="36" hits="116"></line>
+								<line number="37" hits="116"></line>
+								<line number="38" hits="116"></line>
+								<line number="39" hits="90"></line>
+								<line number="40" hits="90"></line>
+								<line number="41" hits="90"></line>
+								<line number="43" hits="26"></line>
+								<line number="46" hits="24"></line>
+							</lines>
+						</method>
+						<method name="flatten" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="50" hits="10"></line>
+								<line number="51" hits="10"></line>
+								<line number="52" hits="10"></line>
+								<line number="68" hits="10"></line>
+								<line number="69" hits="10"></line>
+							</lines>
+						</method>
+						<method name="@52:6" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="53" hits="48"></line>
+								<line number="54" hits="98"></line>
+								<line number="55" hits="98"></line>
+								<line number="56" hits="78"></line>
+								<line number="58" hits="20"></line>
+								<line number="60" hits="98"></line>
+								<line number="62" hits="38"></line>
+								<line number="64" hits="60"></line>
+							</lines>
+						</method>
+						<method name="GetConfigFromYaml" signature="" line-rate="0.875" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="73" hits="10"></line>
+								<line number="74" hits="10"></line>
+								<line number="75" hits="10"></line>
+								<line number="76" hits="0"></line>
+								<line number="78" hits="10"></line>
+								<line number="79" hits="10"></line>
+								<line number="80" hits="4"></line>
+								<line number="83" hits="6"></line>
+							</lines>
+						</method>
+						<method name="GetConfigFromProperties" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="87" hits="6"></line>
+								<line number="89" hits="6"></line>
+								<line number="90" hits="4"></line>
+								<line number="93" hits="2"></line>
+							</lines>
+						</method>
+						<method name="CleanOutput" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="97" hits="87"></line>
+								<line number="98" hits="87"></line>
+								<line number="99" hits="87"></line>
+								<line number="100" hits="87"></line>
+								<line number="101" hits="87"></line>
+								<line number="102" hits="87"></line>
+								<line number="103" hits="87"></line>
+							</lines>
+						</method>
+						<method name="Contains" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="107" hits="1110"></line>
+								<line number="108" hits="9299"></line>
+								<line number="109" hits="84"></line>
+								<line number="112" hits="1026"></line>
+							</lines>
+						</method>
+						<method name="CmdMatcher" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="153" hits="12"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="15" hits="6"></line>
+						<line number="16" hits="6"></line>
+						<line number="17" hits="6"></line>
+						<line number="18" hits="6"></line>
+						<line number="20" hits="0"></line>
+						<line number="24" hits="10"></line>
+						<line number="25" hits="10"></line>
+						<line number="26" hits="10"></line>
+						<line number="27" hits="0"></line>
+						<line number="29" hits="10"></line>
+						<line number="33" hits="24"></line>
+						<line number="34" hits="24"></line>
+						<line number="35" hits="24"></line>
+						<line number="36" hits="116"></line>
+						<line number="37" hits="116"></line>
+						<line number="38" hits="116"></line>
+						<line number="39" hits="90"></line>
+						<line number="40" hits="90"></line>
+						<line number="41" hits="90"></line>
+						<line number="43" hits="26"></line>
+						<line number="46" hits="24"></line>
+						<line number="50" hits="10"></line>
+						<line number="51" hits="10"></line>
+						<line number="52" hits="10"></line>
+						<line number="68" hits="10"></line>
+						<line number="69" hits="10"></line>
+						<line number="53" hits="48"></line>
+						<line number="54" hits="98"></line>
+						<line number="55" hits="98"></line>
+						<line number="56" hits="78"></line>
+						<line number="58" hits="20"></line>
+						<line number="60" hits="98"></line>
+						<line number="62" hits="38"></line>
+						<line number="64" hits="60"></line>
+						<line number="73" hits="10"></line>
+						<line number="74" hits="10"></line>
+						<line number="75" hits="10"></line>
+						<line number="76" hits="0"></line>
+						<line number="78" hits="10"></line>
+						<line number="79" hits="10"></line>
+						<line number="80" hits="4"></line>
+						<line number="83" hits="6"></line>
+						<line number="87" hits="6"></line>
+						<line number="89" hits="6"></line>
+						<line number="90" hits="4"></line>
+						<line number="93" hits="2"></line>
+						<line number="97" hits="87"></line>
+						<line number="98" hits="87"></line>
+						<line number="99" hits="87"></line>
+						<line number="100" hits="87"></line>
+						<line number="101" hits="87"></line>
+						<line number="102" hits="87"></line>
+						<line number="103" hits="87"></line>
+						<line number="107" hits="1110"></line>
+						<line number="108" hits="9299"></line>
+						<line number="109" hits="84"></line>
+						<line number="112" hits="1026"></line>
+						<line number="153" hits="12"></line>
+					</lines>
+				</class>
+				<class name="" filename="springboot/util.go" line-rate="1" branch-rate="0" complexity="0" line-count="5" line-hits="5">
+					<methods>
+						<method name="try" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="120" hits="55"></line>
+								<line number="121" hits="55"></line>
+								<line number="122" hits="87"></line>
+								<line number="123" hits="50"></line>
+								<line number="127" hits="5"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="120" hits="55"></line>
+						<line number="121" hits="55"></line>
+						<line number="122" hits="87"></line>
+						<line number="123" hits="50"></line>
+						<line number="127" hits="5"></line>
+					</lines>
+				</class>
+				<class name="cmdMatcher" filename="springboot/util.go" line-rate="1" branch-rate="0" complexity="0" line-count="12" line-hits="12">
+					<methods>
+						<method name="Matches" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="135" hits="34"></line>
+								<line number="136" hits="34"></line>
+								<line number="137" hits="34"></line>
+								<line number="138" hits="34"></line>
+								<line number="139" hits="34"></line>
+								<line number="140" hits="34"></line>
+								<line number="141" hits="34"></line>
+								<line number="142" hits="34"></line>
+								<line number="143" hits="34"></line>
+								<line number="144" hits="34"></line>
+								<line number="145" hits="34"></line>
+							</lines>
+						</method>
+						<method name="String" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="149" hits="26"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="135" hits="34"></line>
+						<line number="136" hits="34"></line>
+						<line number="137" hits="34"></line>
+						<line number="138" hits="34"></line>
+						<line number="139" hits="34"></line>
+						<line number="140" hits="34"></line>
+						<line number="141" hits="34"></line>
+						<line number="142" hits="34"></line>
+						<line number="143" hits="34"></line>
+						<line number="144" hits="34"></line>
+						<line number="145" hits="34"></line>
+						<line number="149" hits="26"></line>
+					</lines>
+				</class>
+				<class name="CredentialError" filename="springboot/errors.go" line-rate="0.5" branch-rate="0" complexity="0" line-count="2" line-hits="1">
+					<methods>
+						<method name="Error" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="61" hits="0"></line>
+							</lines>
+						</method>
+						<method name="Unwrap" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="65" hits="1"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="61" hits="0"></line>
+						<line number="65" hits="1"></line>
+					</lines>
+				</class>
+				<class name="-" filename="springboot/errors.go" line-rate="0.16666667" branch-rate="0" complexity="0" line-count="12" line-hits="2">
+					<methods>
+						<method name="Join" signature="" line-rate="0.33333334" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="69" hits="2"></line>
+								<line number="70" hits="2"></line>
+								<line number="73" hits="0"></line>
+								<line number="74" hits="0"></line>
+								<line number="75" hits="0"></line>
+								<line number="77" hits="0"></line>
+							</lines>
+						</method>
+						<method name="IsSshError" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="93" hits="0"></line>
+							</lines>
+						</method>
+						<method name="IsConnectionError" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="97" hits="0"></line>
+							</lines>
+						</method>
+						<method name="IsCredentialError" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="101" hits="0"></line>
+							</lines>
+						</method>
+						<method name="IsPermissionDenied" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="105" hits="0"></line>
+							</lines>
+						</method>
+						<method name="IsJoinErrors" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="109" hits="0"></line>
+							</lines>
+						</method>
+						<method name="is" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="113" hits="0"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="69" hits="2"></line>
+						<line number="70" hits="2"></line>
+						<line number="73" hits="0"></line>
+						<line number="74" hits="0"></line>
+						<line number="75" hits="0"></line>
+						<line number="77" hits="0"></line>
+						<line number="93" hits="0"></line>
+						<line number="97" hits="0"></line>
+						<line number="101" hits="0"></line>
+						<line number="105" hits="0"></line>
+						<line number="109" hits="0"></line>
+						<line number="113" hits="0"></line>
+					</lines>
+				</class>
+				<class name="JoinErrors" filename="springboot/errors.go" line-rate="0" branch-rate="0" complexity="0" line-count="2" line-hits="0">
+					<methods>
+						<method name="Error" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="85" hits="0"></line>
+							</lines>
+						</method>
+						<method name="Unwrap" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="89" hits="0"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="85" hits="0"></line>
+						<line number="89" hits="0"></line>
+					</lines>
+				</class>
+				<class name="SshError" filename="springboot/errors.go" line-rate="0" branch-rate="0" complexity="0" line-count="2" line-hits="0">
+					<methods>
+						<method name="Error" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="14" hits="0"></line>
+							</lines>
+						</method>
+						<method name="Unwrap" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="18" hits="0"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="14" hits="0"></line>
+						<line number="18" hits="0"></line>
+					</lines>
+				</class>
+				<class name="PermissionDenied" filename="springboot/errors.go" line-rate="0" branch-rate="0" complexity="0" line-count="2" line-hits="0">
+					<methods>
+						<method name="Error" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="27" hits="0"></line>
+							</lines>
+						</method>
+						<method name="Unwrap" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="31" hits="0"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="27" hits="0"></line>
+						<line number="31" hits="0"></line>
+					</lines>
+				</class>
+				<class name="ConnectionError" filename="springboot/errors.go" line-rate="0" branch-rate="0" complexity="0" line-count="2" line-hits="0">
+					<methods>
+						<method name="Error" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="40" hits="0"></line>
+							</lines>
+						</method>
+						<method name="Unwrap" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="44" hits="0"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="40" hits="0"></line>
+						<line number="44" hits="0"></line>
+					</lines>
+				</class>
+				<class name="ConnectionTimeoutError" filename="springboot/errors.go" line-rate="0" branch-rate="0" complexity="0" line-count="1" line-hits="0">
+					<methods>
+						<method name="Error" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="52" hits="0"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="52" hits="0"></line>
+					</lines>
+				</class>
+				<class name="versions" filename="springboot/version.go" line-rate="1" branch-rate="0" complexity="0" line-count="4" line-hits="4">
+					<methods>
+						<method name="match" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="21" hits="2"></line>
+								<line number="22" hits="8"></line>
+								<line number="26" hits="1"></line>
+								<line number="29" hits="1"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="21" hits="2"></line>
+						<line number="22" hits="8"></line>
+						<line number="26" hits="1"></line>
+						<line number="29" hits="1"></line>
+					</lines>
+				</class>
+				<class name="versionMatcher" filename="springboot/version.go" line-rate="0.4" branch-rate="0" complexity="0" line-count="5" line-hits="2">
+					<methods>
+						<method name="Match" signature="" line-rate="0.6666667" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="33" hits="10"></line>
+								<line number="34" hits="0"></line>
+								<line number="36" hits="10"></line>
+							</lines>
+						</method>
+						<method name="FailureMessage" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="53" hits="0"></line>
+							</lines>
+						</method>
+						<method name="NegatedFailureMessage" signature="" line-rate="0" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="57" hits="0"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="33" hits="10"></line>
+						<line number="34" hits="0"></line>
+						<line number="36" hits="10"></line>
+						<line number="53" hits="0"></line>
+						<line number="57" hits="0"></line>
+					</lines>
+				</class>
+				<class name="-" filename="springboot/version.go" line-rate="1" branch-rate="0" complexity="0" line-count="10" line-hits="10">
+					<methods>
+						<method name="normalize" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="43" hits="68"></line>
+								<line number="44" hits="4"></line>
+								<line number="46" hits="64"></line>
+								<line number="47" hits="60"></line>
+								<line number="49" hits="4"></line>
+							</lines>
+						</method>
+						<method name="MatchVersion" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="61" hits="6"></line>
+							</lines>
+						</method>
+						<method name="LessThan" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="65" hits="6"></line>
+							</lines>
+						</method>
+						<method name="GreatThan" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="69" hits="6"></line>
+							</lines>
+						</method>
+						<method name="SanitizeVersion" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="73" hits="64"></line>
+							</lines>
+						</method>
+						<method name="IsValidJdkVersion" signature="" line-rate="1" branch-rate="0" complexity="0" line-count="0" line-hits="0">
+							<lines>
+								<line number="77" hits="6"></line>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="43" hits="68"></line>
+						<line number="44" hits="4"></line>
+						<line number="46" hits="64"></line>
+						<line number="47" hits="60"></line>
+						<line number="49" hits="4"></line>
+						<line number="61" hits="6"></line>
+						<line number="65" hits="6"></line>
+						<line number="69" hits="6"></line>
+						<line number="73" hits="64"></line>
+						<line number="77" hits="6"></line>
+					</lines>
+				</class>
+			</classes>
+		</package>
+	</packages>
+	<sources>
+		<source>/home/runner/work/discover-java-apps/discover-java-apps</source>
+	</sources>
+</coverage>
