@@ -1,13 +1,11 @@
 #!/bin/bash
 
-git config --local user.email "action@github.com"
-git config --local user.name "GitHub Action"
+COVERAGE=`go tool cover -func=coverage.out | grep total: | grep -Eo '[0-9]+\.[0-9]+'`
+echo $COVERAGE
 git fetch
 git checkout badge -f
 git pull
 git merge origin/main
-COVERAGE=`go tool cover -func=coverage.out | grep total: | grep -Eo '[0-9]+\.[0-9]+'`
-echo $COVERAGE
 COLOR=orange
 if (( $(echo "$COVERAGE <= 50" | bc -l) )) ; then
     COLOR=red
