@@ -51,7 +51,7 @@ test: fmt vet ginkgo generate ## Run unit tests.
 build: fmt vet yaml2go ## Build binary for release
 	CGO_ENABLED=0 GOOS=darwin GOARCH=arm64 go build -a -o bin/discovery_darwin_arm64 cli/*.go
 	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -a -o bin/discovery_darwin_amd64 cli/*.go
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -o bin/discovery_l cli/*.go
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -o bin/discovery-l cli/*.go
 	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -a -o bin/discovery.exe cli/*.go
 
 .PHONY: yaml2go
