@@ -7,7 +7,6 @@ import (
 	"github.com/Azure/discover-java-apps/springboot"
 	"github.com/go-logr/logr"
 	"github.com/go-logr/zapr"
-	"io"
 	"os"
 	"time"
 
@@ -79,15 +78,11 @@ func main() {
 	var converter = NewSpringBootAppConverter()
 	var cliApps = converter.Convert(apps)
 
-	var writer io.Writer
-	if writer, err = NewWriter(filename); err != nil {
-		panic(err)
+	output, err := NewOutput[*CliApp](filename, format)
+	if err != nil {
+		azuerLogger.Error(err, "error when creating output", "filename", filename)
+		os.Exit(1)
 	}
-	if closer, ok := writer.(io.Closer); ok {
-		defer closer.Close()
-	}
-
-	output := NewOutput[*CliApp](writer, format)
 	if err = output.Write(cliApps); err != nil {
 		azuerLogger.Error(err, "error when write to target file", "filename", filename)
 		os.Exit(1)

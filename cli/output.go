@@ -45,18 +45,18 @@ func (f FieldWithTags) fields() []string {
 	return fields
 }
 
-func NewOutput[T any](writer io.Writer, format string) *Output[T] {
-	return &Output[T]{
-		writer: writer,
-		format: format,
-	}
-}
-
-func NewWriter(filename string) (io.Writer, error) {
+func NewOutput[T any](filename string, format string) (*Output[T], error) {
+	var writer io.Writer
+	var err error
 	if len(filename) == 0 {
-		return os.Stdout, nil
+		writer = os.Stdout
+	} else {
+		writer, err = fileWriter(filename)
+		if err != nil {
+			return nil, err
+		}
 	}
-	return fileWriter(filename)
+	return &Output[T]{writer: writer, format: format}, nil
 }
 
 func fileWriter(filename string) (io.Writer, error) {
