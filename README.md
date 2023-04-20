@@ -1,7 +1,6 @@
-
 # Project
 A script to discover java apps from your linux system
-1. SSH login to the your linux system 
+1. SSH login to your linux system 
 2. Find the java process for spring application 
 3. Collect the spring apps runtime env and config 
 4. Print the info to console in json or csv format

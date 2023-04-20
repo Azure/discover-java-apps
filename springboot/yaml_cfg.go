@@ -1,20 +1,5 @@
 package springboot
 
-// YamlConfig
-type YamlConfig struct {
-	Pattern Pattern `yaml:"pattern"`
-	Env     Env     `yaml:"env"`
-	Server  Server  `yaml:"server"`
-}
-
-// Pattern
-type Pattern struct {
-	Logging Logging  `yaml:"logging"`
-	Cert    []string `yaml:"cert"`
-	Static  Static   `yaml:"static"`
-	App     []string `yaml:"app"`
-}
-
 // Logging
 type Logging struct {
 	FilePatterns  []string      `yaml:"file_patterns"`
@@ -38,6 +23,13 @@ type Env struct {
 	Denylist []string `yaml:"denylist"`
 }
 
+// YamlConfig
+type YamlConfig struct {
+	Server  Server  `yaml:"server"`
+	Pattern Pattern `yaml:"pattern"`
+	Env     Env     `yaml:"env"`
+}
+
 // Server
 type Server struct {
 	Connect Connect `yaml:"connect"`
@@ -47,5 +39,13 @@ type Server struct {
 type Connect struct {
 	Parallel       bool `yaml:"parallel"`
 	TimeoutSeconds int  `yaml:"timeoutSeconds"`
+}
+
+// Pattern
+type Pattern struct {
+	App     []string `yaml:"app"`
+	Logging Logging  `yaml:"logging"`
+	Cert    []string `yaml:"cert"`
+	Static  Static   `yaml:"static"`
 }
 

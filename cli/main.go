@@ -79,7 +79,7 @@ func DoSpringBootDiscovery(ctx context.Context, info springboot.ServerConnection
 	apps, err := executor.Discover(ctx, info)
 	if err != nil {
 		azureLogger.Error(err, "failed to discover")
-		fmt.Println("Error occurred during discovery, please check discovery.log")
+		fmt.Println("Error occurred during discovery, please check discovery.log, any issue could report to https://github.com/Azure/azure-discovery-java-apps/issues")
 		os.Exit(1)
 	}
 
@@ -93,7 +93,7 @@ func DoSpringBootDiscovery(ctx context.Context, info springboot.ServerConnection
 
 	if err = output.Write(cliApps); err != nil {
 		azureLogger.Error(err, "error when write to target file")
-		fmt.Println("Error occurred while writing to file, please check discovery.log")
+		fmt.Println("Error occurred while writing to file, please check discovery.log, any issue could report to https://github.com/Azure/azure-discovery-java-apps/issues")
 		os.Exit(1)
 	}
 }

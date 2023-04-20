@@ -311,7 +311,6 @@ var _ = Describe("Stream API test", func() {
 					return t.(int64) > 3
 				}).Take(5).Peek(func(t int64) {
 					Expect(getGID()).Should(Not(Equal(gid)))
-					fmt.Println(t)
 				}).Sorted(func(a, b int64) int {
 					Expect(getGID()).Should(Equal(gid)) // for a parallel stream, the sorting is in main thread
 					return int(a - b)
