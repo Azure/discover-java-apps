@@ -47,16 +47,28 @@ func main() {
 	}
 	logger, _ := cfg.Build()
 	ctx := logr.NewContext(context.Background(), zapr.NewLogger(logger))
+	azureLogger := springboot.GetAzureLogger(ctx, map[string]string{
+		"server": server,
+	})
+
 	var serverConnectInfo = springboot.ServerConnectionInfo{
 		Server: server,
 		Port:   port,
 	}
 
-	azuerLogger := springboot.GetAzureLogger(ctx, map[string]string{
-		"server": server,
-	})
+	output, err := NewOutput(filename, format)
+	if err != nil {
+		azureLogger.Error(err, "error when creating output", "filename", filename)
+		os.Exit(1)
+	}
+
+	DoSpringBootDiscovery(ctx, serverConnectInfo, NewUsernamePasswordCredentialProvider(username, password), output)
+}
+
+func DoSpringBootDiscovery(ctx context.Context, info springboot.ServerConnectionInfo, credentialProvider springboot.CredentialProvider, output *Output) {
+	azureLogger := springboot.GetAzureLogger(ctx)
 	var executor = springboot.NewSpringBootDiscoveryExecutor(
-		NewUsernamePasswordCredentialProvider(username, password),
+		credentialProvider,
 		springboot.DefaultServerConnectorFactory(
 			springboot.WithConnectionTimeout(time.Duration(5)*time.Second),
 			springboot.WithHostKeyCallback(MemoryHostKeyCallbackFunction()),
@@ -64,27 +76,24 @@ func main() {
 		springboot.YamlCfg,
 	)
 
-	apps, err := executor.Discover(ctx, serverConnectInfo)
+	apps, err := executor.Discover(ctx, info)
 	if err != nil {
-		azuerLogger.Error(err, "failed to discover")
+		azureLogger.Error(err, "failed to discover")
+		fmt.Println("Error occurred during discovery, please check discovery.log")
 		os.Exit(1)
 	}
 
 	if len(apps) == 0 {
-		azuerLogger.Warning(fmt.Errorf("no app discovered"), "")
+		fmt.Print("no app discovered from " + info.Server)
 		os.Exit(0)
 	}
 
 	var converter = NewSpringBootAppConverter()
 	var cliApps = converter.Convert(apps)
 
-	output, err := NewOutput[*CliApp](filename, format)
-	if err != nil {
-		azuerLogger.Error(err, "error when creating output", "filename", filename)
-		os.Exit(1)
-	}
 	if err = output.Write(cliApps); err != nil {
-		azuerLogger.Error(err, "error when write to target file", "filename", filename)
+		azureLogger.Error(err, "error when write to target file")
+		fmt.Println("Error occurred while writing to file, please check discovery.log")
 		os.Exit(1)
 	}
 }

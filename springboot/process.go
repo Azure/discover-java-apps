@@ -140,14 +140,10 @@ func (p *javaProcess) GetJavaCmd() (string, error) {
 	return p.javaCmd, nil
 }
 
-func (p *javaProcess) GetJvmMemoryInMb() (float64, error) {
+func (p *javaProcess) GetJvmMemory() (int64, error) {
 	for _, option := range p.options {
 		if strings.HasPrefix(option, JvmOptionXmx) {
-			bs, err := units.RAMInBytes(option[len(JvmOptionXmx):])
-			if err != nil {
-				return 0, errors.Wrap(err, fmt.Sprintf("failed to parse -Xmx from pid %v", p.pid))
-			}
-			return math.Round(float64(bs)*100/MiB) / 100, nil
+			return units.RAMInBytes(option[len(JvmOptionXmx):])
 		}
 	}
 
@@ -156,25 +152,24 @@ func (p *javaProcess) GetJvmMemoryInMb() (float64, error) {
 	// So if nothing found in the first iteration, we try another round
 	for _, option := range p.options {
 		if strings.HasPrefix(option, JvmOptionMaxRamPercentage) {
-			totalInKB, err := p.executor.GetTotalMemoryInKB()
+			total, err := p.executor.GetTotalMemory()
 			if err != nil {
 				return 0, err
 			}
 
-			percent, err := strconv.ParseFloat(option[len(JvmOptionMaxRamPercentage)+1:], 2)
+			percent, err := strconv.ParseFloat(option[len(JvmOptionMaxRamPercentage)+1:], 64)
 			if err != nil {
 				return 0, errors.Wrap(err, "failed to parse -XX:MaxRAMPercentage")
 			}
-
-			return math.Round(totalInKB*percent/KiB) / 100, nil
+			return int64(math.Round(float64(total)*percent) / 100), nil
 		}
 	}
 
-	defaultMaxHeap, err := p.getDefaultMaxHeapSizeInBytes()
+	defaultMaxHeap, err := p.getDefaultMaxHeapSize()
 	if err != nil {
 		return 0, err
 	}
-	return math.Round(defaultMaxHeap*100/MiB) / 100, nil
+	return defaultMaxHeap, nil
 }
 
 func (p *javaProcess) Executor() ServerDiscovery {
@@ -204,7 +199,7 @@ func (p *javaProcess) GetPorts() ([]int, error) {
 	return ports, nil
 }
 
-func (p *javaProcess) getDefaultMaxHeapSizeInBytes() (float64, error) {
+func (p *javaProcess) getDefaultMaxHeapSize() (int64, error) {
 	output, err := p.Executor().Server().RunCmd(GetDefaultMaxHeap(p.javaCmd))
 	if err != nil {
 		return 0, err
@@ -213,7 +208,7 @@ func (p *javaProcess) getDefaultMaxHeapSizeInBytes() (float64, error) {
 		return 0, errors.New("failed to get default MaxHeapSize, output is empty")
 	}
 
-	size, err := strconv.ParseFloat(CleanOutput(output), 64)
+	size, err := strconv.ParseInt(CleanOutput(output), 10, 64)
 	if err != nil {
 		return 0, errors.Wrap(err, fmt.Sprintf("failed to parse default MaxHeapSize, output: %s", output))
 	}

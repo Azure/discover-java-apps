@@ -231,25 +231,25 @@ var _ = Describe("Linux java process", func() {
 		When("got success output", func() {
 			It("should return memory size in kb", func() {
 				m.EXPECT().RunCmd(GetDefaultMaxHeap(JavaCmd)).Return(DefaultMaxHeapSize, nil)
-				Expect(process.getDefaultMaxHeapSizeInBytes()).Should(Equal(float64(987654321)))
+				Expect(process.getDefaultMaxHeapSize()).Should(Equal(float64(987654321)))
 			})
 		})
 		When("got empty output", func() {
 			It("should return error", func() {
 				m.EXPECT().RunCmd(GetDefaultMaxHeap(JavaCmd)).Return("  \n", nil)
-				Expect(process.getDefaultMaxHeapSizeInBytes()).Error().Should(HaveOccurred())
+				Expect(process.getDefaultMaxHeapSize()).Error().Should(HaveOccurred())
 			})
 		})
 		When("got invalid output", func() {
 			It("should return error", func() {
 				m.EXPECT().RunCmd(GetDefaultMaxHeap(JavaCmd)).Return("  abcdefg\n", nil)
-				Expect(process.getDefaultMaxHeapSizeInBytes()).Error().Should(HaveOccurred())
+				Expect(process.getDefaultMaxHeapSize()).Error().Should(HaveOccurred())
 			})
 		})
 		When("got error", func() {
 			It("should return error", func() {
 				m.EXPECT().RunCmd(GetDefaultMaxHeap(JavaCmd)).Return("", fmt.Errorf("test error message"))
-				Expect(process.getDefaultMaxHeapSizeInBytes()).Error().Should(HaveOccurred())
+				Expect(process.getDefaultMaxHeapSize()).Error().Should(HaveOccurred())
 			})
 		})
 	})

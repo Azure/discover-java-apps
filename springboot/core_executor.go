@@ -2,7 +2,6 @@ package springboot
 
 import (
 	"context"
-	"fmt"
 	errors "github.com/pkg/errors"
 	"reflect"
 	"strings"
@@ -27,15 +26,11 @@ func NewSpringBootDiscoveryExecutor(
 	}
 }
 
-func (s *springBootDiscoveryExecutor) Discover(ctx context.Context, serverConnectionInfo ServerConnectionInfo) ([]*SpringBootApp, error) {
+func (s *springBootDiscoveryExecutor) Discover(ctx context.Context, serverConnectionInfo ServerConnectionInfo, alternativeConnectionInfos ...ServerConnectionInfo) ([]*SpringBootApp, error) {
 	azureLogger := GetAzureLogger(ctx)
 	azureLogger.Info("going to discover")
 	var err error
-	if len(serverConnectionInfo.Server) == 0 || serverConnectionInfo.Port == 0 {
-		return nil, errors.New(fmt.Sprintf("invalid serverConnectionInfo connection info, serverConnectionInfo: %s, port: %v", serverConnectionInfo.Server, serverConnectionInfo.Port))
-	}
-
-	serverDiscovery, cred, err := s.tryConnect(ctx, serverConnectionInfo)
+	serverDiscovery, cred, err := s.tryConnect(ctx, append(alternativeConnectionInfos, serverConnectionInfo))
 	if err != nil {
 		return nil, errors.Wrap(err, "connection failed")
 	}
@@ -169,8 +164,8 @@ var getRuntimeJdkVersion StepFunc = func(process JavaProcess, jarFile JarFile) *
 	return Of(process.GetRuntimeJdkVersion()).Field("RuntimeJdkVersion")
 }
 
-var getJvmMemoryInMB StepFunc = func(process JavaProcess, jarFile JarFile) *Monad {
-	return Of(process.GetJvmMemoryInMb()).Map(wrap(func(f float64) int { return int(f) })).Field("JvmMemoryInMB")
+var getJvmMemory StepFunc = func(process JavaProcess, jarFile JarFile) *Monad {
+	return Of(process.GetJvmMemory()).Field("JvmMemory")
 }
 
 var getEnvironments StepFunc = func(process JavaProcess, jarFile JarFile) *Monad {
@@ -236,7 +231,7 @@ func (s *springBootDiscoveryExecutor) discoverApp(process JavaProcess, jar JarFi
 		Apply(getJavaCmd).
 		Apply(getServer).
 		Apply(getRuntimeJdkVersion).
-		Apply(getJvmMemoryInMB).
+		Apply(getJvmMemory).
 		Apply(getEnvironments).
 		Apply(getJvmOptions).
 		Apply(getBindingPorts).
@@ -280,32 +275,32 @@ func sanitizeArtifactName(artifactName string) string {
 	return Patterns.MavenPomVersionPattern.ReplaceAllString(artifactName, "")
 }
 
-func (s *springBootDiscoveryExecutor) tryConnect(ctx context.Context, server ServerConnectionInfo) (ServerDiscovery, *Credential, error) {
+func (s *springBootDiscoveryExecutor) tryConnect(ctx context.Context, serverConnectionInfos []ServerConnectionInfo) (ServerDiscovery, *Credential, error) {
 	azureLogger := GetAzureLogger(ctx)
-	var toTry = append([]string{server.Server}, server.AltAddress...)
 	var serverDiscovery ServerDiscovery
 	var cred *Credential
 	var err error
-	for _, try := range toTry {
+	for _, info := range serverConnectionInfos {
+		if len(info.Server) == 0 || info.Port == 0 {
+			azureLogger.Warning(err, "invalid connection info", "server", info.Server, "port", info.Port)
+			continue
+		}
 		serverDiscovery = NewLinuxServerDiscovery(
 			ctx,
-			s.serverConnectorFactory.Create(
-				ctx,
-				try,
-				server.Port,
-			),
+			s.serverConnectorFactory.Create(ctx, info.Server, info.Port),
 			s.credentialProvider,
 			s.cfg,
 		)
 
 		if cred, err = serverDiscovery.Prepare(); err != nil {
-			azureLogger.Warning(err, "failed to connect to", "server", try)
+			azureLogger.Warning(err, "failed to connect to", "server", info.Server)
 			continue
 		} else {
 			return serverDiscovery, cred, nil
 		}
 	}
 
-	return serverDiscovery, cred, err
+	// every connection info has been tried, but still failed
+	return nil, nil, err
 
 }

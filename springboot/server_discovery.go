@@ -131,7 +131,7 @@ func (l *linuxServerDiscovery) ProcessScan() ([]JavaProcess, error) {
 	return processes, nil
 }
 
-func (l *linuxServerDiscovery) GetTotalMemoryInKB() (float64, error) {
+func (l *linuxServerDiscovery) GetTotalMemory() (int64, error) {
 	output, err := l.server.RunCmd(GetTotalMemoryCmd())
 	if err != nil {
 		return 0, err
@@ -140,12 +140,12 @@ func (l *linuxServerDiscovery) GetTotalMemoryInKB() (float64, error) {
 		return 0, errors.New("failed to get total memory, output is empty")
 	}
 
-	size, err := strconv.ParseFloat(CleanOutput(output), 64)
+	size, err := strconv.ParseInt(CleanOutput(output), 10, 64)
 	if err != nil {
 		return 0, errors.Wrap(err, fmt.Sprintf("unable to parse total memory, output is %s", output))
 	}
 
-	return size, nil
+	return size * KiB, nil
 }
 
 func (l *linuxServerDiscovery) getChecksum(absolutePath string) (string, error) {
@@ -311,8 +311,8 @@ func (l *linuxServerDiscovery) connect(creds ...*Credential) (*Credential, error
 	}
 
 	if err != nil {
-		azureLogger.Warning(err, "error to connect to server with credential", "server", l.server.FQDN(), "err")
-		return nil, ConnectionError{error: err, message: fmt.Sprintf("failed to connec to server: %s", l.server.FQDN())}
+		azureLogger.Warning(err, "error to connect to server with credential", "server", l.server.FQDN())
+		return nil, ConnectionError{error: err, message: fmt.Sprintf("failed to connect to server: %s", l.server.FQDN())}
 	}
 
 	return nil, CredentialError{

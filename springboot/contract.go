@@ -34,9 +34,8 @@ func (types AppTypes) Contains(appType AppType) bool {
 }
 
 type ServerConnectionInfo struct {
-	Server     string
-	AltAddress []string
-	Port       int
+	Server string
+	Port   int
 }
 
 type Artifact struct {
@@ -54,7 +53,7 @@ type Runtime struct {
 	JavaCmd           string   `json:"javaCmd"`
 	Environments      []string `json:"environments"`
 	JvmOptions        []string `json:"jvmOptions"`
-	JvmMemoryInMB     int      `json:"jvmMemoryInMB"`
+	JvmMemory         int64    `json:"jvmMemory"`
 	OsName            string   `json:"osName"`
 	OsVersion         string   `json:"osVersion"`
 	BindingPorts      []int    `json:"bindingPorts"`
@@ -88,7 +87,7 @@ type Credential struct {
 }
 
 type DiscoveryExecutor interface {
-	Discover(ctx context.Context, server ServerConnectionInfo) ([]*SpringBootApp, error)
+	Discover(ctx context.Context, server ServerConnectionInfo, alternativeConnectionInfos ...ServerConnectionInfo) ([]*SpringBootApp, error)
 }
 
 type CredentialProvider interface {
@@ -99,7 +98,7 @@ type ServerDiscovery interface {
 	Prepare() (*Credential, error)
 	Server() ServerConnector
 	ProcessScan() ([]JavaProcess, error)
-	GetTotalMemoryInKB() (float64, error)
+	GetTotalMemory() (int64, error)
 	GetOsName() (string, error)
 	GetOsVersion() (string, error)
 	ReadJarFile(location string, walkers ...JarFileWalker) (JarFile, error)
@@ -135,7 +134,7 @@ type JavaProcess interface {
 	GetJavaCmd() (string, error)
 	GetJvmOptions() ([]string, error)
 	GetEnvironments() ([]string, error)
-	GetJvmMemoryInMb() (float64, error)
+	GetJvmMemory() (int64, error)
 	GetPorts() ([]int, error)
 	Executor() ServerDiscovery
 }

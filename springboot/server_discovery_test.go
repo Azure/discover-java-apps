@@ -88,25 +88,25 @@ var _ = Describe("Linux java process", func() {
 		When("got success output", func() {
 			It("should return memory size in kb", func() {
 				m.EXPECT().RunCmd(LinuxGetTotalMemoryCmd).Return(TotalMemory, nil)
-				Expect(executor.GetTotalMemoryInKB()).Should(Equal(float64(987654321)))
+				Expect(executor.GetTotalMemory()).Should(Equal(float64(987654321)))
 			})
 		})
 		When("got empty output", func() {
 			It("should return error", func() {
 				m.EXPECT().RunCmd(LinuxGetTotalMemoryCmd).Return("  \n", nil)
-				Expect(executor.GetTotalMemoryInKB()).Error().Should(HaveOccurred())
+				Expect(executor.GetTotalMemory()).Error().Should(HaveOccurred())
 			})
 		})
 		When("got invalid output", func() {
 			It("should return error", func() {
 				m.EXPECT().RunCmd(LinuxGetTotalMemoryCmd).Return("  abcdefg\n", nil)
-				Expect(executor.GetTotalMemoryInKB()).Error().Should(HaveOccurred())
+				Expect(executor.GetTotalMemory()).Error().Should(HaveOccurred())
 			})
 		})
 		When("got error", func() {
 			It("should return error", func() {
 				m.EXPECT().RunCmd(LinuxGetTotalMemoryCmd).Return("", fmt.Errorf("test error message"))
-				Expect(executor.GetTotalMemoryInKB()).Error().Should(HaveOccurred())
+				Expect(executor.GetTotalMemory()).Error().Should(HaveOccurred())
 			})
 		})
 	})

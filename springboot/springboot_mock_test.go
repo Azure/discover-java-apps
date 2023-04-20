@@ -161,7 +161,7 @@ func (mr *MockServerDiscoveryMockRecorder) GetOsVersion() *gomock.Call {
 // GetTotalMemoryInKB mocks base method.
 func (m *MockServerDiscovery) GetTotalMemoryInKB() (float64, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetTotalMemoryInKB")
+	ret := m.ctrl.Call(m, "GetTotalMemory")
 	ret0, _ := ret[0].(float64)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
@@ -170,7 +170,7 @@ func (m *MockServerDiscovery) GetTotalMemoryInKB() (float64, error) {
 // GetTotalMemoryInKB indicates an expected call of GetTotalMemoryInKB.
 func (mr *MockServerDiscoveryMockRecorder) GetTotalMemoryInKB() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTotalMemoryInKB", reflect.TypeOf((*MockServerDiscovery)(nil).GetTotalMemoryInKB))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTotalMemory", reflect.TypeOf((*MockServerDiscovery)(nil).GetTotalMemoryInKB))
 }
 
 // Prepare mocks base method.

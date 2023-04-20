@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-type Output[T any] struct {
+type Output struct {
 	writer io.Writer
 	format string
 }
@@ -45,7 +45,7 @@ func (f FieldWithTags) fields() []string {
 	return fields
 }
 
-func NewOutput[T any](filename string, format string) (*Output[T], error) {
+func NewOutput(filename string, format string) (*Output, error) {
 	var writer io.Writer
 	var err error
 	if len(filename) == 0 {
@@ -56,7 +56,7 @@ func NewOutput[T any](filename string, format string) (*Output[T], error) {
 			return nil, err
 		}
 	}
-	return &Output[T]{writer: writer, format: format}, nil
+	return &Output{writer: writer, format: format}, nil
 }
 
 func fileWriter(filename string) (io.Writer, error) {
@@ -67,7 +67,7 @@ func fileWriter(filename string) (io.Writer, error) {
 	return file, nil
 }
 
-func (o *Output[T]) Write(records []T) error {
+func (o *Output) Write(records any) error {
 	var err error
 	switch strings.ToLower(strings.TrimSpace(o.format)) {
 	case "":
@@ -79,7 +79,7 @@ func (o *Output[T]) Write(records []T) error {
 	return err
 }
 
-func (o *Output[T]) writeJson(records []T, writer io.Writer) error {
+func (o *Output) writeJson(records any, writer io.Writer) error {
 	b, err := json.Marshal(records)
 	if err != nil {
 		return err
@@ -98,8 +98,7 @@ func (o *Output[T]) writeJson(records []T, writer io.Writer) error {
 	return nil
 }
 
-func (o *Output[T]) writCSV(records []T, writer io.Writer) error {
-	var zero T
+func (o *Output) writCSV(records any, writer io.Writer) error {
 	var csvWriter = csv.NewWriter(writer)
 	defer csvWriter.Flush()
 	csvWriter.Comma = ','
@@ -107,25 +106,33 @@ func (o *Output[T]) writCSV(records []T, writer io.Writer) error {
 	var content [][]string
 	var fieldWithTags FieldWithTags
 
-	t := reflect.TypeOf(zero)
-	if t.Kind() == reflect.Ptr {
-		t = t.Elem()
+	var refTyp = reflect.TypeOf(records)
+	refVal := reflect.ValueOf(records)
+	var values []reflect.Value
+	fmt.Println(refTyp.Kind())
+	switch refTyp.Kind() {
+	case reflect.Slice:
+		for i := 0; i < refVal.Len(); i++ {
+			if refVal.Index(i).Kind() == reflect.Ptr {
+				values = append(values, refVal.Index(i).Elem())
+			} else {
+				values = append(values, refVal.Index(i))
+			}
+		}
+	case reflect.Ptr:
+		values = append(values, refVal.Elem())
+	default:
+		values = append(values, refVal)
 	}
-	for i := 0; i < t.NumField(); i++ {
-		field := t.Field(i)
+
+	for i := 0; i < values[0].Type().NumField(); i++ {
+		field := values[0].Type().Field(i)
 		fieldWithTags = append(fieldWithTags, FieldWithTag{name: field.Name, tag: field.Tag.Get("csv")})
 	}
 	content = append(content, fieldWithTags.headers())
 	fields := fieldWithTags.fields()
-	for _, record := range records {
+	for _, v := range values {
 		var row []string
-		t = reflect.TypeOf(record)
-		var v reflect.Value
-		if t.Kind() == reflect.Ptr {
-			v = reflect.ValueOf(record).Elem()
-		} else {
-			v = reflect.ValueOf(record)
-		}
 		for _, field := range fields {
 			value := v.FieldByName(field)
 			row = append(row, toString(value))
