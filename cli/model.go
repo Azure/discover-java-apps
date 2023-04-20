@@ -39,10 +39,17 @@ func (s springBootAppConverter) Convert(apps []*springboot.SpringBootApp) []*Cli
 	var results []*CliApp
 
 	for _, app := range apps {
+
+		var appType = "ExecutableJar"
+
+		if springboot.SpringBootAppTypes.Contains(app.AppType) {
+			appType = "SpringBoot"
+		}
+
 		results = append(results, &CliApp{
 			Server:            app.Runtime.Server,
 			AppName:           app.AppName,
-			AppType:           app.AppType,
+			AppType:           appType,
 			AppPort:           app.Runtime.AppPort,
 			ArtifactGroup:     app.Artifact.Group,
 			ArtifactName:      app.Artifact.Name,

@@ -150,7 +150,7 @@ var getCertificates StepFunc = func(process JavaProcess, jarFile JarFile) *Monad
 }
 
 var getAppType StepFunc = func(process JavaProcess, jarFile JarFile) *Monad {
-	return Of(jarFile.GetAppType()).Map(wrap(mapToAppTypeString)).Field("AppType")
+	return Of(jarFile.GetAppType()).Field("AppType")
 }
 
 var getStaticContentLocation StepFunc = func(process JavaProcess, jarFile JarFile) *Monad {

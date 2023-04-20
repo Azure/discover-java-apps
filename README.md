@@ -82,7 +82,7 @@ The default output will be a json like
 70% percent test coverage is mandatory requirement when PR  
 
 ## Limitation
-1. Only support to discover the spring apps from Linux VM
+Only support to discover the spring apps from Linux VM
 
 ## Roadmap
 1. More application types

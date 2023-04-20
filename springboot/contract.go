@@ -26,6 +26,13 @@ var SpringBootAppTypes = AppTypes{
 	SpringBootExploded,
 }
 
+func (types AppTypes) Contains(appType AppType) bool {
+	for _, t := range types {
+		return t == appType
+	}
+	return false
+}
+
 type ServerConnectionInfo struct {
 	Server     string
 	AltAddress []string
@@ -55,7 +62,7 @@ type Runtime struct {
 
 type SpringBootApp struct {
 	AppName                   string            `json:"appName"`
-	AppType                   string            `json:"appType"`
+	AppType                   AppType           `json:"appType"`
 	ApplicationConfigurations map[string]string `json:"applicationConfigurations"`
 	Artifact                  *Artifact         `json:"artifact"`
 	BuildJdkVersion           string            `json:"buildJdkVersion"`
