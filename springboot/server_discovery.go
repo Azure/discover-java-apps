@@ -12,7 +12,6 @@ import (
 	"io"
 	"strconv"
 	"strings"
-	"sync"
 )
 
 type AuthType int32
@@ -27,7 +26,6 @@ type linuxServerDiscovery struct {
 	server             ServerConnector
 	ctx                context.Context
 	cfg                YamlConfig
-	cache              *cache[string, *Credential]
 }
 
 func NewLinuxServerDiscovery(
@@ -40,7 +38,6 @@ func NewLinuxServerDiscovery(
 		cfg:                cfg,
 		server:             serverConnector,
 		credentialProvider: credentialProvider,
-		cache:              NewCache[string, *Credential](),
 	}
 }
 
@@ -49,19 +46,6 @@ func (l *linuxServerDiscovery) Server() ServerConnector {
 }
 
 func (l *linuxServerDiscovery) Prepare() (*Credential, error) {
-	azureLogger := GetAzureLogger(l.ctx)
-	if cred, ok := l.cache.Get(l.server.FQDN()); ok {
-		_, err := l.connect(cred)
-		if err != nil {
-			azureLogger.Warning(err, "cached credential invalidated", "fqdn", l.server.FQDN(), "credential", cred.FriendlyName)
-			l.cache.Clear(l.server.FQDN())
-		} else {
-			azureLogger.Info("cached credential login succeeded", "fqdn", l.server.FQDN(), "credential", cred.FriendlyName)
-			return cred, nil
-		}
-	}
-
-	azureLogger.Info("getting credentials from store", "fqdn", l.server.FQDN())
 	creds, err := l.credentialProvider.GetCredentials()
 	if err != nil {
 		return nil, CredentialError{error: err, message: "failed to get credentials"}
@@ -281,19 +265,20 @@ func (l *linuxServerDiscovery) connect(creds ...*Credential) (*Credential, error
 
 	s := FromSlice[*Credential](l.ctx, creds)
 	if l.cfg.Server.Connect.Parallel {
-		s = s.Parallel(5)
+		s = s.Parallel(l.cfg.Server.Connect.Parallelism)
 	}
-	cred, err := s.Map(func(cred *Credential) (*Credential, error) {
-		err := l.server.Connect(cred.Username, cred.Password)
-		if err != nil {
-			if !isAuthFailure(err) {
-				return nil, err
+	cred, err :=
+		s.Map(func(cred *Credential) (*Credential, error) {
+			err := l.server.Connect(cred.Username, cred.Password)
+			if err != nil {
+				if !isAuthFailure(err) {
+					return nil, err
+				}
 			}
-		}
-		return cred, nil
-	}).Filter(func(t any) bool {
-		return t != nil
-	}).First()
+			return cred, nil
+		}).Filter(func(t any) bool {
+			return t != nil
+		}).First()
 
 	if cred != nil {
 		return cred.(*Credential), nil
@@ -315,32 +300,4 @@ func isAuthFailure(err error) bool {
 		return false
 	}
 	return strings.Contains(err.Error(), "ssh: unable to authenticate")
-}
-
-type cache[K comparable, V any] struct {
-	m   map[K]V
-	mux sync.Mutex
-}
-
-func NewCache[K comparable, V any]() *cache[K, V] {
-	return &cache[K, V]{m: make(map[K]V)}
-}
-
-func (c *cache[K, V]) Get(k K) (V, bool) {
-	c.mux.Lock()
-	defer c.mux.Unlock()
-	v, ok := c.m[k]
-	return v, ok
-}
-
-func (c *cache[K, V]) Set(k K, v V) {
-	c.mux.Lock()
-	defer c.mux.Unlock()
-	c.m[k] = v
-}
-
-func (c *cache[K, V]) Clear(k K) {
-	c.mux.Lock()
-	defer c.mux.Unlock()
-	delete(c.m, k)
 }
