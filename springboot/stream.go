@@ -17,13 +17,15 @@ import (
 type unaryFuncType int
 
 const (
-	unsupported unaryFuncType = iota
-	singleInZeroOut
-	singleInSingleOut
-	singleInErrorOut
-	contextInZeroOut
-	contextInSingleOut
-	contextInErrorOut
+	unsupported        unaryFuncType = iota
+	zeroInSingleOut                  // f() any
+	zeroInErrorOut                   // f() (any, error)
+	singleInZeroOut                  // f(any)
+	singleInSingleOut                // f(any) any
+	singleInErrorOut                 // f(any) (any, error)
+	contextInZeroOut                 // f(context, any)
+	contextInSingleOut               // f(context, any) any
+	contextInErrorOut                // f(context, any) (any, error)
 )
 
 var stopped = stop{}
@@ -317,6 +319,18 @@ func isUnaryFunc(refType reflect.Type) unaryFuncType {
 	}
 
 	switch refType.NumIn() {
+	case 0:
+		switch refType.NumOut() {
+		case 0:
+			return unsupported
+		case 1:
+			return zeroInSingleOut
+		case 2:
+			if isError(refType.Out(1)) {
+				return zeroInErrorOut
+			}
+			return unsupported
+		}
 	case 1:
 		switch refType.NumOut() {
 		case 0:
@@ -324,7 +338,7 @@ func isUnaryFunc(refType reflect.Type) unaryFuncType {
 		case 1:
 			return singleInSingleOut
 		case 2:
-			if refType.Out(1).Kind() == reflect.Interface {
+			if isError(refType.Out(1)) {
 				return singleInErrorOut
 			}
 			return unsupported
@@ -340,7 +354,7 @@ func isUnaryFunc(refType reflect.Type) unaryFuncType {
 		case 1:
 			return contextInSingleOut
 		case 2:
-			if refType.Out(1).Kind() == reflect.Interface {
+			if isError(refType.Out(1)) {
 				return contextInErrorOut
 			}
 			return unsupported
@@ -354,25 +368,43 @@ func callUnaryFunc(ctx context.Context, refVal reflect.Value, data interface{}, 
 	var result reflect.Value
 	switch typ {
 	case unsupported:
-		panic("unsupported function " + refVal.String() + ", only f(any)/f(any)error/f(any)(any,error)/f(ctx, any)/f(ctx, any)error/f(ctx, any)(any, error) supported")
+		return result, fmt.Errorf("unsupported function " + refVal.String())
+	case zeroInSingleOut:
+		out := refVal.Call(toReflectParams())
+		if hasError(out[0]) {
+			return result, out[0].Interface().(error)
+		}
+		return out[0], nil
+	case zeroInErrorOut:
+		out := refVal.Call(toReflectParams())
+		if hasError(out[1]) {
+			return result, out[1].Interface().(error)
+		}
+		return out[0], nil
 	case singleInZeroOut:
-		refVal.Call([]reflect.Value{reflect.ValueOf(data)})
+		refVal.Call(toReflectParams(data))
 	case singleInSingleOut:
-		out := refVal.Call([]reflect.Value{reflect.ValueOf(data)})
+		out := refVal.Call(toReflectParams(data))
+		if hasError(out[0]) {
+			return result, out[0].Interface().(error)
+		}
 		return out[0], nil
 	case singleInErrorOut:
-		out := refVal.Call([]reflect.Value{reflect.ValueOf(data)})
+		out := refVal.Call(toReflectParams(data))
 		if out[1].Interface() == nil {
 			return out[0], nil
 		}
 		return result, out[1].Interface().(error)
 	case contextInZeroOut:
-		refVal.Call([]reflect.Value{reflect.ValueOf(ctx), reflect.ValueOf(data)})
+		refVal.Call(toReflectParams(ctx, data))
 	case contextInSingleOut:
-		out := refVal.Call([]reflect.Value{reflect.ValueOf(ctx), reflect.ValueOf(data)})
+		out := refVal.Call(toReflectParams(ctx, data))
+		if hasError(out[0]) {
+			return result, out[0].Interface().(error)
+		}
 		return out[0], nil
 	case contextInErrorOut:
-		out := refVal.Call([]reflect.Value{reflect.ValueOf(ctx), reflect.ValueOf(data)})
+		out := refVal.Call(toReflectParams(ctx, data))
 		if out[1].Interface() == nil {
 			return out[0], nil
 		}
@@ -444,4 +476,21 @@ func ignoreStopped(err error) error {
 		return nil
 	}
 	return err
+}
+
+func isError(typ reflect.Type) bool {
+	return typ == reflect.TypeOf((*error)(nil)).Elem()
+}
+
+func hasError(value reflect.Value) bool {
+	return isError(value.Type()) && !value.IsNil()
+}
+
+func toReflectParams(params ...any) []reflect.Value {
+	var vals []reflect.Value
+	for _, t := range params {
+		vals = append(vals, reflect.ValueOf(t))
+	}
+
+	return vals
 }

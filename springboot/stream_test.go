@@ -323,4 +323,49 @@ var _ = Describe("Stream API test", func() {
 		})
 	})
 
+	Context("test error handling", func() {
+
+		var (
+			s Stream
+		)
+
+		BeforeEach(func() {
+			s = FromSlice[string](context.Background(), []string{"1", "2", "3"})
+		})
+
+		When("test multiple cases", func() {
+			It("should succeeded", func() {
+				for _, testcase := range []struct {
+					name    string
+					f       interface{}
+					isError bool
+				}{
+					{name: "unsupported 1", f: func(a, b string) string { return a }, isError: true},
+					{name: "unsupported 2", f: func(a string) (string, int) { return "", 0 }, isError: true},
+					{name: "zero in single out 1", f: func() string { return "string" }, isError: false},
+					{name: "zero in single out 2", f: func() error { return fmt.Errorf("error") }, isError: true},
+					{name: "zero in error out 1", f: func() (string, error) { return "string", nil }, isError: false},
+					{name: "zero in error out 2", f: func() (string, error) { return "", fmt.Errorf("error") }, isError: true},
+					{name: "single in zero out", f: func(s string) {}, isError: false},
+					{name: "single in single out 1", f: func(s string) string { return s }, isError: false},
+					{name: "single in single out 2", f: func(s string) error { return fmt.Errorf("err") }, isError: true},
+					{name: "single in error out 1", f: func(s string) (string, error) { return s, nil }, isError: false},
+					{name: "single in error out 2", f: func(s string) (string, error) { return s, fmt.Errorf("err") }, isError: true},
+					{name: "context in zero out", f: func(ctx context.Context, s string) {}, isError: false},
+					{name: "context in single out 1", f: func(ctx context.Context, s string) string { return s }, isError: false},
+					{name: "context in single out 2", f: func(ctx context.Context, s string) error { return fmt.Errorf("err") }, isError: true},
+					{name: "context in error out 1", f: func(ctx context.Context, s string) (string, error) { return s, nil }, isError: false},
+					{name: "context in error out 2", f: func(ctx context.Context, s string) (string, error) { return s, fmt.Errorf("err") }, isError: true},
+				} {
+					err := s.ForEach(testcase.f)
+					if !testcase.isError {
+						Expect(err).Should(BeNil())
+					} else {
+						Expect(err).ShouldNot(BeNil())
+					}
+				}
+			})
+		})
+	})
+
 })

@@ -26,12 +26,22 @@ type linuxServerDiscovery struct {
 	credentialProvider CredentialProvider
 	server             ServerConnector
 	ctx                context.Context
-	credentialCache    sync.Map
 	cfg                YamlConfig
+	cache              *cache[string, *Credential]
 }
 
-func NewLinuxServerDiscovery(ctx context.Context, targetServer ServerConnector, credentialProvider CredentialProvider, cfg YamlConfig) ServerDiscovery {
-	return &linuxServerDiscovery{server: targetServer, credentialProvider: credentialProvider, ctx: ctx, cfg: cfg}
+func NewLinuxServerDiscovery(
+	ctx context.Context,
+	serverConnector ServerConnector,
+	credentialProvider CredentialProvider,
+	cfg YamlConfig) ServerDiscovery {
+	return &linuxServerDiscovery{
+		ctx:                ctx,
+		cfg:                cfg,
+		server:             serverConnector,
+		credentialProvider: credentialProvider,
+		cache:              NewCache[string, *Credential](),
+	}
 }
 
 func (l *linuxServerDiscovery) Server() ServerConnector {
@@ -39,29 +49,24 @@ func (l *linuxServerDiscovery) Server() ServerConnector {
 }
 
 func (l *linuxServerDiscovery) Prepare() (*Credential, error) {
-	var err error
 	azureLogger := GetAzureLogger(l.ctx)
-	cred, cached := l.getCredFromCache(l.server.FQDN())
-	if cached {
-		azureLogger.Debug("credential cache hit", "server", l.server, "credentialId", cred.Id)
-		cred, err = l.connect(cred)
+	if cred, ok := l.cache.Get(l.server.FQDN()); ok {
+		_, err := l.connect(cred)
+		if err != nil {
+			azureLogger.Warning(err, "cached credential invalidated", "fqdn", l.server.FQDN(), "credential", cred.FriendlyName)
+			l.cache.Clear(l.server.FQDN())
+		} else {
+			azureLogger.Info("cached credential login succeeded", "fqdn", l.server.FQDN(), "credential", cred.FriendlyName)
+			return cred, nil
+		}
 	}
 
-	if cached && err == nil {
-		return cred, nil
-	}
-
-	azureLogger.Debug("credential cache miss or login failed, going to get credentials again", "server", l.server, "cached", cached, "parallelEnabled", l.cfg.Server.Connect.Parallel, "err", err)
+	azureLogger.Info("getting credentials from store", "fqdn", l.server.FQDN())
 	creds, err := l.credentialProvider.GetCredentials()
 	if err != nil {
 		return nil, CredentialError{error: err, message: "failed to get credentials"}
 	}
-	cred, err = l.connect(creds...)
-	if err == nil && cred != nil {
-		azureLogger.Debug("going to cache the credential", "server", l.server, "credential", cred.Id)
-		l.cacheCredential(l.server.FQDN(), cred)
-	}
-	return cred, err
+	return l.connect(creds...)
 }
 
 func (l *linuxServerDiscovery) ProcessScan() ([]JavaProcess, error) {
@@ -132,7 +137,7 @@ func (l *linuxServerDiscovery) ProcessScan() ([]JavaProcess, error) {
 }
 
 func (l *linuxServerDiscovery) GetTotalMemory() (int64, error) {
-	output, err := l.server.RunCmd(GetTotalMemoryCmd())
+	output, err := runWithSudo(l.server, GetTotalMemoryCmd())
 	if err != nil {
 		return 0, err
 	}
@@ -150,7 +155,7 @@ func (l *linuxServerDiscovery) GetTotalMemory() (int64, error) {
 
 func (l *linuxServerDiscovery) getChecksum(absolutePath string) (string, error) {
 	azureLogger := GetAzureLogger(l.ctx)
-	output, err := l.Server().RunCmd(GetSha256Cmd(absolutePath))
+	output, err := runWithSudo(l.server, GetSha256Cmd(absolutePath))
 	if err != nil || len(output) == 0 {
 		azureLogger.Info("cannot get sha256 checksum", "absolutePath", absolutePath, "err", err)
 		return "", nil
@@ -161,14 +166,14 @@ func (l *linuxServerDiscovery) getChecksum(absolutePath string) (string, error) 
 func (l *linuxServerDiscovery) GetOsName() (string, error) {
 	azureLogger := GetAzureLogger(l.ctx)
 	var tryOsRelease tryFunc[ServerConnector, string] = func(in ServerConnector) (string, bool) {
-		output, err := in.RunCmd(GetOsName())
+		output, err := runWithSudo(in, GetOsName())
 		if err != nil {
 			azureLogger.Warning(err, "cannot get os name", "output", output)
 		}
 		return output, len(output) > 0
 	}
 	var tryCentOsRelease tryFunc[ServerConnector, string] = func(in ServerConnector) (string, bool) {
-		output, err := in.RunCmd(GetCentOsName())
+		output, err := runWithSudo(in, GetCentOsName())
 		if err != nil {
 			azureLogger.Warning(err, "cannot get cent os name", "output", output)
 		}
@@ -186,14 +191,14 @@ func (l *linuxServerDiscovery) GetOsName() (string, error) {
 func (l *linuxServerDiscovery) GetOsVersion() (string, error) {
 	azureLogger := GetAzureLogger(l.ctx)
 	var tryOsRelease tryFunc[ServerConnector, string] = func(in ServerConnector) (string, bool) {
-		output, err := in.RunCmd(GetOsVersion())
+		output, err := runWithSudo(in, GetOsVersion())
 		if err != nil {
 			azureLogger.Debug("cannot get os version", "err", err, "output", output)
 		}
 		return output, len(output) > 0
 	}
 	var tryCentOsRelease tryFunc[ServerConnector, string] = func(in ServerConnector) (string, bool) {
-		output, err := in.RunCmd(GetCentOsVersion())
+		output, err := runWithSudo(in, GetCentOsVersion())
 		if err != nil {
 			azureLogger.Debug("cannot get cent os version", "err", err, "output", output)
 		}
@@ -267,28 +272,12 @@ func sudo(command string) string {
 	return "sudo " + command
 }
 
-func (l *linuxServerDiscovery) getCredFromCache(server string) (*Credential, bool) {
-	if v, ok := l.credentialCache.Load(server); ok {
-		return v.(*Credential), true
-	}
-	return nil, false
-}
-
-func (l *linuxServerDiscovery) cacheCredential(server string, credential *Credential) {
-	l.credentialCache.Store(server, credential)
-}
-
-func (l *linuxServerDiscovery) clearCache(server string) {
-	l.credentialCache.Delete(server)
-}
-
 func (l *linuxServerDiscovery) connect(creds ...*Credential) (*Credential, error) {
+	azureLogger := GetAzureLogger(l.ctx)
 	length := len(creds)
 	if length == 0 {
 		return nil, CredentialError{error: fmt.Errorf("credentials are empty"), message: ""}
 	}
-
-	azureLogger := GetAzureLogger(l.ctx)
 
 	s := FromSlice[*Credential](l.ctx, creds)
 	if l.cfg.Server.Connect.Parallel {
@@ -326,4 +315,32 @@ func isAuthFailure(err error) bool {
 		return false
 	}
 	return strings.Contains(err.Error(), "ssh: unable to authenticate")
+}
+
+type cache[K comparable, V any] struct {
+	m   map[K]V
+	mux sync.Mutex
+}
+
+func NewCache[K comparable, V any]() *cache[K, V] {
+	return &cache[K, V]{m: make(map[K]V)}
+}
+
+func (c *cache[K, V]) Get(k K) (V, bool) {
+	c.mux.Lock()
+	defer c.mux.Unlock()
+	v, ok := c.m[k]
+	return v, ok
+}
+
+func (c *cache[K, V]) Set(k K, v V) {
+	c.mux.Lock()
+	defer c.mux.Unlock()
+	c.m[k] = v
+}
+
+func (c *cache[K, V]) Clear(k K) {
+	c.mux.Lock()
+	defer c.mux.Unlock()
+	delete(c.m, k)
 }
