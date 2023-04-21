@@ -22,7 +22,6 @@ var _ = Describe("test config loader", func() {
 
 		It("should return values from default config", func() {
 			Expect(yamlCfg.Server.Connect.Parallel).Should(Equal(false))
-			Expect(yamlCfg.Server.Connect.TimeoutSeconds).Should(BeNumerically(">", 0))
 
 			Expect(yamlCfg.Pattern.Cert).Should(HaveLen(1))
 			Expect(yamlCfg.Pattern.App).Should(HaveLen(1))
@@ -48,7 +47,6 @@ var _ = Describe("test config loader", func() {
 
 		It("should return values from env config", func() {
 			Expect(yamlCfg.Server.Connect.Parallel).Should(Equal(false))
-			Expect(yamlCfg.Server.Connect.TimeoutSeconds).Should(BeNumerically(">", 0))
 
 			Expect(yamlCfg.Pattern.Cert).Should(HaveLen(1))
 			Expect(yamlCfg.Pattern.App).Should(HaveLen(1))

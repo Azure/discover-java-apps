@@ -43,7 +43,7 @@ func (p *javaProcess) LocateJarFile() (string, error) {
 	}
 	if !filepath.IsAbs(jarFileName) {
 		// when jar file path is not absolute path, we shall locate the jar file path again
-		output, err := p.executor.Server().RunCmd(GetLocateJarCmd(p.pid, filepath.Base(jarFileName)))
+		output, err := runWithSudo(p.executor.Server(), GetLocateJarCmd(p.pid, filepath.Base(jarFileName)))
 		if err != nil {
 			return "", err
 		}
@@ -59,7 +59,7 @@ func (p *javaProcess) LocateJarFile() (string, error) {
 }
 
 func (p *javaProcess) GetRuntimeJdkVersion() (string, error) {
-	buf, err := p.executor.Server().RunCmd(GetJdkVersionCmd(p.javaCmd))
+	buf, err := runWithSudo(p.executor.Server(), GetJdkVersionCmd(p.javaCmd))
 	if err != nil {
 		return "", err
 	}
@@ -204,7 +204,7 @@ func (p *javaProcess) GetPorts() ([]int, error) {
 }
 
 func (p *javaProcess) getDefaultMaxHeapSize() (int64, error) {
-	output, err := p.Executor().Server().RunCmd(GetDefaultMaxHeap(p.javaCmd))
+	output, err := runWithSudo(p.executor.Server(), GetDefaultMaxHeap(p.javaCmd))
 	if err != nil {
 		return 0, err
 	}

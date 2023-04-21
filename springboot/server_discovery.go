@@ -12,7 +12,6 @@ import (
 	"io"
 	"strconv"
 	"strings"
-	"sync"
 )
 
 type AuthType int32
@@ -26,12 +25,20 @@ type linuxServerDiscovery struct {
 	credentialProvider CredentialProvider
 	server             ServerConnector
 	ctx                context.Context
-	credentialCache    sync.Map
 	cfg                YamlConfig
 }
 
-func NewLinuxServerDiscovery(ctx context.Context, targetServer ServerConnector, credentialProvider CredentialProvider, cfg YamlConfig) ServerDiscovery {
-	return &linuxServerDiscovery{server: targetServer, credentialProvider: credentialProvider, ctx: ctx, cfg: cfg}
+func NewLinuxServerDiscovery(
+	ctx context.Context,
+	serverConnector ServerConnector,
+	credentialProvider CredentialProvider,
+	cfg YamlConfig) ServerDiscovery {
+	return &linuxServerDiscovery{
+		ctx:                ctx,
+		cfg:                cfg,
+		server:             serverConnector,
+		credentialProvider: credentialProvider,
+	}
 }
 
 func (l *linuxServerDiscovery) Server() ServerConnector {
@@ -39,29 +46,11 @@ func (l *linuxServerDiscovery) Server() ServerConnector {
 }
 
 func (l *linuxServerDiscovery) Prepare() (*Credential, error) {
-	var err error
-	azureLogger := GetAzureLogger(l.ctx)
-	cred, cached := l.getCredFromCache(l.server.FQDN())
-	if cached {
-		azureLogger.Debug("credential cache hit", "server", l.server, "credentialId", cred.Id)
-		cred, err = l.connect(cred)
-	}
-
-	if cached && err == nil {
-		return cred, nil
-	}
-
-	azureLogger.Debug("credential cache miss or login failed, going to get credentials again", "server", l.server, "cached", cached, "parallelEnabled", l.cfg.Server.Connect.Parallel, "err", err)
 	creds, err := l.credentialProvider.GetCredentials()
 	if err != nil {
 		return nil, CredentialError{error: err, message: "failed to get credentials"}
 	}
-	cred, err = l.connect(creds...)
-	if err == nil && cred != nil {
-		azureLogger.Debug("going to cache the credential", "server", l.server, "credential", cred.Id)
-		l.cacheCredential(l.server.FQDN(), cred)
-	}
-	return cred, err
+	return l.connect(creds...)
 }
 
 func (l *linuxServerDiscovery) ProcessScan() ([]JavaProcess, error) {
@@ -132,7 +121,7 @@ func (l *linuxServerDiscovery) ProcessScan() ([]JavaProcess, error) {
 }
 
 func (l *linuxServerDiscovery) GetTotalMemory() (int64, error) {
-	output, err := l.server.RunCmd(GetTotalMemoryCmd())
+	output, err := runWithSudo(l.server, GetTotalMemoryCmd())
 	if err != nil {
 		return 0, err
 	}
@@ -150,7 +139,7 @@ func (l *linuxServerDiscovery) GetTotalMemory() (int64, error) {
 
 func (l *linuxServerDiscovery) getChecksum(absolutePath string) (string, error) {
 	azureLogger := GetAzureLogger(l.ctx)
-	output, err := l.Server().RunCmd(GetSha256Cmd(absolutePath))
+	output, err := runWithSudo(l.server, GetSha256Cmd(absolutePath))
 	if err != nil || len(output) == 0 {
 		azureLogger.Info("cannot get sha256 checksum", "absolutePath", absolutePath, "err", err)
 		return "", nil
@@ -161,14 +150,14 @@ func (l *linuxServerDiscovery) getChecksum(absolutePath string) (string, error) 
 func (l *linuxServerDiscovery) GetOsName() (string, error) {
 	azureLogger := GetAzureLogger(l.ctx)
 	var tryOsRelease tryFunc[ServerConnector, string] = func(in ServerConnector) (string, bool) {
-		output, err := in.RunCmd(GetOsName())
+		output, err := runWithSudo(in, GetOsName())
 		if err != nil {
 			azureLogger.Warning(err, "cannot get os name", "output", output)
 		}
 		return output, len(output) > 0
 	}
 	var tryCentOsRelease tryFunc[ServerConnector, string] = func(in ServerConnector) (string, bool) {
-		output, err := in.RunCmd(GetCentOsName())
+		output, err := runWithSudo(in, GetCentOsName())
 		if err != nil {
 			azureLogger.Warning(err, "cannot get cent os name", "output", output)
 		}
@@ -186,14 +175,14 @@ func (l *linuxServerDiscovery) GetOsName() (string, error) {
 func (l *linuxServerDiscovery) GetOsVersion() (string, error) {
 	azureLogger := GetAzureLogger(l.ctx)
 	var tryOsRelease tryFunc[ServerConnector, string] = func(in ServerConnector) (string, bool) {
-		output, err := in.RunCmd(GetOsVersion())
+		output, err := runWithSudo(in, GetOsVersion())
 		if err != nil {
 			azureLogger.Debug("cannot get os version", "err", err, "output", output)
 		}
 		return output, len(output) > 0
 	}
 	var tryCentOsRelease tryFunc[ServerConnector, string] = func(in ServerConnector) (string, bool) {
-		output, err := in.RunCmd(GetCentOsVersion())
+		output, err := runWithSudo(in, GetCentOsVersion())
 		if err != nil {
 			azureLogger.Debug("cannot get cent os version", "err", err, "output", output)
 		}
@@ -267,44 +256,29 @@ func sudo(command string) string {
 	return "sudo " + command
 }
 
-func (l *linuxServerDiscovery) getCredFromCache(server string) (*Credential, bool) {
-	if v, ok := l.credentialCache.Load(server); ok {
-		return v.(*Credential), true
-	}
-	return nil, false
-}
-
-func (l *linuxServerDiscovery) cacheCredential(server string, credential *Credential) {
-	l.credentialCache.Store(server, credential)
-}
-
-func (l *linuxServerDiscovery) clearCache(server string) {
-	l.credentialCache.Delete(server)
-}
-
 func (l *linuxServerDiscovery) connect(creds ...*Credential) (*Credential, error) {
+	azureLogger := GetAzureLogger(l.ctx)
 	length := len(creds)
 	if length == 0 {
 		return nil, CredentialError{error: fmt.Errorf("credentials are empty"), message: ""}
 	}
 
-	azureLogger := GetAzureLogger(l.ctx)
-
 	s := FromSlice[*Credential](l.ctx, creds)
 	if l.cfg.Server.Connect.Parallel {
-		s = s.Parallel(5)
+		s = s.Parallel(l.cfg.Server.Connect.Parallelism)
 	}
-	cred, err := s.Map(func(cred *Credential) (*Credential, error) {
-		err := l.server.Connect(cred.Username, cred.Password)
-		if err != nil {
-			if !isAuthFailure(err) {
-				return nil, err
+	cred, err :=
+		s.Map(func(cred *Credential) (*Credential, error) {
+			err := l.server.Connect(cred.Username, cred.Password)
+			if err != nil {
+				if !isAuthFailure(err) {
+					return nil, err
+				}
 			}
-		}
-		return cred, nil
-	}).Filter(func(t any) bool {
-		return t != nil
-	}).First()
+			return cred, nil
+		}).Filter(func(t any) bool {
+			return t != nil
+		}).First()
 
 	if cred != nil {
 		return cred.(*Credential), nil

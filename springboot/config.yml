@@ -1,7 +1,7 @@
 server:
   connect:
     parallel: true
-    timeoutSeconds: 30
+    parallelism: 5
 pattern:
   app:
     - "application\\.ya?ml"
