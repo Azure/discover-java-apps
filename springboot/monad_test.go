@@ -65,7 +65,7 @@ var _ = Describe("Test monadic", func() {
 			})
 		})
 
-		When("filed not exists", func() {
+		When("field not exists", func() {
 			It("should return empty", func() {
 				monadic.Apply(func(process JavaProcess, jarFile JarFile) *Monad {
 					return Of(appName, nil).Field("NotExistsField")
