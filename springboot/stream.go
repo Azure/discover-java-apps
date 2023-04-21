@@ -43,20 +43,6 @@ func FromSlice[T any](ctx context.Context, slice []T) Stream {
 	})
 }
 
-func FromConsumer(f func(consumer consumer) error) Stream {
-	return stream(f)
-}
-
-func FromProducer(ctx context.Context, p func() (any, error)) Stream {
-	return stream(func(consumer consumer) error {
-		t, err := p()
-		if err != nil {
-			return err
-		}
-		return consumer(ctx, t)
-	})
-}
-
 func IntComparator() Comparator[int] {
 	return func(a, b int) int {
 		return a - b
@@ -97,6 +83,7 @@ type Stream interface {
 	Sorted(less interface{}) Stream
 	Reduce(seed any, c Combinator[any]) (any, error)
 	Parallel(parallelism int) Stream
+	GroupBy(keyFunc func(t any) string) (map[string][]any, error)
 }
 
 type stop struct {
@@ -311,6 +298,27 @@ func (s stream) Parallel(parallelism int) Stream {
 	return stream(func(consumer consumer) error {
 		return s.asyncConsume(consumer, parallelism)
 	})
+}
+
+func (s stream) GroupBy(keyFunc func(t any) string) (map[string][]any, error) {
+	var m = make(map[string][]any)
+	var mux sync.Mutex
+	err := s(func(ctx context.Context, t any) error {
+		mux.Lock()
+		defer mux.Unlock()
+		key := keyFunc(t)
+		if _, exists := m[key]; exists {
+			m[key] = append(m[key], t)
+		} else {
+			m[key] = []any{t}
+		}
+		return nil
+	})
+
+	if err != nil && err != stopped {
+		return nil, err
+	}
+	return m, nil
 }
 
 func isUnaryFunc(refType reflect.Type) unaryFuncType {

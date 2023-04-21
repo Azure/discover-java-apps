@@ -194,6 +194,30 @@ var _ = Describe("Stream API test", func() {
 		})
 	})
 
+	Context("test group by", func() {
+		When("int stream supplied, count duplicated number", func() {
+			It("should be grouped", func() {
+				s := FromSlice(context.Background(), []int{1, 2, 3, 3, 4, 5, 5, 6, 7})
+
+				keyFunc := func(t any) string { return fmt.Sprintf("%d", t) }
+				result, err := s.GroupBy(keyFunc)
+
+				Expect(result).Should(
+					And(
+						HaveKeyWithValue("1", ConsistOf(1)),
+						HaveKeyWithValue("2", ConsistOf(2)),
+						HaveKeyWithValue("3", ConsistOf(3, 3)),
+						HaveKeyWithValue("4", ConsistOf(4)),
+						HaveKeyWithValue("5", ConsistOf(5, 5)),
+						HaveKeyWithValue("6", ConsistOf(6)),
+						HaveKeyWithValue("7", ConsistOf(7)),
+					),
+				)
+				Expect(err).Should(BeNil())
+			})
+		})
+	})
+
 	Context("test parallel stream", func() {
 
 		It("should be as expected", func() {
