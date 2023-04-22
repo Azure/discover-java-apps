@@ -226,6 +226,10 @@ func (p *javaProcess) String() string {
 	return strings.Join(s, " ")
 }
 
+func (p *javaProcess) GetUid() int {
+	return p.uid
+}
+
 func runWithSudo(server ServerConnector, cmd string) (string, error) {
 	output, err := server.RunCmd(cmd)
 	if err != nil {
