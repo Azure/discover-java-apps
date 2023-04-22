@@ -16,11 +16,11 @@ type CliApp struct {
 	SpringBootVersion string `json:"springBootVersion" csv:"SpringBootVersion"`
 	BuildJdkVersion   string `json:"buildJdkVersion" csv:"BuildJdkVersion"`
 	RuntimeJdkVersion string `json:"runtimeJdkVersion" csv:"RuntimeJdkVersion"`
-	JvmMemory         int64  `json:"jvmMemory" csv:"HeapMemory(MB)"`
+	JvmMemory         int64  `json:"jvmMemory" csv:"JvmHeapMemory(MB)"`
 	OsName            string `json:"osName" csv:"OsName"`
 	OsVersion         string `json:"osVersion" csv:"OsVersion"`
 	JarFileLocation   string `json:"jarFileLocation" csv:"JarFileLocation"`
-	JarSize           int64  `json:"jarSize" csv:"JarFileSize(MB)"`
+	JarSize           int64  `json:"jarSize" csv:"JarFileSize(KB)"`
 	LastModifiedTime  string `json:"lastModifiedTime" csv:"JarFileModifiedTime"`
 }
 
@@ -60,7 +60,7 @@ func (s springBootAppConverter) Convert(apps []*springboot.SpringBootApp) []*Cli
 			JarFileLocation:   app.JarFileLocation,
 			OsName:            app.Runtime.OsName,
 			OsVersion:         app.Runtime.OsVersion,
-			JarSize:           app.JarSize / springboot.MiB,
+			JarSize:           app.JarSize / springboot.KiB,
 			JvmMemory:         app.Runtime.JvmMemory / springboot.MiB,
 			LastModifiedTime:  app.LastModifiedTime.UTC().Format(time.RFC3339),
 		})

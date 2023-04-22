@@ -129,6 +129,7 @@ type JarFile interface {
 
 type JavaProcess interface {
 	GetProcessId() int
+	GetUid() int
 	GetRuntimeJdkVersion() (string, error)
 	LocateJarFile() (string, error)
 	GetJavaCmd() (string, error)

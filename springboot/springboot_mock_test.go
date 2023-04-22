@@ -687,6 +687,20 @@ func (mr *MockJavaProcessMockRecorder) GetRuntimeJdkVersion() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetRuntimeJdkVersion", reflect.TypeOf((*MockJavaProcess)(nil).GetRuntimeJdkVersion))
 }
 
+// GetUid mocks base method.
+func (m *MockJavaProcess) GetUid() int {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUid")
+	ret0, _ := ret[0].(int)
+	return ret0
+}
+
+// GetUid indicates an expected call of GetUid.
+func (mr *MockJavaProcessMockRecorder) GetUid() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUid", reflect.TypeOf((*MockJavaProcess)(nil).GetUid))
+}
+
 // LocateJarFile mocks base method.
 func (m *MockJavaProcess) LocateJarFile() (string, error) {
 	m.ctrl.T.Helper()

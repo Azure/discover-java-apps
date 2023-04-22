@@ -192,6 +192,14 @@ var getOsVersion StepFunc = func(process JavaProcess, jarFile JarFile) *Monad {
 	return Of(process.Executor().GetOsVersion()).Field("OsVersion")
 }
 
+var getPid StepFunc = func(process JavaProcess, jarFile JarFile) *Monad {
+	return Of(process.GetProcessId()).Field("Pid")
+}
+
+var getUid StepFunc = func(process JavaProcess, jarFile JarFile) *Monad {
+	return Of(process.GetUid()).Field("Uid")
+}
+
 func (s *springBootDiscoveryExecutor) discoverApp(process JavaProcess, jar JarFile) (*SpringBootApp, error) {
 
 	m := NewMonadic[*SpringBootApp](process, jar)
@@ -237,6 +245,8 @@ func (s *springBootDiscoveryExecutor) discoverApp(process JavaProcess, jar JarFi
 		Apply(getBindingPorts).
 		Apply(getOsName).
 		Apply(getOsVersion).
+		Apply(getPid).
+		Apply(getUid).
 		Get()
 	if err != nil {
 		return nil, err
@@ -249,10 +259,6 @@ func (s *springBootDiscoveryExecutor) discoverApp(process JavaProcess, jar JarFi
 	}
 
 	return app, err
-}
-
-func mapToAppTypeString(appType AppType) string {
-	return string(appType)
 }
 
 func mapToCommonParentFolder(origin []string) []string {
@@ -293,6 +299,7 @@ func (s *springBootDiscoveryExecutor) tryConnect(ctx context.Context, serverConn
 		)
 
 		if cred, err = serverDiscovery.Prepare(); err != nil {
+			_ = serverDiscovery.Finish()
 			azureLogger.Warning(err, "failed to connect to", "server", info.Server)
 			continue
 		} else {
