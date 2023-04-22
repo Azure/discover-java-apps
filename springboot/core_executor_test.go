@@ -27,19 +27,15 @@ var _ = Describe("Test springboot discovery executor", func() {
 		serverConnectorFactory *MockServerConnectorFactory
 		serverConnector        *MockServerConnector
 		credentials            []*Credential
+		ctrl                   *gomock.Controller
 	)
 
 	BeforeEach(func() {
-		ctrl := gomock.NewController(GinkgoT())
+		ctrl = gomock.NewController(GinkgoT())
 		credentialProvider = NewMockCredentialProvider(ctrl)
 		serverConnectorFactory = NewMockServerConnectorFactory(ctrl)
 		serverConnector = NewMockServerConnector(ctrl)
-		executor = NewSpringBootDiscoveryExecutor(
-			credentialProvider,
-			serverConnectorFactory,
-			YamlCfg,
-		)
-		serverConnectorFactory.EXPECT().Create(gomock.Any(), gomock.Any(), gomock.Any()).Return(serverConnector).AnyTimes()
+		executor = NewSpringBootDiscoveryExecutor(credentialProvider, serverConnectorFactory, YamlCfg)
 		credentials = []*Credential{
 			{
 				Username: testUser,
@@ -55,6 +51,7 @@ var _ = Describe("Test springboot discovery executor", func() {
 			connection := ServerConnectionInfo{Server: fqdn, Port: 1022}
 			serverConnector.EXPECT().FQDN().Return(fqdn).AnyTimes()
 			serverConnector.EXPECT().Connect(gomock.Any(), gomock.Any()).Return(nil).AnyTimes()
+			serverConnectorFactory.EXPECT().Create(gomock.Any(), fqdn, gomock.Any()).Return(serverConnector).AnyTimes()
 
 			var matchers []types.GomegaMatcher
 			var processes []string
@@ -90,6 +87,7 @@ var _ = Describe("Test springboot discovery executor", func() {
 			credentialProvider.EXPECT().GetCredentials().Return(credentials, nil).AnyTimes()
 			serverConnector.EXPECT().FQDN().Return(fqdn).AnyTimes()
 			serverConnector.EXPECT().Connect(gomock.Any(), gomock.Any()).Return(fmt.Errorf("connection error")).AnyTimes()
+			serverConnector.EXPECT().Close().MinTimes(1)
 
 			connection := ServerConnectionInfo{
 				Server: fqdn,
@@ -104,39 +102,35 @@ var _ = Describe("Test springboot discovery executor", func() {
 
 	When("primary fqdn is not accessible but alternative IP address is accessible", func() {
 		It("prepare should succeeded", func() {
+			var primaryFqdn = "primary"
 			var altServerAccessible = "server-accessible"
 			var altServerNotAccessible = "server-not-accessible"
 
-			ctrl := gomock.NewController(GinkgoT())
-
-			accessibleConnector := NewMockServerConnector(ctrl)
-			notAccessibleConnector := NewMockServerConnector(ctrl)
-			serverConnectorFactory.EXPECT().Create(gomock.Any(), fqdn, gomock.Any()).Return(serverConnector).AnyTimes()
-			serverConnectorFactory.EXPECT().Create(gomock.Any(), altServerAccessible, gomock.Any()).Return(accessibleConnector).AnyTimes()
-			serverConnectorFactory.EXPECT().Create(gomock.Any(), altServerNotAccessible, gomock.Any()).Return(notAccessibleConnector).AnyTimes()
-			serverConnector.EXPECT().FQDN().Return(fqdn).AnyTimes()
-			accessibleConnector.EXPECT().FQDN().Return(altServerAccessible).AnyTimes()
-			notAccessibleConnector.EXPECT().FQDN().Return(altServerNotAccessible).AnyTimes()
-			serverConnector.EXPECT().Connect(testUser, gomock.Any()).Return(fmt.Errorf("connection error")).AnyTimes()
-			notAccessibleConnector.EXPECT().Connect(testUser, gomock.Any()).Return(fmt.Errorf("connection error")).AnyTimes()
-			accessibleConnector.EXPECT().Connect(testUser, gomock.Any()).Return(nil).AnyTimes()
+			for _, testcase := range []struct {
+				fqdn       string
+				accessible bool
+			}{
+				{fqdn: primaryFqdn, accessible: false},
+				{fqdn: altServerAccessible, accessible: true},
+				{fqdn: altServerNotAccessible, accessible: false},
+			} {
+				connector := NewMockServerConnector(ctrl)
+				connector.EXPECT().FQDN().Return(testcase.fqdn).AnyTimes()
+				if testcase.accessible {
+					connector.EXPECT().Connect(gomock.Any(), gomock.Any()).Return(nil).AnyTimes()
+				} else {
+					connector.EXPECT().Connect(gomock.Any(), gomock.Any()).Return(fmt.Errorf("connection error")).AnyTimes()
+				}
+				setupServerConnectorMock(connector, strings.Join([]string{SpringBoot2xProcess, SpringBoot1xProcess, ExecutableProcess}, "\n"))
+				serverConnectorFactory.EXPECT().Create(gomock.Any(), testcase.fqdn, gomock.Any()).Return(connector).AnyTimes()
+			}
 
 			credentialProvider.EXPECT().GetCredentials().Return(credentials, nil).AnyTimes()
-			setupServerConnectorMock(accessibleConnector, SpringBoot1xProcess)
 
-			connection := ServerConnectionInfo{
-				Server: fqdn,
-				Port:   1022,
-			}
-			accessible := ServerConnectionInfo{
-				Server: altServerAccessible,
-				Port:   1022,
-			}
-			nonaccessible := ServerConnectionInfo{
-				Server: altServerNotAccessible,
-				Port:   1022,
-			}
-			apps, err := executor.Discover(context.Background(), connection, accessible, nonaccessible)
+			connection := ServerConnectionInfo{Server: primaryFqdn, Port: 1022}
+			accessible := ServerConnectionInfo{Server: altServerAccessible, Port: 1022}
+			nonaccessible := ServerConnectionInfo{Server: altServerNotAccessible, Port: 1022}
+			apps, err := executor.Discover(context.Background(), connection, nonaccessible, accessible)
 
 			Expect(apps).Should(Not(BeEmpty()))
 			Expect(err).Should(BeNil())
@@ -149,6 +143,7 @@ var _ = Describe("Test springboot discovery executor", func() {
 			credentialProvider.EXPECT().GetCredentials().Return(nil, fmt.Errorf("get credential error")).AnyTimes()
 			serverConnector.EXPECT().FQDN().Return(fqdn).AnyTimes()
 			serverConnector.EXPECT().Connect(gomock.Any(), gomock.Any()).Return(nil).AnyTimes()
+			serverConnector.EXPECT().Close().MinTimes(1)
 
 			connection := ServerConnectionInfo{
 				Server: fqdn,
@@ -275,7 +270,7 @@ func setupServerConnectorMock(s *MockServerConnector, processes string) {
 	s.EXPECT().RunCmd(CmdMatcher(LinuxSha256Cmd)).Return("", nil).AnyTimes()
 	s.EXPECT().RunCmd(CmdMatcher(GetOsName())).Return(osName, nil).AnyTimes()
 	s.EXPECT().RunCmd(CmdMatcher(GetOsVersion())).Return(osVersion, nil).AnyTimes()
-	s.EXPECT().FQDN().Return(Host).AnyTimes()
+	//s.EXPECT().FQDN().Return(Host).AnyTimes()
 
 	b, err := os.ReadFile(filepath.Join("..", "mock", SpringBoot2xJarFile))
 	if err != nil {

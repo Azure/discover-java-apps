@@ -267,6 +267,7 @@ func (l *linuxServerDiscovery) connect(creds ...*Credential) (*Credential, error
 	if l.cfg.Server.Connect.Parallel {
 		s = s.Parallel(l.cfg.Server.Connect.Parallelism)
 	}
+
 	cred, err :=
 		s.Map(func(cred *Credential) (*Credential, error) {
 			err := l.server.Connect(cred.Username, cred.Password)

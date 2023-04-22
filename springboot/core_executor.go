@@ -299,6 +299,7 @@ func (s *springBootDiscoveryExecutor) tryConnect(ctx context.Context, serverConn
 		)
 
 		if cred, err = serverDiscovery.Prepare(); err != nil {
+			_ = serverDiscovery.Finish()
 			azureLogger.Warning(err, "failed to connect to", "server", info.Server)
 			continue
 		} else {
