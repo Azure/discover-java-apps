@@ -16,11 +16,11 @@ type CliApp struct {
 	SpringBootVersion string `json:"springBootVersion" csv:"SpringBootVersion"`
 	BuildJdkVersion   string `json:"buildJdkVersion" csv:"BuildJdkVersion"`
 	RuntimeJdkVersion string `json:"runtimeJdkVersion" csv:"RuntimeJdkVersion"`
-	JvmMemory         int64  `json:"jvmMemory" csv:"JvmHeapMemory(MB)"`
+	JvmMemory         int64  `json:"jvmMemoryInMB" csv:"JvmHeapMemory(MB)"`
 	OsName            string `json:"osName" csv:"OsName"`
 	OsVersion         string `json:"osVersion" csv:"OsVersion"`
 	JarFileLocation   string `json:"jarFileLocation" csv:"JarFileLocation"`
-	JarSize           int64  `json:"jarSize" csv:"JarFileSize(KB)"`
+	JarSize           int64  `json:"jarSizeInKB" csv:"JarFileSize(KB)"`
 	LastModifiedTime  string `json:"lastModifiedTime" csv:"JarFileModifiedTime"`
 }
 
