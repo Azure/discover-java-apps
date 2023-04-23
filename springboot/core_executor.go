@@ -2,7 +2,6 @@ package springboot
 
 import (
 	"context"
-	errors "github.com/pkg/errors"
 	"reflect"
 	"strings"
 	"time"
@@ -32,7 +31,7 @@ func (s *springBootDiscoveryExecutor) Discover(ctx context.Context, serverConnec
 	var err error
 	serverDiscovery, cred, err := s.tryConnect(ctx, append([]ServerConnectionInfo{serverConnectionInfo}, alternativeConnectionInfos...))
 	if err != nil {
-		return nil, errors.Wrap(err, "connection failed")
+		return nil, err
 	}
 	azureLogger.Info("connect to serverConnectionInfo successfully", "credential", cred.FriendlyName, "runAsAccountId", cred.Id)
 	defer serverDiscovery.Finish()
