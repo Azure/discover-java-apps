@@ -203,8 +203,3 @@ func WithKeyAlgorithms(algos []string) SshOption {
 func (s *linuxServer) String() string {
 	return s.server
 }
-
-type loginResult struct {
-	cred *Credential
-	err  error
-}

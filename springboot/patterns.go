@@ -47,6 +47,6 @@ func newPatterns() *patterns {
 		AppPatterns:                appPatterns,
 		ConsoleOutputRegexPatterns: ps,
 		ConsoleOutputYamlPatterns:  ys,
-		MavenPomVersionPattern:     regexp.MustCompile("-?[0-9\\.]+.*\\.jar"),
+		MavenPomVersionPattern:     regexp.MustCompile("(-?[0-9\\.]+.*)?\\.jar"),
 	}
 }
