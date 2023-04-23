@@ -112,8 +112,7 @@ func (j *jarFile) GetArtifactName() (string, error) {
 	}
 
 	var tryFilename tryFunc[*jarFile, string] = func(j *jarFile) (string, bool) {
-		filename := filepath.Base(j.remoteLocation)
-		return sanitizeArtifactName(strings.ReplaceAll(filename, filepath.Ext(filename), "")), true
+		return sanitizeArtifactName(filepath.Base(j.remoteLocation)), true
 	}
 
 	var funcs = tryFuncs[*jarFile, string]{tryPom, tryManifest, tryFilename}

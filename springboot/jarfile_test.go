@@ -65,7 +65,6 @@ var _ = Describe("JarFile test", func() {
 				j = &jarFile{manifests: parseManifests(""), remoteLocation: "hellospringfromfilename.jar"}
 				process = &javaProcess{
 					options: []string{
-						"-Dspring.application.name=hellospringfromoptions",
 						"-Dserver.port=8084",
 					},
 				}
@@ -76,7 +75,7 @@ var _ = Describe("JarFile test", func() {
 			})
 
 			It("should return jar file name as fallback", func() {
-				Expect(j.GetAppName(process)).Should(Equal("hellospringfromoptions"))
+				Expect(j.GetAppName(process)).Should(Equal("hellospringfromfilename"))
 			})
 
 			It("should return artifact name", func() {
