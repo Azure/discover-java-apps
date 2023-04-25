@@ -268,21 +268,23 @@ func (l *linuxServerDiscovery) connect(creds ...*Credential) (*Credential, error
 		s = s.Parallel(l.cfg.Server.Connect.Parallelism)
 	}
 
-	cred, err :=
-		s.Map(func(cred *Credential) (*Credential, error) {
+	results, _ :=
+		ToSlice[loginResult](s.Map(func(cred *Credential) loginResult {
 			err := l.server.Connect(cred.Username, cred.Password)
 			if err != nil {
 				if !isAuthFailure(err) {
-					return nil, err
+					return loginResult{cred: nil, err: err}
 				}
 			}
-			return cred, nil
-		}).Filter(func(t any) bool {
-			return t != nil
-		}).First()
+			return loginResult{cred: cred, err: nil}
+		}))
 
-	if cred != nil {
-		return cred.(*Credential), nil
+	var err error
+	for _, result := range results {
+		if result.cred != nil {
+			return result.cred, nil
+		}
+		err = result.err
 	}
 
 	if err != nil {
@@ -301,4 +303,9 @@ func isAuthFailure(err error) bool {
 		return false
 	}
 	return strings.Contains(err.Error(), "ssh: unable to authenticate")
+}
+
+type loginResult struct {
+	cred *Credential
+	err  error
 }

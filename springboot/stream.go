@@ -32,10 +32,12 @@ var stopped = stop{}
 
 func FromSlice[T any](ctx context.Context, slice []T) Stream {
 	return stream(func(consumer consumer) error {
-		var err error
 		for _, i := range slice {
-			err = consumer(ctx, i)
+			err := consumer(ctx, i)
 			if err != nil {
+				if err == stopped {
+					break
+				}
 				return err
 			}
 		}
@@ -69,7 +71,6 @@ func StringJoiner(sep string) Combinator[any] {
 
 type Stream interface {
 	consume(consumer consumer) error
-	asyncConsume(consumer consumer, parallelism int) error
 	ForEach(f interface{}) error
 	Peek(f interface{}) Stream
 	Map(f interface{}) Stream
@@ -101,6 +102,20 @@ type Predicate func(t any) bool
 
 type consumer func(ctx context.Context, t any) error
 
+func (c consumer) andThen(other consumer) consumer {
+	return func(ctx context.Context, t any) error {
+		err := c(ctx, t)
+		if err != nil {
+			return err
+		}
+		err = other(ctx, t)
+		if err != nil {
+			return err
+		}
+		return nil
+	}
+}
+
 type stream func(consumer consumer) error
 
 type RetryPolicy struct {
@@ -112,21 +127,9 @@ func (s stream) consume(c consumer) error {
 	return s(c)
 }
 
-func (s stream) asyncConsume(c consumer, parallelism int) error {
-	errs, _ := errgroup.WithContext(context.Background())
-	errs.SetLimit(parallelism)
-
-	_ = s.ForEach(func(t any) {
-		errs.Go(func() error {
-			return c(context.Background(), t)
-		})
-	})
-	return errs.Wait()
-}
-
 func (s stream) ForEach(f interface{}) error {
 	fc := toCall(f)
-	return s(func(ctx context.Context, t any) error {
+	return s.consume(func(ctx context.Context, t any) error {
 		_, err := fc.call(ctx, t)
 		return err
 	})
@@ -134,18 +137,21 @@ func (s stream) ForEach(f interface{}) error {
 
 func (s stream) Peek(f interface{}) Stream {
 	fc := toCall(f)
-	return s.Map(func(ctx context.Context, t any) (any, error) {
+	c := consumer(func(ctx context.Context, t any) error {
 		_, err := fc.call(ctx, t)
-		return t, err
+		return err
+	})
+	return stream(func(other consumer) error {
+		return s.consume(c.andThen(other))
 	})
 }
 
 func (s stream) Map(f interface{}) Stream {
 	fc := toCall(f)
 	return stream(func(consumer consumer) error {
-		return s(func(ctx context.Context, t any) error {
+		return s.consume(func(ctx context.Context, t any) error {
 			val, err := fc.call(ctx, t)
-			if err != nil {
+			if err != nil && err != stopped {
 				return err
 			}
 			return consumer(ctx, val.Interface())
@@ -156,7 +162,7 @@ func (s stream) Map(f interface{}) Stream {
 func (s stream) FlatMap(f interface{}) Stream {
 	fc := toCall(f)
 	return stream(func(consumer consumer) error {
-		return s(func(ctx context.Context, t any) error {
+		return s.consume(func(ctx context.Context, t any) error {
 			val, err := fc.call(ctx, t)
 			if err != nil {
 				return err
@@ -187,7 +193,7 @@ func (s stream) Distinct() Stream {
 
 func (s stream) Filter(f Predicate) Stream {
 	return stream(func(consumer consumer) error {
-		return s(func(ctx context.Context, t any) error {
+		return s.consume(func(ctx context.Context, t any) error {
 			if f(t) {
 				return consumer(ctx, t)
 			}
@@ -213,7 +219,7 @@ func (s stream) Join(sep string) (string, error) {
 
 func (s stream) Retry(policy RetryPolicy) Stream {
 	return stream(func(consumer consumer) error {
-		return s(func(ctx context.Context, t any) error {
+		return s.consume(func(ctx context.Context, t any) error {
 			var err error
 			for i := 0; i <= policy.max; i++ {
 				err = consumer(ctx, t)
@@ -231,7 +237,7 @@ func (s stream) Take(n int) Stream {
 	return stream(func(consumer consumer) error {
 		i := n
 		var mux sync.Mutex
-		return s(func(ctx context.Context, t any) error {
+		return s.consume(func(ctx context.Context, t any) error {
 			shouldConsume := false
 			mux.Lock()
 			i--
@@ -249,13 +255,16 @@ func (s stream) Take(n int) Stream {
 func (s stream) First() (any, error) {
 	var result any
 	var mux sync.Mutex
-	err := s(func(ctx context.Context, t any) error {
+	err := s.consume(func(ctx context.Context, t any) error {
 		mux.Lock()
 		defer mux.Unlock()
 		result = t
 		return stopped
 	})
-	return result, ignoreStopped(err)
+	if err != nil && err != stopped {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (s stream) Sorted(less interface{}) Stream {
@@ -263,23 +272,16 @@ func (s stream) Sorted(less interface{}) Stream {
 		var slice []any
 		var ctx context.Context
 		var mux sync.Mutex
-		_ = s(func(context context.Context, t any) error {
+		_ = s.consume(func(context context.Context, t any) error {
 			mux.Lock()
 			defer mux.Unlock()
 			slice = append(slice, t)
 			ctx = context
 			return nil
 		})
-
 		sortSlice(slice, less)
+		return FromSlice(ctx, slice).consume(consumer)
 
-		for _, t := range slice {
-			err := consumer(ctx, t)
-			if err != nil && err != stopped {
-				return err
-			}
-		}
-		return nil
 	})
 }
 
@@ -291,19 +293,35 @@ func (s stream) Reduce(initial any, c Combinator[any]) (any, error) {
 		defer mux.Unlock()
 		result = c(result, t)
 	})
-	return result, ignoreStopped(err)
+	if err != nil && err != stopped {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (s stream) Parallel(parallelism int) Stream {
 	return stream(func(consumer consumer) error {
-		return s.asyncConsume(consumer, parallelism)
+		errs, _ := errgroup.WithContext(context.Background())
+		errs.SetLimit(parallelism)
+		err := s(func(ctx context.Context, t any) error {
+			errs.Go(func() error {
+				return consumer(ctx, t)
+			})
+			return nil
+		})
+
+		if err != nil {
+			return err
+		}
+
+		return errs.Wait()
 	})
 }
 
 func (s stream) GroupBy(keyFunc func(t any) string) (map[string][]any, error) {
 	var m = make(map[string][]any)
 	var mux sync.Mutex
-	err := s(func(ctx context.Context, t any) error {
+	err := s.consume(func(ctx context.Context, t any) error {
 		mux.Lock()
 		defer mux.Unlock()
 		key := keyFunc(t)
@@ -435,7 +453,7 @@ func ToSlice[T any](s Stream) ([]T, error) {
 	if err != nil && err != stopped {
 		return nil, err
 	}
-	return slice, err
+	return slice, nil
 }
 
 func PolicyOf(max int, interval time.Duration) RetryPolicy {

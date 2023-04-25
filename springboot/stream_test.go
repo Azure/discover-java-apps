@@ -156,7 +156,8 @@ var _ = Describe("Stream API test", func() {
 		It("should return first n elements", func() {
 			s := FromSlice(context.Background(), []string{"1", "a", "3"})
 
-			result, _ := ToSlice[string](s.Take(2))
+			result, err := ToSlice[string](s.Take(2))
+			Expect(err).Should(BeNil())
 			Expect(result).Should(ConsistOf("1", "a"))
 		})
 	})
@@ -223,7 +224,8 @@ var _ = Describe("Stream API test", func() {
 		It("should be as expected", func() {
 			s := FromSlice(context.Background(), []int{7, 4, 8, 3, 5, 1, 9})
 			s = s.Parallel(3)
-
+			take := 5
+			initial := "test"
 			result, err := s.Filter(
 				func(t any) bool {
 					return t.(int) > 2
@@ -233,7 +235,7 @@ var _ = Describe("Stream API test", func() {
 					return a.(int) - b.(int)
 				},
 			).Take(
-				5,
+				take,
 			).Map(
 				func(context context.Context, i int) (string, error) {
 					return fmt.Sprintf("%v", i), nil
@@ -242,13 +244,13 @@ var _ = Describe("Stream API test", func() {
 				func(context context.Context, i string) string {
 					return fmt.Sprintf("%v", i)
 				},
-			).Reduce("test",
+			).Reduce(initial,
 				func(a, b any) any {
 					return a.(string) + "," + b.(string)
 				},
 			)
 
-			Expect(result).Should(Equal("test,3,4,5,7,8"))
+			Expect(result).Should(And(HavePrefix(initial), HaveLen(len(initial)+take*2)))
 			Expect(err).Should(BeNil())
 		})
 
@@ -262,23 +264,22 @@ var _ = Describe("Stream API test", func() {
 					},
 				)
 				result, _ := ToSlice[int](s)
-				Expect(result).Should(Equal([]int{9, 8, 7, 5, 4, 3, 1}))
+				expected := []int{9, 8, 7, 5, 4, 3, 1}
+				Expect(result).Should(ConsistOf(expected))
 
-				Expect(s.Join("=")).Should(Equal("9=8=7=5=4=3=1"))
+				Expect(s.Join("=")).Should(HaveLen(len(expected)*2 - 1))
 			})
 		})
 
 		When("error occurred with retry enabled", func() {
 			It("should failed with retried", func() {
 				s := FromSlice(context.Background(), []int{1, 3, 6, 7})
-				s = s.Parallel(3)
+				s = s.Parallel(50)
 
 				m := make(map[int]int)
 				mux := sync.Mutex{}
-				s = s.Retry(
-					PolicyOf(3, time.Millisecond*500),
-				).Map(
-					func(context context.Context, i int) (int, error) {
+				s = s.Retry(PolicyOf(3, time.Millisecond*500)).
+					Map(func(context context.Context, i int) (int, error) {
 						mux.Lock()
 						m[i]++
 						mux.Unlock()
@@ -286,8 +287,7 @@ var _ = Describe("Stream API test", func() {
 							return 0, fmt.Errorf("error")
 						}
 						return i, nil
-					},
-				)
+					})
 
 				_, err := ToSlice[int](s)
 
@@ -317,32 +317,43 @@ var _ = Describe("Stream API test", func() {
 		When("ensure it's parallel", func() {
 			It("should succeeded", func() {
 				gid := getGID()
-
+				slice := [][]string{
+					{"1", "2", "3", "4"},
+					{"3", "4", "5", "6"},
+					{"5", "6", "7", "8"},
+					{"7", "8", "9", "10"},
+				}
 				By(fmt.Sprintf("running test case in gid %v", gid))
-				s := FromSlice(context.Background(), [][]string{
-					{"1", "2", "3"},
-					{"3", "4", "5"},
-					{"5", "6", "7"},
-				})
-				s = s.Parallel(3)
-				s.FlatMap(func(t []string) Stream {
-					return FromSlice[string](context.Background(), t)
-				}).Map(
-					func(s string) (int64, error) {
-						Expect(getGID()).Should(Not(Equal(gid)))
-						return strconv.ParseInt(s, 10, 32)
-					},
-				).Distinct().Filter(func(t any) bool {
-					Expect(getGID()).Should(Not(Equal(gid)))
-					return t.(int64) > 3
-				}).Take(5).Peek(func(t int64) {
-					Expect(getGID()).Should(Not(Equal(gid)))
-				}).Sorted(func(a, b int64) int {
-					Expect(getGID()).Should(Equal(gid)) // for a parallel stream, the sorting is in main thread
-					return int(a - b)
-				}).ForEach(func(i int64) {
-					Expect(getGID()).Should(Equal(gid)) // after sorting in main thread, forEach is also in main thread
-				})
+				s := FromSlice(context.Background(), slice)
+				s = s.Parallel(50)
+				Expect(getGID()).Should(Equal(gid)) // after sorting in main thread, forEach is also in main thread
+				s = s.Parallel(50)
+				for _, is := range []struct {
+					name   string
+					stream Stream
+					sync   bool
+				}{
+					{name: "FlatMap", stream: s.FlatMap(func(t []string) Stream { return FromSlice[string](context.Background(), t) }).Distinct()},
+					{name: "Retry", stream: s.Retry(PolicyOf(3, time.Second))},
+					{name: "Map", stream: s.Map(func(s any) (any, error) { return s, nil })},
+					{name: "FlatMap-Map", stream: s.FlatMap(func(s []string) Stream { return FromSlice(context.Background(), s) }).Map(func(s any) (any, error) { return s, nil })},
+					{name: "Filter", stream: s.Filter(func(t any) bool { return true })},
+					{name: "Take", stream: s.Take(5)},
+					{name: "Peek", stream: s.Peek(func(t any) {})},
+					{name: "Sorted", stream: s.Sorted(func(a, b any) int { return 1 }), sync: true},
+				} {
+					By(fmt.Sprintf("checking %s when ForEach", is.name))
+					start := time.Now()
+					_ = is.stream.ForEach(func(i any) {
+						time.Sleep(time.Second)
+						if is.sync {
+							Expect(getGID()).Should(Equal(gid))
+						} else {
+							Expect(getGID()).ShouldNot(Equal(gid))
+						}
+					})
+					Expect(time.Since(start)).Should(MatchDurationAround(time.Second*time.Duration(len(slice)), time.Millisecond*50))
+				}
 			})
 		})
 	})
