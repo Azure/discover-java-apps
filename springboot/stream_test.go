@@ -156,7 +156,8 @@ var _ = Describe("Stream API test", func() {
 		It("should return first n elements", func() {
 			s := FromSlice(context.Background(), []string{"1", "a", "3"})
 
-			result, _ := ToSlice[string](s.Take(2))
+			result, err := ToSlice[string](s.Take(2))
+			Expect(err).Should(BeNil())
 			Expect(result).Should(ConsistOf("1", "a"))
 		})
 	})
@@ -351,7 +352,7 @@ var _ = Describe("Stream API test", func() {
 							Expect(getGID()).ShouldNot(Equal(gid))
 						}
 					})
-					Expect(time.Since(start).Seconds()).Should(BeNumerically("<=", len(slice)+1))
+					Expect(time.Since(start)).Should(MatchDurationAround(time.Second*time.Duration(len(slice)), time.Millisecond*50))
 				}
 			})
 		})

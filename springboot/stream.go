@@ -32,10 +32,12 @@ var stopped = stop{}
 
 func FromSlice[T any](ctx context.Context, slice []T) Stream {
 	return stream(func(consumer consumer) error {
-		var err error
 		for _, i := range slice {
-			err = consumer(ctx, i)
+			err := consumer(ctx, i)
 			if err != nil {
+				if err == stopped {
+					break
+				}
 				return err
 			}
 		}
@@ -129,7 +131,7 @@ func (s stream) ForEach(f interface{}) error {
 	fc := toCall(f)
 	return s.consume(func(ctx context.Context, t any) error {
 		_, err := fc.call(ctx, t)
-		return ignoreStopped(err)
+		return err
 	})
 }
 
@@ -137,7 +139,7 @@ func (s stream) Peek(f interface{}) Stream {
 	fc := toCall(f)
 	c := consumer(func(ctx context.Context, t any) error {
 		_, err := fc.call(ctx, t)
-		return ignoreStopped(err)
+		return err
 	})
 	return stream(func(other consumer) error {
 		return s.consume(c.andThen(other))
@@ -182,7 +184,7 @@ func (s stream) Distinct() Stream {
 			}
 			mux.Unlock()
 			if !exists {
-				return ignoreStopped(consumer(ctx, t))
+				return consumer(ctx, t)
 			}
 			return nil
 		})
@@ -193,7 +195,7 @@ func (s stream) Filter(f Predicate) Stream {
 	return stream(func(consumer consumer) error {
 		return s.consume(func(ctx context.Context, t any) error {
 			if f(t) {
-				return ignoreStopped(consumer(ctx, t))
+				return consumer(ctx, t)
 			}
 			return nil
 		})
@@ -208,8 +210,8 @@ func (s stream) Join(sep string) (string, error) {
 		defer mux.Unlock()
 		slice = append(slice, fmt.Sprintf("%v", t))
 	})
-	if err != nil {
-		return "", ignoreStopped(err)
+	if err != nil && err != stopped {
+		return "", err
 	}
 
 	return strings.Join(slice, sep), nil
@@ -242,7 +244,7 @@ func (s stream) Take(n int) Stream {
 			shouldConsume = i >= 0
 			mux.Unlock()
 			if shouldConsume {
-				return ignoreStopped(consumer(ctx, t))
+				return consumer(ctx, t)
 			} else {
 				return stopped
 			}
@@ -259,8 +261,8 @@ func (s stream) First() (any, error) {
 		result = t
 		return stopped
 	})
-	if err != nil {
-		return nil, ignoreStopped(err)
+	if err != nil && err != stopped {
+		return nil, err
 	}
 	return result, nil
 }
@@ -291,8 +293,8 @@ func (s stream) Reduce(initial any, c Combinator[any]) (any, error) {
 		defer mux.Unlock()
 		result = c(result, t)
 	})
-	if err != nil {
-		return nil, ignoreStopped(err)
+	if err != nil && err != stopped {
+		return nil, err
 	}
 	return result, nil
 }
@@ -303,13 +305,13 @@ func (s stream) Parallel(parallelism int) Stream {
 		errs.SetLimit(parallelism)
 		err := s(func(ctx context.Context, t any) error {
 			errs.Go(func() error {
-				return ignoreStopped(consumer(ctx, t))
+				return consumer(ctx, t)
 			})
 			return nil
 		})
 
 		if err != nil {
-			return ignoreStopped(err)
+			return err
 		}
 
 		return errs.Wait()
@@ -331,8 +333,8 @@ func (s stream) GroupBy(keyFunc func(t any) string) (map[string][]any, error) {
 		return nil
 	})
 
-	if err != nil {
-		return nil, ignoreStopped(err)
+	if err != nil && err != stopped {
+		return nil, err
 	}
 	return m, nil
 }
@@ -448,10 +450,10 @@ func ToSlice[T any](s Stream) ([]T, error) {
 		slice = append(slice, t.(T))
 		return nil
 	})
-	if err != nil {
-		return nil, ignoreStopped(err)
+	if err != nil && err != stopped {
+		return nil, err
 	}
-	return slice, err
+	return slice, nil
 }
 
 func PolicyOf(max int, interval time.Duration) RetryPolicy {

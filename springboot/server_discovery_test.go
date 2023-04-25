@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"github.com/onsi/gomega/types"
 	"os"
 	"path/filepath"
 	"strings"
@@ -299,7 +300,7 @@ var _ = Describe("Linux java process", func() {
 		})
 
 		When("multiple credentials get", func() {
-			It("should succeeded for one of them", func() {
+			It("should succeeded", func() {
 				for _, cred := range credentials {
 					m.EXPECT().Connect(gomock.Eq(cred.Username), gomock.Any()).MaxTimes(1)
 				}
@@ -309,29 +310,36 @@ var _ = Describe("Linux java process", func() {
 		})
 
 		When("multiple credentials get, when slow connect", func() {
-			It("should succeeded finally", func() {
+			It("should finally succeeded within proper time", func() {
+				delay := time.Second * 5
 				for _, cred := range credentials {
 					call := m.EXPECT().Connect(gomock.Eq(cred.Username), gomock.Any()).MaxTimes(1)
-					slowCall(call)
+					slowCall(call, delay)
 				}
 				credentialProvider.EXPECT().GetCredentials().Return(credentials, nil)
+				start := time.Now()
 				Expect(executor.Prepare()).Should(BeElementOf(credentials))
+				if YamlCfg.Server.Connect.Parallel {
+					Expect(time.Since(start)).Should(MatchDurationAround(delay, time.Millisecond*50))
+				} else {
+					Expect(time.Since(start)).Should(MatchDurationAround(delay*time.Duration(len(credentials)), time.Millisecond*50))
+				}
 			})
 		})
 
-		When("multiple credentials get, when error occurred for all", func() {
-			It("should failed", func() {
+		When("multiple credentials get, when connection error occurred for all", func() {
+			It("should failed with connection error", func() {
 				for _, cred := range credentials {
 					call := m.EXPECT().Connect(gomock.Eq(cred.Username), gomock.Any()).MaxTimes(1)
 					errorCall(call)
 				}
 				credentialProvider.EXPECT().GetCredentials().Return(credentials, nil)
-				Expect(executor.Prepare()).Error().Should(Not(BeNil()))
+				Expect(executor.Prepare()).Error().Should(BeAssignableToTypeOf(ConnectionError{}))
 			})
 		})
 
-		When("multiple credentials get, when error occurred in partial", func() {
-			It("should succeeded", func() {
+		When("multiple credentials get, when connection error occurred for partial", func() {
+			It("should finally succeeded", func() {
 				for i, cred := range credentials {
 					call := m.EXPECT().Connect(gomock.Eq(cred.Username), gomock.Any()).MaxTimes(1)
 					if i%2 == 0 {
@@ -343,8 +351,21 @@ var _ = Describe("Linux java process", func() {
 			})
 		})
 
-		When("multiple credentials get, when auth error occurred", func() {
-			It("should succeeded", func() {
+		When("multiple credentials get, when auth error occurred for partial", func() {
+			It("should finally succeeded", func() {
+				for i, cred := range credentials {
+					call := m.EXPECT().Connect(gomock.Eq(cred.Username), gomock.Any()).MaxTimes(1)
+					if i%2 == 0 {
+						unauthenticated(call)
+					}
+				}
+				credentialProvider.EXPECT().GetCredentials().Return(credentials, nil)
+				Expect(executor.Prepare()).Error().Should(BeNil())
+			})
+		})
+
+		When("multiple credentials get, when auth error occurred for all", func() {
+			It("should failed with credential error", func() {
 				for i, cred := range credentials {
 					call := m.EXPECT().Connect(gomock.Eq(cred.Username), gomock.Any()).MaxTimes(1)
 					if i%2 == 0 {
@@ -368,9 +389,9 @@ var _ = Describe("Linux java process", func() {
 
 })
 
-func slowCall(call *gomock.Call) *gomock.Call {
+func slowCall(call *gomock.Call, delay time.Duration) *gomock.Call {
 	return call.DoAndReturn(func(username, password string) error {
-		time.Sleep(5 * time.Second)
+		time.Sleep(delay)
 		return nil
 	})
 }
@@ -381,4 +402,35 @@ func errorCall(call *gomock.Call) *gomock.Call {
 
 func unauthenticated(call *gomock.Call) *gomock.Call {
 	return call.Return(fmt.Errorf("ssh: unable to authenticate"))
+}
+
+func MatchDurationAround(expected time.Duration, diff time.Duration) types.GomegaMatcher {
+	return matchDurationAround{expected: expected, diff: diff}
+}
+
+type matchDurationAround struct {
+	expected time.Duration
+	diff     time.Duration
+}
+
+func (m matchDurationAround) Match(actual interface{}) (success bool, err error) {
+	if act, ok := actual.(time.Duration); ok {
+		return (act.Milliseconds() - m.expected.Milliseconds()) <= m.diff.Milliseconds(), nil
+	}
+
+	return false, fmt.Errorf("unknown duration, %v", actual)
+}
+
+func (m matchDurationAround) FailureMessage(actual interface{}) (message string) {
+	if act, ok := actual.(time.Duration); ok {
+		return fmt.Sprintf("expect to finished within %dms(+%dms), but actual cost is %dms", m.expected.Milliseconds(), m.diff.Milliseconds(), act.Milliseconds())
+	}
+	return fmt.Sprintf("unknown duration, %v", actual)
+}
+
+func (m matchDurationAround) NegatedFailureMessage(actual interface{}) (message string) {
+	if act, ok := actual.(time.Duration); ok {
+		return fmt.Sprintf("expect to finished within %dms(+%dms), but actual cost is %dms", m.expected.Milliseconds(), m.diff.Milliseconds(), act.Milliseconds())
+	}
+	return fmt.Sprintf("unknown duration, %v", actual)
 }

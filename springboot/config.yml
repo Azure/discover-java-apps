@@ -1,7 +1,7 @@
 server:
   connect:
     parallel: true
-    parallelism: 5
+    parallelism: 50
 pattern:
   app:
     - "application\\.ya?ml"
