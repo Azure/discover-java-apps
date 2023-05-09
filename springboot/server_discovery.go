@@ -269,27 +269,29 @@ func (l *linuxServerDiscovery) connect(creds ...*Credential) (*Credential, error
 	}
 
 	results, _ :=
-		ToSlice[loginResult](s.Map(func(cred *Credential) loginResult {
-			err := l.server.Connect(cred.Username, cred.Password)
-			if err != nil {
-				if !isAuthFailure(err) {
-					return loginResult{cred: nil, err: err}
-				}
-			}
-			return loginResult{cred: cred, err: nil}
-		}))
+		ToSlice[loginResult](
+			s.Map(func(cred *Credential) loginResult {
+				err := l.server.Connect(cred.Username, cred.Password)
+				return loginResult{cred: cred, err: err}
+			}),
+		)
 
 	var err error
 	for _, result := range results {
-		if result.cred != nil {
-			return result.cred, nil
+		if result.err != nil {
+			if isAuthFailure(result.err) {
+				err = CredentialError{error: result.err, message: fmt.Sprintf("bad credential: %s", result.cred.Username)}
+			} else {
+				err = ConnectionError{error: result.err, message: fmt.Sprintf("failed connect to %s", l.server.FQDN())}
+			}
+			continue
 		}
-		err = result.err
+		return result.cred, nil
 	}
 
 	if err != nil {
 		azureLogger.Warning(err, "error to connect to server with credential", "server", l.server.FQDN())
-		return nil, ConnectionError{error: err, message: fmt.Sprintf("failed to connect to server: %s", l.server.FQDN())}
+		return nil, err
 	}
 
 	return nil, CredentialError{

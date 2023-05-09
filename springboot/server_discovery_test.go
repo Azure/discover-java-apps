@@ -334,7 +334,8 @@ var _ = Describe("Linux java process", func() {
 					errorCall(call)
 				}
 				credentialProvider.EXPECT().GetCredentials().Return(credentials, nil)
-				Expect(executor.Prepare()).Error().Should(BeAssignableToTypeOf(ConnectionError{}))
+				_, err := executor.Prepare()
+				Expect(err).Should(BeAssignableToTypeOf(ConnectionError{}))
 			})
 		})
 
@@ -366,14 +367,14 @@ var _ = Describe("Linux java process", func() {
 
 		When("multiple credentials get, when auth error occurred for all", func() {
 			It("should failed with credential error", func() {
-				for i, cred := range credentials {
+				for _, cred := range credentials {
 					call := m.EXPECT().Connect(gomock.Eq(cred.Username), gomock.Any()).MaxTimes(1)
-					if i%2 == 0 {
-						unauthenticated(call)
-					}
+					unauthenticated(call)
 				}
 				credentialProvider.EXPECT().GetCredentials().Return(credentials, nil)
-				Expect(executor.Prepare()).Error().Should(BeNil())
+				cred, err := executor.Prepare()
+				Expect(cred).Should(BeNil())
+				Expect(isAuthFailure(err)).Should(BeTrue())
 			})
 		})
 	})

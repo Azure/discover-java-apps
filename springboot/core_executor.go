@@ -78,6 +78,12 @@ func (s *springBootDiscoveryExecutor) Discover(ctx context.Context, serverConnec
 			errs = append(errs, errInLoop)
 			continue
 		}
+
+		if !Contains(SpringBootAppTypes, app.AppType) {
+			azureLogger.Info("not a valid springboot app", "appType", app.AppType)
+			continue
+		}
+
 		jarSize, _ := jar.GetSize()
 		app.LastUpdatedTime = time.Now()
 		app.JarSize = jarSize
@@ -299,6 +305,10 @@ func (s *springBootDiscoveryExecutor) tryConnect(ctx context.Context, serverConn
 
 		if cred, err = serverDiscovery.Prepare(); err != nil {
 			_ = serverDiscovery.Finish()
+			if IsCredentialError(err) {
+				// if credential error, the server is connectable, just break to avoid nonsense try
+				break
+			}
 			azureLogger.Warning(err, "failed to connect to", "server", info.Server)
 			continue
 		} else {
