@@ -47,7 +47,7 @@ The default output will be a json like
 ```javascript
 [
   {
-     "server": "127.0.0.1",
+    "server": "127.0.0.1",
     // Application Name
     "appName": "hellospring",
     // Runnable artifact name
@@ -58,8 +58,8 @@ The default output will be a json like
     "appType": "SpringBootFatJar",
     // Runtime JDK Version
     "runtimeJdkVersion": "17.0.6",
-     // OS Name
-     "OsName": "ubuntu",
+    // OS Name
+    "OsName": "ubuntu",
     // OS Version
     "OsVersion": "2204",
     // Build JDK version
@@ -120,13 +120,13 @@ Only support to discover the spring apps from Linux VM
 
 - More java app runtime are coming.
 
-| Type | Readiness | Ready Date |
-| -- | -- | -- |
-| SpringBoot | Ready | 2023-04 |
-| Tomcat App | Planned | - |
-| WebLogic App | Planned | - |
-| WebSphere App | Planned | - |
-| JBoss EAP App | Planned | - |
+| Type           | Readiness | Ready Date |
+|----------------| -- | -- |
+| SpringBoot App | Ready | 2023-04 |
+| Tomcat App     | Planned | - |
+| WebLogic App   | Planned | - |
+| WebSphere App  | Planned | - |
+| JBoss EAP App  | Planned | - |
 
 - More source operating systems are coming.
 

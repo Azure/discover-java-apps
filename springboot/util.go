@@ -103,7 +103,7 @@ func CleanOutput(raw string) string {
 	return value
 }
 
-func Contains(slices []string, find string) bool {
+func Contains[T ~string](slices []T, find T) bool {
 	for _, t := range slices {
 		if t == find {
 			return true

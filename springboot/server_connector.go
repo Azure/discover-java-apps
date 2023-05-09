@@ -155,7 +155,7 @@ func (s *linuxServer) Connect(username, password string) error {
 	connectString := fmt.Sprintf("%s:%d", s.server, s.port)
 	client, err := ssh.Dial("tcp", connectString, cfg)
 	if err != nil {
-		return ConnectionError{error: err, message: fmt.Sprintf("error dial %s", connectString)}
+		return err
 	}
 	s.mux.Lock()
 	defer s.mux.Unlock()

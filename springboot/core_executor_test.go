@@ -67,16 +67,16 @@ var _ = Describe("Test springboot discovery executor", func() {
 				{appName: SpringBoot2xAppName, jdkVersion: Jdk7Version, springBootVersion: SpringBoot2xVersion, jarFileLocation: SpringBoot2xJarFileLocation, process: SpringBoot2xProcess},
 			} {
 				if testcase.appName != ExecutableAppName {
-					matchers = append(matchers, MatchFatJar(testcase.appName, testcase.jdkVersion, testcase.springBootVersion, testcase.jarFileLocation))
+					matchers = append(matchers, ContainElement(MatchFatJar(testcase.appName, testcase.jdkVersion, testcase.springBootVersion, testcase.jarFileLocation)))
 				} else {
-					matchers = append(matchers, MatchExecutableJar(testcase.appName, testcase.jarFileLocation))
+					matchers = append(matchers, Not(ContainElement(MatchExecutableJar(testcase.appName, testcase.jarFileLocation))))
 				}
 				processes = append(processes, testcase.process)
 			}
 
 			setupServerConnectorMock(serverConnector, strings.Join(processes, "\n"))
 			apps, err := executor.Discover(context.Background(), connection)
-			Expect(apps).Should(ContainElements(matchers))
+			Expect(apps).Should(And(matchers...))
 			Expect(err).Should(BeNil())
 		})
 	})
@@ -134,6 +134,41 @@ var _ = Describe("Test springboot discovery executor", func() {
 
 			Expect(apps).Should(Not(BeEmpty()))
 			Expect(err).Should(BeNil())
+		})
+	})
+
+	When("primary fqdn is accessible but got credential error", func() {
+		It("prepare should be failed with credential error", func() {
+			var primaryFqdn = "primary"
+			var altServerAccessible = "server-accessible"
+
+			for _, testcase := range []struct {
+				fqdn       string
+				accessible bool
+			}{
+				{fqdn: primaryFqdn, accessible: true},
+				{fqdn: altServerAccessible, accessible: false},
+			} {
+				connector := NewMockServerConnector(ctrl)
+				connector.EXPECT().FQDN().Return(testcase.fqdn).AnyTimes()
+				if !testcase.accessible {
+					connector.EXPECT().Connect(gomock.Any(), gomock.Any()).Return(fmt.Errorf("connection failed")).AnyTimes()
+				} else {
+					connector.EXPECT().Connect(gomock.Any(), gomock.Any()).Return(fmt.Errorf("ssh: unable to authenticate")).AnyTimes()
+				}
+
+				setupServerConnectorMock(connector, strings.Join([]string{SpringBoot2xProcess, SpringBoot1xProcess, ExecutableProcess}, "\n"))
+				serverConnectorFactory.EXPECT().Create(gomock.Any(), testcase.fqdn, gomock.Any()).Return(connector).AnyTimes()
+			}
+
+			credentialProvider.EXPECT().GetCredentials().Return(credentials, nil).AnyTimes()
+
+			connection := ServerConnectionInfo{Server: primaryFqdn, Port: 1022}
+			accessible := ServerConnectionInfo{Server: altServerAccessible, Port: 1022}
+			apps, err := executor.Discover(context.Background(), connection, accessible)
+
+			Expect(apps).Should(BeEmpty())
+			Expect(err).Should(BeAssignableToTypeOf(CredentialError{}))
 		})
 	})
 
@@ -249,7 +284,7 @@ func MatchExecutableJar(app string, jarLocation string) types.GomegaMatcher {
 }
 
 func setupServerConnectorMock(s *MockServerConnector, processes string) {
-	s.EXPECT().Close().MinTimes(1)
+	s.EXPECT().Close().AnyTimes()
 	s.EXPECT().RunCmd(gomock.Eq(GetLocateJarCmd(SpringBoot2xProcessId, SpringBoot2xJarFile))).Return(SpringBoot2xJarFileLocation, nil).AnyTimes()
 	s.EXPECT().RunCmd(gomock.Eq(GetEnvCmd(SpringBoot2xProcessId))).Return(TestEnv, nil).AnyTimes()
 	s.EXPECT().RunCmd(gomock.Eq(GetPortsCmd(SpringBoot2xProcessId))).Return(Ports, nil).AnyTimes()
