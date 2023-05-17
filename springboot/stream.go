@@ -84,7 +84,7 @@ type Stream interface {
 	Sorted(less interface{}) Stream
 	Reduce(seed any, c Combinator[any]) (any, error)
 	Parallel(parallelism int) Stream
-	GroupBy(keyFunc func(t any) string) (map[string][]any, error)
+	GroupBy(keyFunc func(t any) string, combinator Combinator[any]) (map[string]any, error)
 }
 
 type stop struct {
@@ -318,17 +318,17 @@ func (s stream) Parallel(parallelism int) Stream {
 	})
 }
 
-func (s stream) GroupBy(keyFunc func(t any) string) (map[string][]any, error) {
-	var m = make(map[string][]any)
+func (s stream) GroupBy(keyFunc func(t any) string, combinator Combinator[any]) (map[string]any, error) {
+	var m = make(map[string]any)
 	var mux sync.Mutex
 	err := s.consume(func(ctx context.Context, t any) error {
 		mux.Lock()
 		defer mux.Unlock()
 		key := keyFunc(t)
-		if _, exists := m[key]; exists {
-			m[key] = append(m[key], t)
+		if existed, exists := m[key]; exists {
+			m[key] = combinator(existed, t)
 		} else {
-			m[key] = []any{t}
+			m[key] = t
 		}
 		return nil
 	})
