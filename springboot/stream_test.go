@@ -201,17 +201,20 @@ var _ = Describe("Stream API test", func() {
 				s := FromSlice(context.Background(), []int{1, 2, 3, 3, 4, 5, 5, 6, 7})
 
 				keyFunc := func(t any) string { return fmt.Sprintf("%d", t) }
-				result, err := s.GroupBy(keyFunc)
+				var sum Combinator[any] = func(a, b any) any {
+					return a.(int) + b.(int)
+				}
+				result, err := s.GroupBy(keyFunc, sum)
 
 				Expect(result).Should(
 					And(
-						HaveKeyWithValue("1", ConsistOf(1)),
-						HaveKeyWithValue("2", ConsistOf(2)),
-						HaveKeyWithValue("3", ConsistOf(3, 3)),
-						HaveKeyWithValue("4", ConsistOf(4)),
-						HaveKeyWithValue("5", ConsistOf(5, 5)),
-						HaveKeyWithValue("6", ConsistOf(6)),
-						HaveKeyWithValue("7", ConsistOf(7)),
+						HaveKeyWithValue("1", Equal(1)),
+						HaveKeyWithValue("2", Equal(2)),
+						HaveKeyWithValue("3", Equal(6)),
+						HaveKeyWithValue("4", Equal(4)),
+						HaveKeyWithValue("5", Equal(10)),
+						HaveKeyWithValue("6", Equal(6)),
+						HaveKeyWithValue("7", Equal(7)),
 					),
 				)
 				Expect(err).Should(BeNil())
