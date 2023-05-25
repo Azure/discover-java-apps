@@ -27,7 +27,6 @@ func NewSpringBootDiscoveryExecutor(
 
 func (s *springBootDiscoveryExecutor) Discover(ctx context.Context, serverConnectionInfo ServerConnectionInfo, alternativeConnectionInfos ...ServerConnectionInfo) ([]*SpringBootApp, error) {
 	azureLogger := GetAzureLogger(ctx)
-	azureLogger.Info("going to discover")
 	var err error
 	serverDiscovery, cred, err := s.tryConnect(ctx, append([]ServerConnectionInfo{serverConnectionInfo}, alternativeConnectionInfos...))
 	if err != nil {
