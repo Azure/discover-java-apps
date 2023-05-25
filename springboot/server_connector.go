@@ -67,7 +67,7 @@ func (s *linuxServer) RunCmd(cmd string) (string, error) {
 	err = session.Run(cmd)
 	output := b.String()
 	azureLogger := GetAzureLogger(s.ctx)
-	azureLogger.logr.V(1).Info("Running cmd on server", "cmd", cmd, "server", s.server)
+	azureLogger.Debug("Running cmd on server", "cmd", cmd, "server", s.server)
 	if strings.Contains(e.String(), "Permission denied") {
 		err = PermissionDenied{error: fmt.Errorf("run cmd by user %s permission denied", s.username), message: CleanOutput(e.String())}
 		azureLogger.Warning(err, "Running cmd permission denied", "cmd", cmd, "server", s.server, "output", CleanOutput(e.String()), "username", s.username)
