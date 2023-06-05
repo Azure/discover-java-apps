@@ -53,6 +53,12 @@ build: fmt vet yaml2go ## Build binary for release
 	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -a -o bin/discovery_darwin_amd64 cli/*.go
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -o bin/discovery-l cli/*.go
 	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -a -o bin/discovery.exe cli/*.go
+    # weblogic
+	CGO_ENABLED=0 GOOS=darwin GOARCH=arm64 go build -a -o bin/weblogic_darwin_arm64 weblogiccli/*.go
+	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -a -o bin/weblogic_darwin_amd64 weblogiccli/*.go
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -o bin/weblogic-l weblogiccli/*.go
+	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -a -o bin/weblogic.exe weblogiccli/*.go
+
 
 .PHONY: yaml2go
 yaml2go: yaml2go-cli  ## Generate yaml config struct
