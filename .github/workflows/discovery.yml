@@ -82,5 +82,6 @@ jobs:
         path: bin
 
     - name: Push Coverage Badge
+      if: ${{ steps.fork_check.outputs.is_forked != 'true' }} # skip if is a forked repo.
       run: |
         .github/workflows/badge.sh
