@@ -59,11 +59,11 @@ jobs:
         thresholds: '70 80'
 
     - name: Check if forked
-        id: fork_check
-        if: github.event_name == 'pull_request'
-        run: |
-          is_forked=$(echo "${{ github.event.pull_request.head.repo.fork }}" | tr '[:upper:]' '[:lower:]')
-          echo "::set-output name=is_forked::${is_forked}"
+      id: fork_check
+      if: github.event_name == 'pull_request'
+      run: |
+        is_forked=$(echo "${{ github.event.pull_request.head.repo.fork }}" | tr '[:upper:]' '[:lower:]')
+        echo "::set-output name=is_forked::${is_forked}"
 
     - name: Add Coverage PR Comment
       uses: marocchino/sticky-pull-request-comment@v2
