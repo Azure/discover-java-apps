@@ -10,7 +10,7 @@ const (
 	LinuxGetJdkVersionCmd     = "%s -version 2>&1 | head -n 1 | awk -F '\"' '{print $2}'"
 	LinuxGetTotalMemoryCmd    = "cat /proc/meminfo | grep MemTotal | awk '{print $2}'"
 	LinuxGetDefaultMaxHeapCmd = "%s -XX:+PrintFlagsFinal 2>1 | grep ' MaxHeapSize ' | awk '{print $4}'"
-	LinuxGetPortsCmd          = `ls -lta /proc/%[1]d/fd | grep socket | awk -F'[\\[\\]]' '{print $2}' | xargs -I {} grep {} /proc/%[1]d/net/tcp /proc/%[1]d/net/tcp6 | awk '{print $3}' | awk -F':' '{print $2}' | sort | uniq | xargs -I {} printf '%%d\n' '0x{}'`
+	LinuxGetPortsCmd          = `ls -lta /proc/%[1]d/fd | grep socket | awk -F'[\\[\\]]' '{print $2}' | xargs -I {} grep {} /proc/%[1]d/net/tcp /proc/%[1]d/net/tcp6 | grep ' 0A ' | awk '{print $3}' | awk -F':' '{print $2}' | sort | uniq | xargs -I {} printf '%%d\n' '0x{}'`
 	LinuxGetOsName            = "grep '^ID=' /etc/os-release | awk -F= '{print $2}'"
 	LinuxGetOsVersion         = "grep '^VERSION_ID=' /etc/os-release | awk -F= '{print $2}'"
 	CentOsGetName             = "cat /etc/centos-release | awk '{print $1}'"
