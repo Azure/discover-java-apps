@@ -1,0 +1,12 @@
+sonobuoy-config:
+  driver: Job
+  plugin-name: azure-arc-springbootdiscovery
+  result-format: junit
+spec:
+  image: ascdevmigrationacr.azurecr.io/springboot-discovery-conformance:0.5.21-beta
+  imagePullPolicy: IfNotPresent
+  name: plugin
+  resources: {}
+  volumeMounts:
+    - mountPath: /tmp/results
+      name: results
