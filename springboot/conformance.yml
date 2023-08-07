@@ -3,7 +3,7 @@ sonobuoy-config:
   plugin-name: azure-arc-springbootdiscovery
   result-format: junit
 spec:
-  image: ascdevmigrationacr.azurecr.io/images/springboot-discovery-conformance:1.0.0
+  image: ascdevmigrationacr.azurecr.io/images/springboot-discovery-conformance:1.0.1
   imagePullPolicy: IfNotPresent
   name: plugin
   resources: {}
