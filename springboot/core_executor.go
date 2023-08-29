@@ -2,7 +2,6 @@ package springboot
 
 import (
 	"context"
-	"reflect"
 	"strings"
 	"time"
 )
@@ -32,7 +31,7 @@ func (s *springBootDiscoveryExecutor) Discover(ctx context.Context, serverConnec
 	if err != nil {
 		return nil, err
 	}
-	azureLogger.Info("connect to serverConnectionInfo successfully", "credential", cred.FriendlyName, "runAsAccountId", cred.Id)
+	azureLogger.Info("connect to serverConnectionInfo successfully", "credential", cred.FriendlyName, "runAsAccountId", cred.Id, "host", serverDiscovery.Server().FQDN())
 	defer serverDiscovery.Finish()
 
 	var processes []JavaProcess
@@ -40,20 +39,20 @@ func (s *springBootDiscoveryExecutor) Discover(ctx context.Context, serverConnec
 	if err != nil {
 		return nil, err
 	}
-	azureLogger.Info("process scanned", "length", len(processes))
+	azureLogger.Info("process scanned", "length", len(processes), "host", serverDiscovery.Server().FQDN())
 
 	var jarCache = make(map[string]JarFile)
 	var apps []*SpringBootApp
 	var errs []error
 	for _, process := range processes {
-		azureLogger.Info("begin to discover process", "processId", process.GetProcessId())
+		azureLogger.Info("begin to discover process", "processId", process.GetProcessId(), "host", serverDiscovery.Server().FQDN())
 		var app *SpringBootApp
 		var errInLoop error
 
 		var jarLocation string
 		jarLocation, errInLoop = process.LocateJarFile()
 		if errInLoop != nil {
-			azureLogger.Warning(errInLoop, "locate jar file failed")
+			azureLogger.Warning(errInLoop, "locate jar file failed", "host", serverDiscovery.Server().FQDN())
 			errs = append(errs, errInLoop)
 			continue
 		}
@@ -61,11 +60,11 @@ func (s *springBootDiscoveryExecutor) Discover(ctx context.Context, serverConnec
 		var jar JarFile
 		var exists bool
 		if jar, exists = jarCache[jarLocation]; exists {
-			azureLogger.Debug("jar file already discovered")
+			azureLogger.Debug("jar file already discovered", "host", serverDiscovery.Server().FQDN())
 		} else {
 			jar, errInLoop = process.Executor().ReadJarFile(jarLocation, DefaultJarFileWalkers...)
 			if errInLoop != nil {
-				azureLogger.Error(errInLoop, "read jar file failed", "location", jarLocation, "type", reflect.TypeOf(errInLoop))
+				azureLogger.Error(errInLoop, "read jar file failed", "location", jarLocation, "error", errInLoop.Error(), "host", serverDiscovery.Server().FQDN())
 				errs = append(errs, errInLoop)
 				continue
 			}
@@ -73,13 +72,13 @@ func (s *springBootDiscoveryExecutor) Discover(ctx context.Context, serverConnec
 
 		app, errInLoop = s.discoverApp(process, jar)
 		if errInLoop != nil {
-			azureLogger.Warning(errInLoop, "discover app failed", "location", jarLocation, "process", process.GetProcessId(), "type", reflect.TypeOf(errInLoop))
+			azureLogger.Warning(errInLoop, "discover app failed", "location", jarLocation, "process", process.GetProcessId(), "error", errInLoop.Error(), "host", serverDiscovery.Server().FQDN())
 			errs = append(errs, errInLoop)
 			continue
 		}
 
 		if !Contains(SpringBootAppTypes, app.AppType) {
-			azureLogger.Info("not a valid springboot app", "appType", app.AppType)
+			azureLogger.Info("not a valid springboot app", "appType", app.AppType, "host", serverDiscovery.Server().FQDN())
 			continue
 		}
 
@@ -88,7 +87,7 @@ func (s *springBootDiscoveryExecutor) Discover(ctx context.Context, serverConnec
 		app.JarSize = jarSize
 		jarCache[jarLocation] = jar
 
-		azureLogger.Info("finished to discover process, found app", "processId", process.GetProcessId(), "app", app.AppName)
+		azureLogger.Info("finished to discover process, found app", "processId", process.GetProcessId(), "app", app.AppName, "host", serverDiscovery.Server().FQDN())
 
 		apps = append(apps, app)
 	}
@@ -292,7 +291,7 @@ func (s *springBootDiscoveryExecutor) tryConnect(ctx context.Context, serverConn
 	var err error
 	for _, info := range serverConnectionInfos {
 		if len(info.Server) == 0 || info.Port == 0 {
-			azureLogger.Warning(err, "invalid connection info", "server", info.Server, "port", info.Port)
+			azureLogger.Warning(err, "invalid connection info", "host", info.Server, "port", info.Port)
 			continue
 		}
 		serverDiscovery = NewLinuxServerDiscovery(
@@ -308,7 +307,7 @@ func (s *springBootDiscoveryExecutor) tryConnect(ctx context.Context, serverConn
 				// if credential error, the server is connectable, just break to avoid nonsense try
 				break
 			}
-			azureLogger.Warning(err, "failed to connect to", "server", info.Server)
+			azureLogger.Warning(err, "failed to connect to", "host", info.Server)
 			continue
 		} else {
 			return serverDiscovery, cred, nil
