@@ -307,6 +307,13 @@ func isAuthFailure(err error) bool {
 	return strings.Contains(err.Error(), "ssh: unable to authenticate")
 }
 
+func isPermissionDenied(err error) bool {
+	if err == nil {
+		return false
+	}
+	return strings.Contains(err.Error(), "permission denied")
+}
+
 type loginResult struct {
 	cred *Credential
 	err  error

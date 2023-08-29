@@ -102,17 +102,26 @@ func (s *linuxServer) Read(location string) (io.ReaderAt, os.FileInfo, error) {
 	}
 	client, err := sftp.NewClient(s.client)
 	if err != nil {
+		if isPermissionDenied(err) {
+			return nil, nil, PermissionDenied{error: err, message: fmt.Sprintf("create sftp client permission denied, server: %s, location: %s", s.server, location)}
+		}
 		return nil, nil, ConnectionError{error: err, message: fmt.Sprintf("create sftp client failed, server: %s, location: %s", s.server, location)}
 	}
 
 	// Read the source file
 	srcFile, err := client.OpenFile(location, os.O_RDONLY)
 	if err != nil {
+		if isPermissionDenied(err) {
+			return nil, nil, PermissionDenied{error: err, message: fmt.Sprintf("read jar file over sftp permission deinied, server: %s, location: %s", s.server, location)}
+		}
 		return nil, nil, ConnectionError{error: err, message: fmt.Sprintf("read jar file over sftp failed, server: %s, location: %s", s.server, location)}
 	}
 
 	stat, err := srcFile.Stat()
 	if err != nil {
+		if isPermissionDenied(err) {
+			return nil, nil, PermissionDenied{error: err, message: fmt.Sprintf("stat jar file permission denied: server: %s, location: %s", s.server, location)}
+		}
 		return nil, nil, ConnectionError{error: err, message: fmt.Sprintf("stat jar file failed: server: %s, location: %s", s.server, location)}
 	}
 
