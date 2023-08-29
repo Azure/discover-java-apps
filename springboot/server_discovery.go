@@ -290,7 +290,7 @@ func (l *linuxServerDiscovery) connect(creds ...*Credential) (*Credential, error
 	}
 
 	if err != nil {
-		azureLogger.Warning(err, "error to connect to server with credential", "server", l.server.FQDN())
+		azureLogger.Warning(err, "error to connect to server with credential", "host", l.server.FQDN())
 		return nil, err
 	}
 

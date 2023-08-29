@@ -57,7 +57,7 @@ func (s *linuxServer) RunCmd(cmd string) (string, error) {
 
 	session, err = s.client.NewSession()
 	if err != nil {
-		return "", ConnectionError{error: err, message: fmt.Sprintf("failed to create new session, server: %s", s.server)}
+		return "", ConnectionError{error: err, message: fmt.Sprintf("failed to create new session, host: %s", s.server)}
 	}
 	defer session.Close()
 	var b bytes.Buffer
@@ -67,10 +67,10 @@ func (s *linuxServer) RunCmd(cmd string) (string, error) {
 	err = session.Run(cmd)
 	output := b.String()
 	azureLogger := GetAzureLogger(s.ctx)
-	azureLogger.Debug("Running cmd on server", "cmd", cmd, "server", s.server)
+	azureLogger.Debug("Running cmd on server", "cmd", cmd, "host", s.server)
 	if strings.Contains(e.String(), "Permission denied") {
 		err = PermissionDenied{error: fmt.Errorf("run cmd by user %s permission denied", s.username), message: CleanOutput(e.String())}
-		azureLogger.Warning(err, "Running cmd permission denied", "cmd", cmd, "server", s.server, "output", CleanOutput(e.String()), "username", s.username)
+		azureLogger.Warning(err, "Running cmd permission denied", "cmd", cmd, "host", s.server, "output", CleanOutput(e.String()), "username", s.username)
 		return "", err
 	}
 	if err != nil {
@@ -81,7 +81,7 @@ func (s *linuxServer) RunCmd(cmd string) (string, error) {
 				return "", nil
 			}
 		}
-		azureLogger.Warning(err, "Running cmd on server failed", "cmd", cmd, "server", s.server, "output", e.String())
+		azureLogger.Warning(err, "Running cmd on server failed", "cmd", cmd, "host", s.server, "output", e.String())
 		return "", toSshError(err, &e)
 	}
 
