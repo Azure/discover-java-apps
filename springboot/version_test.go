@@ -11,7 +11,7 @@ var _ = Describe("test version matcher", func() {
 		It("should as expected", func() {
 			m := versionMatcher{expect: "1.8"}
 
-			Expect(m.Match("1.8.0")).Should(BeTrue())
+			Expect("1.8.0").Should(m)
 		})
 	})
 
@@ -19,7 +19,7 @@ var _ = Describe("test version matcher", func() {
 		It("should as expected", func() {
 			m := versionMatcher{expect: "1.8"}
 
-			Expect(m.Match("1.8.231_ea")).Should(BeTrue())
+			Expect("1.8.231_ea").Should(m)
 		})
 	})
 
@@ -27,7 +27,15 @@ var _ = Describe("test version matcher", func() {
 		It("should as expected", func() {
 			m := versionMatcher{expect: "1.8"}
 
-			Expect(m.Match("8")).Should(BeTrue())
+			Expect("8").Should(m)
+		})
+	})
+
+	When("java 11 version with 4 digits matched", func() {
+		It("should as expected", func() {
+			m := versionMatcher{expect: "11"}
+
+			Expect("11.0.21.1").Should(m)
 		})
 	})
 
@@ -35,7 +43,7 @@ var _ = Describe("test version matcher", func() {
 		It("should not matched", func() {
 			m := versionMatcher{expect: "1.8"}
 
-			Expect(m.Match("a.b.c")).Should(BeFalse())
+			Expect("a.b.c").ShouldNot(m)
 		})
 	})
 
@@ -66,7 +74,6 @@ var _ = Describe("test version matcher", func() {
 			Expect(IsValidJdkVersion("a.b.c.d")).Should(BeFalse())
 			Expect(IsValidJdkVersion("1.b.c.d")).Should(BeFalse())
 			Expect(IsValidJdkVersion("1.7.c.d")).Should(BeFalse())
-			Expect(IsValidJdkVersion("1.7.6.d")).Should(BeFalse())
 			Expect(IsValidJdkVersion("1.7.6-d")).Should(BeTrue())
 			Expect(IsValidJdkVersion("1.7.6_d")).Should(BeTrue())
 		})
