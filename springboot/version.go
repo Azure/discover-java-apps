@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"github.com/onsi/gomega/types"
 	"golang.org/x/mod/semver"
+	"regexp"
 	"strings"
 )
 
 var (
 	legacyJdkVersions versions = []string{"1.5", "1.6", "1.7", "1.8"}
+	validVersionRegex          = regexp.MustCompile(`^[^\\.]+(\.[^\\.]+){0,2}`)
 )
 
 type versions []string
@@ -70,7 +72,8 @@ func GreatThan(versionA, versionB string) bool {
 }
 
 func SanitizeVersion(version string) string {
-	return strings.ReplaceAll(CleanOutput(version), "_", "-")
+	cleaned := strings.ReplaceAll(CleanOutput(version), "_", "-")
+	return validVersionRegex.FindString(cleaned)
 }
 
 func IsValidJdkVersion(version string) bool {
