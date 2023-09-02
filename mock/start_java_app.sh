@@ -31,4 +31,4 @@ ExecStart=/home/migrateadmin/startApp.sh
 [Install]
 WantedBy=multi-user.target
 END
-sudo systemctl enable startup.service --now
+sudo systemctl enable springboot.service --now
