@@ -13,8 +13,7 @@ fi
 tee /home/migrateadmin/startApp.sh << END
 #!/bin/bash
 
-JAVA_OPTS_2x="-XX:InitialRAMPercentage=40.0 -XX:MaxRAMPercentage=40.0 -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=1099 -Dcom.sun.management.jmxremote.local.only=true -Dmanagement.endpoints.jmx.exposure.include=healthmetrics -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -DtestOption=abc=def -Dspring.jmx.enabled=true -Dserver.tomcat.mbeanregistry.enabled=true -Dfile.encoding=UTF8 -Dspring.config.import=optional:configserver:/ -Dspring.datasource.password=testpassword1234"
-java $JAVA_OPTS_2x -jar $JAR_FILE
+java -XX:InitialRAMPercentage=40.0 -XX:MaxRAMPercentage=40.0 -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=1099 -Dcom.sun.management.jmxremote.local.only=true -Dmanagement.endpoints.jmx.exposure.include=healthmetrics -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -DtestOption=abc=def -Dspring.jmx.enabled=true -Dserver.tomcat.mbeanregistry.enabled=true -Dfile.encoding=UTF8 -Dspring.config.import=optional:configserver:/ -Dspring.datasource.password=testpassword1234 -jar $JAR_FILE
 END
 
 chmod +x /home/migrateadmin/startApp.sh
