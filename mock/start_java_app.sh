@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DIR=${1;-/home/migrateadmin}
+DIR=${1:-/home/migrateadmin}
 JAR_FILE=$DIR/hellospring2x-0.0.1-SNAPSHOT.jar
 sudo apt update
 sudo apt install openjdk-11-jre-headless
