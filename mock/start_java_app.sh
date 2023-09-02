@@ -23,7 +23,7 @@ chmod +x /home/migrateadmin/startApp.sh
 nohup /home/migrateadmin/startApp.sh 2>&1 &
 
 # Enable auto start
-tee -a /lib/systemd/system/springboot.service << END
+sudo tee -a /lib/systemd/system/springboot.service << END
 [Unit]
 Description=Start springboot application
 [Service]
@@ -31,4 +31,4 @@ ExecStart=/home/migrateadmin/startApp.sh
 [Install]
 WantedBy=multi-user.target
 END
-systemctl enable startup.service --now
+sudo systemctl enable startup.service --now
