@@ -23,7 +23,7 @@ chmod +x /home/migrateadmin/startApp.sh
 nohup /home/migrateadmin/startApp.sh 2>&1 &
 
 # Enable auto start
-sudo tee -a /lib/systemd/system/springboot.service << END
+sudo tee /lib/systemd/system/springboot.service << END
 [Unit]
 Description=Start springboot application
 [Service]
