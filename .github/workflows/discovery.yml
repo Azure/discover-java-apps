@@ -16,8 +16,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
-        ref: ${{ github.head_ref }}   # checkout the correct branch name
-        fetch-depth: 0                # fetch the whole repo history
+        fetch-depth: 0
+        ref: ${{github.event.pull_request.head.ref}}
+        repository: ${{github.event.pull_request.head.repo.full_name}}
 
     - name: Set up Go
       uses: actions/setup-go@v4
@@ -57,9 +58,16 @@ jobs:
         output: both
         thresholds: '70 80'
 
+    - name: Check if forked
+      id: fork_check
+      if: github.event_name == 'pull_request'
+      run: |
+        is_forked=$(echo "${{ github.event.pull_request.head.repo.fork }}" | tr '[:upper:]' '[:lower:]')
+        echo "::set-output name=is_forked::${is_forked}"
+
     - name: Add Coverage PR Comment
       uses: marocchino/sticky-pull-request-comment@v2
-      if: github.event_name == 'pull_request'
+      if: ${{ github.event_name == 'pull_request' && steps.fork_check.outputs.is_forked != 'true' }}
       with:
         recreate: true
         path: code-coverage-results.md
@@ -74,5 +82,6 @@ jobs:
         path: bin
 
     - name: Push Coverage Badge
+      if: ${{ steps.fork_check.outputs.is_forked != 'true' }} # skip if is a forked repo.
       run: |
         .github/workflows/badge.sh
